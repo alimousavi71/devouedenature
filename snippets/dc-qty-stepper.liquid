@@ -1,0 +1,37 @@
+{%- comment -%}
+  Quantity stepper — DesignSystem.dc.html (118×44, − / value / +).
+  Params: name, value, min, max, id, class
+{%- endcomment -%}
+{%- liquid
+  assign min = min | default: 1
+  assign max = max | default: 9
+-%}
+<quantity-input class="dc-qty-stepper {{ class }}">
+  <button
+    type="button"
+    class="dc-qty-stepper__btn"
+    name="minus"
+    aria-label="{{ 'products.product.quantity.decrease' | t | default: 'Decrease quantity' }}"
+  >
+    −
+  </button>
+  <input
+    class="dc-qty-stepper__input"
+    type="number"
+    {% if id %}id="{{ id }}"{% endif %}
+    name="{{ name }}"
+    value="{{ value }}"
+    min="{{ min }}"
+    max="{{ max }}"
+    inputmode="numeric"
+    aria-label="{{ 'products.product.quantity.input_label' | t | default: 'Quantity' }}"
+  >
+  <button
+    type="button"
+    class="dc-qty-stepper__btn"
+    name="plus"
+    aria-label="{{ 'products.product.quantity.increase' | t | default: 'Increase quantity' }}"
+  >
+    +
+  </button>
+</quantity-input>

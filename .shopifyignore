@@ -1,0 +1,13 @@
+# Keep local tooling / design prototypes out of the Shopify package.
+redesign/
+node_modules/
+.git/
+.gitignore
+package.json
+package-lock.json
+vite.config.js
+tailwind.config.cjs
+postcss.config.cjs
+src/
+scripts/
+*.md

@@ -1,0 +1,55 @@
+{%- comment -%}
+  Minimal gift-card template — uses theme.css only.
+{%- endcomment -%}
+{% layout none %}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <title>{{ page_title }}</title>
+    {% render 'meta-tags' %}
+    {{ content_for_header }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+  </head>
+  <body class="bg-bg text-ink antialiased min-h-screen flex items-center justify-center px-5 py-16">
+    <div class="w-full max-w-md text-center">
+      <h1 class="font-display text-h2 mb-2">{{ shop.name }}</h1>
+      <p class="font-body text-body text-secondary mb-8">{{ 'gift_cards.issued.subtext' | t | default: 'Your gift card' }}</p>
+
+      {%- if gift_card.image -%}
+        <div class="mb-8 overflow-hidden">
+          {{ gift_card.image | image_url: width: 600 | image_tag: class: 'w-full', loading: 'eager' }}
+        </div>
+      {%- endif -%}
+
+      <p class="font-display text-h1 mb-2">{{ gift_card.balance | money }}</p>
+      {%- if gift_card.enabled == false or gift_card.expired -%}
+        <p class="font-body text-body-sm text-error mb-6">{{ 'gift_cards.issued.expired' | t | default: 'Expired' }}</p>
+      {%- endif -%}
+
+      <div class="border border-border px-4 py-5 mb-6">
+        <p class="font-mono text-caption uppercase text-muted mb-2">{{ 'gift_cards.issued.code' | t | default: 'Code' }}</p>
+        <p id="gift-card-code" class="font-mono text-body tracking-widest">{{ gift_card.code | format_code }}</p>
+      </div>
+
+      <div id="qr-code" class="flex justify-center mb-8"></div>
+
+      <a href="{{ shop.url }}" class="inline-block font-mono text-caption uppercase border-b border-ink pb-1">
+        {{ 'gift_cards.issued.shop_link' | t | default: 'Visit store' }}
+      </a>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var qr = document.getElementById('qr-code');
+        if (qr && window.QRCode) {
+          new QRCode(qr, { text: {{ gift_card.qr_identifier | json }}, width: 120, height: 120 });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,136 @@
+{
+  "sections": {
+    "dc-hero": {
+      "type": "dc-hero",
+      "settings": {
+        "show_video": true,
+        "video": "shopify://files/videos/0408(1).mp4",
+        "video_url": "",
+        "image": "shopify://shop_images/25-01-29_DevoueNature_byDSSanchez_00231-V5-copie_2.jpg",
+        "autoplay_video": true,
+        "muted_video": true,
+        "loop_video": true,
+        "heading": "Gold in the glass, not on the label",
+        "button_label": "Shop the collection",
+        "button_url": "shopify://collections/all"
+      }
+    },
+    "dc-lineup": {
+      "type": "dc-lineup",
+      "blocks": {
+        "claim-1": { "type": "claim", "settings": { "mark": "circle", "label": "Grasse distillation" } },
+        "claim-2": { "type": "claim", "settings": { "mark": "diamond", "label": "Nineteen ingredients" } },
+        "claim-3": { "type": "claim", "settings": { "mark": "square", "label": "Refillable in glass" } },
+        "claim-4": { "type": "claim", "settings": { "mark": "circle", "label": "Filled by hand" } },
+        "claim-5": { "type": "claim", "settings": { "mark": "diamond", "label": "Numbered collar" } }
+      },
+      "block_order": ["claim-1", "claim-2", "claim-3", "claim-4", "claim-5"],
+      "settings": {
+        "heading": "The Vermeille lineup",
+        "product_list": [
+          "cleanser",
+          "essence",
+          "serum",
+          "day-cream",
+          "night-cream"
+        ],
+        "products_to_show": 5
+      }
+    },
+    "dc-announcement": {
+      "type": "dc-announcement",
+      "settings": {
+        "date": "8 May 2026",
+        "heading": "Official launch",
+        "text": "Launching in North America and Europe. Get ready to meet your best skin.",
+        "pill_label": "Three cities"
+      }
+    },
+    "dc-campaign": {
+      "type": "dc-campaign",
+      "settings": {
+        "image": "shopify://shop_images/Group_s1410109165.jpg",
+        "subheading": "Shop New Lineup",
+        "heading": "It's Gold, Redefined.",
+        "button_label": "Shop now",
+        "button_url": "shopify://collections/frontpage"
+      }
+    },
+    "dc-faq": {
+      "type": "dc-faq",
+      "blocks": {
+        "faq-1": {
+          "type": "question",
+          "settings": {
+            "question": "Are your products clinically tested?",
+            "answer": "<p>Our formulations are developed using clinically supported ingredients and grounded in dermatological science. We prioritize evidence-based actives known for their efficacy, safety, and skin compatibility.</p>"
+          }
+        },
+        "faq-2": {
+          "type": "question",
+          "settings": {
+            "question": "Do your products really contain 24K gold?",
+            "answer": "<p>Absolutely. We use pure 24K gold in our skincare formulations, carefully blended with advanced active ingredients to enhance radiance and support youthful-looking skin.</p>"
+          }
+        },
+        "faq-3": {
+          "type": "question",
+          "settings": {
+            "question": "How long will it take to see results?",
+            "answer": "<p>Many customers notice an instant glow and smoother texture after the first application. Long-term results, such as improved elasticity and reduced fine lines, are typically seen within 4–6 weeks of consistent use.</p>"
+          }
+        },
+        "faq-4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I use your products with other brands?",
+            "answer": "<p>Yes, Dévoué products are designed to integrate seamlessly into your existing routine. For optimal results and a fully elevated experience, we recommend using them as part of the complete L’Or Celeste Ritual.</p>"
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "button_label": "Read FAQs",
+        "button_url": "/pages/faqs"
+      }
+    },
+    "dc-care-banner": {
+      "type": "dc-care-banner",
+      "settings": {
+        "heading": "We are here for you",
+        "text": "<p>Five people answer the client address, in French or English, within one working day.</p>",
+        "button_label": "Write to us",
+        "button_url": "https://wa.link/sgbrwa"
+      }
+    },
+    "dc-instagram": {
+      "type": "dc-instagram",
+      "blocks": {
+        "ig-1": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9048.png" } },
+        "ig-2": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9047.png" } },
+        "ig-3": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9051.png" } },
+        "ig-4": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9050.png" } },
+        "ig-5": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9052.png" } }
+      },
+      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5"],
+      "settings": {
+        "eyebrow": "Follow for the latest",
+        "heading": "Latest on Instagram",
+        "follow_label": "Follow",
+        "link_account": "https://www.instagram.com/devoueskin/",
+        "cta_label": "View more at @devoueskin",
+        "cta_url": "https://www.instagram.com/devoueskin/"
+      }
+    }
+  },
+  "order": [
+    "dc-hero",
+    "dc-lineup",
+    "dc-announcement",
+    "dc-campaign",
+    "dc-faq",
+    "dc-care-banner",
+    "dc-instagram"
+  ]
+}

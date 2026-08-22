@@ -1,0 +1,13 @@
+{
+	"sections": {
+		"main": {
+			"type": "dc-blog",
+			"settings": {
+				"description": ""
+			}
+		}
+	},
+	"order": [
+		"main"
+	]
+}

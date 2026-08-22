@@ -1,0 +1,196 @@
+{%- comment -%}
+  Generic content page (Devoué de Nature redesign). Styled per redesign/Page.dc.html:
+  hero, 21:9 full-bleed image, 3-col sticky-nav prose + facts, closing CTA band.
+  Real Shopify data: page.title / page.content (rich text).
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow | default: 'The house'
+  assign heading = section.settings.heading | default: page.title
+  assign intro = section.settings.intro
+  assign lead_quote = section.settings.lead_quote
+  assign image_placeholder = section.settings.image_placeholder | default: 'the atelier in grasse — full bleed'
+  assign facts_heading = section.settings.facts_heading | default: 'In short'
+  assign nav_blocks = section.blocks | where: 'type', 'nav_anchor'
+  assign fact_blocks = section.blocks | where: 'type', 'stat_fact'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <article class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+    {%- unless section.settings.hide_hero -%}
+      <header
+        class="pt-[70px] grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[100px] md:items-end"
+        data-reveal
+      >
+        <div>
+          {%- if eyebrow != blank -%}
+            <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+          {%- endif -%}
+          {%- if heading != blank -%}
+            <h1 class="font-display font-normal text-[54px] leading-[1.08] text-ink mt-[18px] mb-0">{{ heading }}</h1>
+          {%- endif -%}
+        </div>
+        {%- if intro != blank -%}
+          <p class="font-body text-[13px] leading-[1.95] text-secondary max-w-[52ch] m-0 text-pretty">{{ intro }}</p>
+        {%- endif -%}
+      </header>
+    {%- endunless -%}
+
+    {%- unless section.settings.hide_image -%}
+      <div class="pt-[80px]" data-reveal>
+        {%- if section.settings.image != blank -%}
+          <div class="relative aspect-[21/9] overflow-hidden">
+            {{ section.settings.image | image_url: width: 2100 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', widths: '750, 1100, 1500, 2100' }}
+          </div>
+        {%- elsif section.settings.show_image_placeholder -%}
+          <div class="relative aspect-[21/9] bg-[linear-gradient(120deg,#E3DCCE,#DCD4C4)] flex items-center justify-center">
+            <span class="font-mono text-[11px] tracking-[0.16em] uppercase text-muted text-center px-4">{{ image_placeholder }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    <div class="pt-[90px] grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)_260px] gap-10 lg:gap-[70px] items-start">
+      {%- if nav_blocks.size > 0 and section.settings.hide_nav == false -%}
+        <nav class="hidden lg:flex flex-col gap-[14px] sticky top-[120px] self-start border-t border-ink pt-5" aria-label="{{ 'general.accessibility.page_sections' | t | default: 'Page sections' }}">
+          {%- for block in nav_blocks -%}
+            {%- if block.settings.label != blank and block.settings.anchor != blank -%}
+              <a
+                href="#{{ block.settings.anchor }}"
+                class="font-body text-[11px] tracking-[0.16em] uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast {% if forloop.first %}text-ink{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.label }}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+      {%- else -%}
+        <div class="hidden lg:block"></div>
+      {%- endif -%}
+
+      <div data-reveal>
+        {%- if lead_quote != blank -%}
+          <p class="font-display text-[26px] leading-[1.5] text-ink max-w-[40ch] m-0">{{ lead_quote }}</p>
+        {%- endif -%}
+
+        {%- if page.content != blank -%}
+          <div class="dc-page-prose {% if lead_quote != blank %}mt-10{% endif %} font-body text-[14px] leading-[1.95] text-secondary max-w-[68ch]">
+            {{ page.content }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if fact_blocks.size > 0 and section.settings.hide_facts == false -%}
+        <aside class="hidden lg:block sticky top-[120px] self-start border-t border-ink pt-5" data-reveal>
+          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ facts_heading }}</p>
+          <div class="mt-[18px] flex flex-col gap-4">
+            {%- for block in fact_blocks -%}
+              {%- if block.settings.number != blank or block.settings.label != blank -%}
+                <div {{ block.shopify_attributes }}>
+                  {%- if block.settings.number != blank -%}
+                    <p class="font-display text-[20px] text-ink m-0">{{ block.settings.number }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.label != blank -%}
+                    <p class="font-body text-[12px] leading-[1.7] text-secondary m-0">{{ block.settings.label }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </aside>
+      {%- endif -%}
+    </div>
+
+    {%- unless section.settings.hide_cta -%}
+      {%- if section.settings.cta_heading != blank -%}
+        <section class="pt-[110px]" data-reveal>
+          <div class="bg-elevated px-6 md:px-[60px] py-[70px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-10 md:gap-[60px] items-center">
+            <div>
+              <h2 class="font-display font-normal text-[32px] text-ink m-0">{{ section.settings.cta_heading }}</h2>
+              {%- if section.settings.cta_text != blank -%}
+                <p class="font-body text-[13px] leading-[1.9] text-secondary max-w-[46ch] mt-[14px] mb-0">{{ section.settings.cta_text }}</p>
+              {%- endif -%}
+            </div>
+            {%- if section.settings.cta_button_label != blank -%}
+              {% render 'dc-button',
+                text: section.settings.cta_button_label,
+                url: section.settings.cta_button_url,
+                variant: 'filled',
+                sweep: true,
+                class: 'h-[52px] px-[34px] whitespace-nowrap shrink-0'
+              %}
+            {%- endif -%}
+          </div>
+        </section>
+      {%- endif -%}
+    {%- endunless -%}
+  </article>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "hide_hero", "label": "Hide hero", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The house" },
+    { "type": "text", "id": "heading", "label": "Heading", "info": "Defaults to page title when empty." },
+    { "type": "textarea", "id": "intro", "label": "Intro statement" },
+    { "type": "header", "content": "Image" },
+    { "type": "checkbox", "id": "hide_image", "label": "Hide image band", "default": false },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Full-bleed image",
+      "info": "Recommended 2100 × 900 px (21:9)."
+    },
+    { "type": "checkbox", "id": "show_image_placeholder", "label": "Show placeholder when no image", "default": true },
+    { "type": "text", "id": "image_placeholder", "label": "Image placeholder label", "default": "the atelier in grasse — full bleed" },
+    { "type": "header", "content": "Content" },
+    { "type": "textarea", "id": "lead_quote", "label": "Lead quote", "info": "Large Syne pull quote above page content." },
+    { "type": "checkbox", "id": "hide_nav", "label": "Hide section navigation", "default": false },
+    { "type": "checkbox", "id": "hide_facts", "label": "Hide facts sidebar", "default": false },
+    { "type": "text", "id": "facts_heading", "label": "\"In short\" heading", "default": "In short" },
+    { "type": "header", "content": "Closing banner" },
+    { "type": "checkbox", "id": "hide_cta", "label": "Hide closing banner", "default": false },
+    { "type": "text", "id": "cta_heading", "label": "Heading" },
+    { "type": "textarea", "id": "cta_text", "label": "Text" },
+    { "type": "text", "id": "cta_button_label", "label": "Button label" },
+    { "type": "url", "id": "cta_button_url", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "nav_anchor",
+      "name": "Section nav link",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "The idea" },
+        { "type": "text", "id": "anchor", "label": "Anchor id", "info": "Matches an id in the page content (e.g. materials)." }
+      ]
+    },
+    {
+      "type": "stat_fact",
+      "name": "Stat fact",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "2011" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Founded, rue Chapon" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page",
+      "blocks": [
+        { "type": "nav_anchor", "settings": { "label": "The idea", "anchor": "the-idea" } },
+        { "type": "nav_anchor", "settings": { "label": "The materials", "anchor": "the-materials" } },
+        { "type": "nav_anchor", "settings": { "label": "The atelier", "anchor": "the-atelier" } },
+        { "type": "nav_anchor", "settings": { "label": "The people", "anchor": "the-people" } },
+        { "type": "stat_fact", "settings": { "number": "2011", "label": "Founded, rue Chapon" } },
+        { "type": "stat_fact", "settings": { "number": "19", "label": "Ingredients, average" } },
+        { "type": "stat_fact", "settings": { "number": "11 s", "label": "Between fillings" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

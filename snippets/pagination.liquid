@@ -1,0 +1,28 @@
+{%- comment -%}
+  Paginated results nav. Used by collection/search dc sections.
+{%- endcomment -%}
+{%- if paginate.parts.size > 0 -%}
+  <nav class="{{ class | default: 'flex items-center justify-center gap-2 mt-10' }}" role="navigation" aria-label="{{ 'general.pagination.label' | t | default: 'Pagination' }}">
+    {%- if paginate.previous -%}
+      <a href="{{ paginate.previous.url }}{{ anchor }}" class="font-mono text-caption uppercase px-3 py-2 border border-border hover:border-ink transition-colors duration-fast ease-fast" aria-label="{{ 'general.pagination.previous' | t | default: 'Previous' }}">
+        ←
+      </a>
+    {%- endif -%}
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a href="{{ part.url }}{{ anchor }}" class="font-mono text-caption uppercase px-3 py-2 border border-border hover:border-ink transition-colors duration-fast ease-fast">{{ part.title }}</a>
+      {%- else -%}
+        {%- if part.title == paginate.current_page -%}
+          <span class="font-mono text-caption uppercase px-3 py-2 border border-ink bg-ink text-bg" aria-current="page">{{ part.title }}</span>
+        {%- else -%}
+          <span class="font-mono text-caption uppercase px-3 py-2 text-muted">{{ part.title }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if paginate.next -%}
+      <a href="{{ paginate.next.url }}{{ anchor }}" class="font-mono text-caption uppercase px-3 py-2 border border-border hover:border-ink transition-colors duration-fast ease-fast" aria-label="{{ 'general.pagination.next' | t | default: 'Next' }}">
+        →
+      </a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "cart-page": {
+      "type": "dc-cart-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "cart-page"
+  ]
+}

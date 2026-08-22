@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "dc-list-collections",
+      "settings": {
+        "title": "Explore Our Collections",
+        "show_count": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

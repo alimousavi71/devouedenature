@@ -1,0 +1,37 @@
+{
+  "name": "devouedenature-theme",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean:assets": "rm -f assets/theme.css assets/theme.js assets/*.woff2",
+    "copy:fonts": "node scripts/copy-fonts.mjs",
+    "build:css": "postcss ./src/styles/main.css -o ./assets/theme.css --env production",
+    "watch:css": "postcss ./src/styles/main.css -o ./assets/theme.css --watch",
+    "build:js": "vite build",
+    "watch:js": "vite build --watch",
+    "build": "npm run clean:assets && npm run copy:fonts && npm run build:css && npm run build:js",
+    "shopify": "shopify",
+    "theme:dev": "shopify theme dev",
+    "theme:push": "shopify theme push",
+    "theme:pull": "shopify theme pull",
+    "theme:check": "shopify theme check",
+    "theme:info": "shopify theme info"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/jost": "^5.3.0",
+    "@fontsource/syne": "^5.3.0",
+    "gsap": "^3.15.0",
+    "lenis": "^1.3.26"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^4.7.0",
+    "autoprefixer": "^10.5.4",
+    "cssnano": "^8.0.7",
+    "postcss": "^8.5.26",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^17.0.0",
+    "tailwindcss": "^3.4.13",
+    "vite": "^8.2.2"
+  }
+}

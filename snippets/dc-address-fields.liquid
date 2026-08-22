@@ -1,0 +1,56 @@
+{%- comment -%}
+  Shared address form fields — used by both the edit-existing and add-new
+  {% form 'customer_address' %} blocks in sections/dc-customer-addresses.liquid.
+  Params: form (the {% form 'customer_address' %} scope), id_suffix (string, unique
+  per form instance on the page — form.id is blank for a new-address form, so the
+  caller must pass an explicit suffix, e.g. address.id or 'new').
+  Usage: {% render 'dc-address-fields', form: form, id_suffix: address.id %}
+{%- endcomment -%}
+{%- liquid
+  assign field_class = 'flex flex-col gap-1'
+  assign input_class = 'border border-border bg-bg px-3 py-2 font-body text-body-sm focus:outline-none focus:border-ink transition-colors duration-fast ease-fast'
+  assign label_class = 'font-mono text-caption uppercase text-muted'
+  assign fid = id_suffix
+-%}
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_first_name_{{ fid }}">{{ 'customer.addresses.first_name' | t | default: 'First name' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_first_name_{{ fid }}" name="address[first_name]" value="{{ form.first_name }}">
+</div>
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_last_name_{{ fid }}">{{ 'customer.addresses.last_name' | t | default: 'Last name' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_last_name_{{ fid }}" name="address[last_name]" value="{{ form.last_name }}">
+</div>
+<div class="{{ field_class }} sm:col-span-2">
+  <label class="{{ label_class }}" for="address_company_{{ fid }}">{{ 'customer.addresses.company' | t | default: 'Company' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_company_{{ fid }}" name="address[company]" value="{{ form.company }}">
+</div>
+<div class="{{ field_class }} sm:col-span-2">
+  <label class="{{ label_class }}" for="address_address1_{{ fid }}">{{ 'customer.addresses.address1' | t | default: 'Address' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_address1_{{ fid }}" name="address[address1]" value="{{ form.address1 }}">
+</div>
+<div class="{{ field_class }} sm:col-span-2">
+  <label class="{{ label_class }}" for="address_address2_{{ fid }}">{{ 'customer.addresses.address2' | t | default: 'Apartment, suite, etc.' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_address2_{{ fid }}" name="address[address2]" value="{{ form.address2 }}">
+</div>
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_city_{{ fid }}">{{ 'customer.addresses.city' | t | default: 'City' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_city_{{ fid }}" name="address[city]" value="{{ form.city }}">
+</div>
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_zip_{{ fid }}">{{ 'customer.addresses.zip' | t | default: 'Postal/zip code' }}</label>
+  <input class="{{ input_class }}" type="text" id="address_zip_{{ fid }}" name="address[zip]" value="{{ form.zip }}">
+</div>
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_country_{{ fid }}">{{ 'customer.addresses.country' | t | default: 'Country/region' }}</label>
+  <select class="{{ input_class }}" id="address_country_{{ fid }}" name="address[country]" data-default="{{ form.country }}">
+    {{ country_option_tags }}
+  </select>
+</div>
+<div class="{{ field_class }}">
+  <label class="{{ label_class }}" for="address_province_{{ fid }}">{{ 'customer.addresses.province' | t | default: 'Province/state' }}</label>
+  <select class="{{ input_class }}" id="address_province_{{ fid }}" name="address[province]" data-default="{{ form.province }}"></select>
+</div>
+<div class="{{ field_class }} sm:col-span-2">
+  <label class="{{ label_class }}" for="address_phone_{{ fid }}">{{ 'customer.addresses.phone' | t | default: 'Phone' }}</label>
+  <input class="{{ input_class }}" type="tel" id="address_phone_{{ fid }}" name="address[phone]" value="{{ form.phone }}">
+</div>

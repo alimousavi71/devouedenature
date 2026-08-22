@@ -1,0 +1,133 @@
+{%- comment -%}
+  New header section — Devoué de Nature theme migration.
+  Built from scratch against redesign/Home.dc.html + redesign/Overlays.dc.html.
+  Real Shopify data: section.settings.menu (linklist), cart.item_count, routes.*, customer, shop.name/logo.
+{%- endcomment -%}
+
+<div
+  class="dc-header-shell fixed top-0 inset-x-0 z-[80]"
+  data-dc-header-shell
+>
+  {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
+    <div class="dc-header__announcement bg-ink text-bg text-center py-2 px-6 font-body text-caption uppercase">
+      {{ section.settings.announcement_text }}
+    </div>
+  {%- endif -%}
+
+  <header
+    class="dc-header border-b border-border transition-colors duration-normal ease-normal {% if section.settings.transparent_on_index and template.name == 'index' %}bg-transparent border-transparent{% else %}bg-bg/95 backdrop-blur-[10px]{% endif %}"
+    data-dc-header
+    {% if section.settings.transparent_on_index and template.name == 'index' %}data-dc-header-transparent{% endif %}
+  >
+  <div class="mx-auto max-w-page px-5 md:px-10 h-[64px] md:h-[78px] grid grid-cols-[auto_1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-4">
+
+    <button
+      type="button"
+      class="md:hidden inline-flex items-center justify-center w-10 h-10"
+      aria-label="{{ 'general.navigation' | t | default: 'Menu' }}"
+      aria-haspopup="dialog"
+      aria-controls="DcMobileNav"
+      data-dc-dialog-open="DcMobileNav"
+    >
+      {% render 'icon', name: 'hamburger' %}
+    </button>
+
+    <nav class="hidden md:flex gap-[30px]" aria-label="{{ 'general.navigation' | t | default: 'Primary' }}">
+      {%- for link in section.settings.menu.links -%}
+        <div class="relative" data-dc-nav-item>
+          {%- capture nav_link_attrs -%}
+            {%- if link.links.size > 0 -%}
+              aria-haspopup="true" aria-expanded="false" aria-controls="DcMegaMenu-{{ forloop.index }}" data-dc-mega-trigger
+            {%- endif -%}
+          {%- endcapture -%}
+          {% render 'dc-nav-link', url: link.url, label: link.title, attributes: nav_link_attrs %}
+          {%- if link.links.size > 0 -%}
+            {%- assign featured_block = section.blocks | where: 'type', 'featured_image' | first -%}
+            {% render 'dc-mega-menu',
+              link: link,
+              panel_id: 'DcMegaMenu-' | append: forloop.index,
+              featured_image: featured_block.settings.image,
+              featured_title: featured_block.settings.title,
+              featured_url: featured_block.settings.url
+            %}
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </nav>
+
+    <div class="justify-self-center min-w-0">
+      {% render 'dc-header-logo',
+        logo: section.settings.logo,
+        logo_alt: section.settings.logo_2,
+        logo_width: section.settings.logo_width
+      %}
+    </div>
+
+    <nav class="flex items-center justify-end gap-4 md:gap-[26px]">
+      {%- liquid
+        capture account_url
+          render 'dc-account-link-url'
+        endcapture
+        assign account_url = account_url | strip
+        assign search_label = 'general.search.title' | t | default: 'Search'
+        assign account_label = 'customer.account.title' | t | default: 'Account'
+        assign saved_label = 'general.saved' | t | default: 'Saved'
+      -%}
+      {% render 'dc-nav-link', url: routes.search_url, label: search_label, class: 'hidden md:inline-flex' %}
+      {% render 'dc-nav-link', url: account_url, label: account_label, class: 'hidden md:inline-flex' %}
+      {% render 'dc-nav-link', url: routes.account_url, label: saved_label, class: 'hidden md:inline-flex' %}
+      <a href="{{ routes.cart_url }}" data-dc-cart-open class="dc-nav-link inline-flex font-body text-nav uppercase text-ink">
+        <span class="dc-nav-link__roll">
+          <span class="dc-nav-link__text">Bag (<span data-dc-cart-count>{{ cart.item_count }}</span>)</span>
+          <span class="dc-nav-link__text dc-nav-link__text--ghost" aria-hidden="true">Bag (<span data-dc-cart-count>{{ cart.item_count }}</span>)</span>
+        </span>
+      </a>
+    </nav>
+  </div>
+  </header>
+</div>
+<div
+  class="dc-header-spacer{% if template.name == 'index' %} dc-header-spacer--overlay{% endif %}"
+  data-dc-header-spacer
+  data-dc-header-spacer-mode="{% if template.name == 'index' %}overlay{% else %}push{% endif %}"
+  aria-hidden="true"
+></div>
+
+{% render 'dc-mobile-nav',
+  menu: section.settings.menu,
+  logo: section.settings.logo,
+  logo_alt: section.settings.logo_2,
+  logo_width: section.settings.logo_width
+%}
+
+{% schema %}
+{
+  "name": "DC Header",
+  "settings": [
+    { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true },
+    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Complimentary engraving and samples with every order" },
+    { "type": "image_picker", "id": "logo", "label": "Logo" },
+    {
+      "type": "image_picker",
+      "id": "logo_2",
+      "label": "Logo (transparent header)",
+      "info": "Light/alternate mark shown on the homepage hero before scroll"
+    },
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 260, "step": 10, "default": 140 },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "transparent_on_index", "label": "Transparent on homepage", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "featured_image",
+      "name": "Mega menu featured image",
+      "limit": 1,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

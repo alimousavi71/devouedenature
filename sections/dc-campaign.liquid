@@ -1,0 +1,65 @@
+{%- comment -%}
+  Full-bleed campaign — redesign/Home.dc.html + original media-slideshow slide.
+  On photo: cream text + inverse CTA (readable on dark/gold imagery).
+  Without photo: ink text + outline CTA on gradient fallback.
+{%- endcomment -%}
+{%- assign has_image = false -%}
+{%- if section.settings.image != blank -%}
+  {%- assign has_image = true -%}
+{%- endif -%}
+
+<section data-reveal="1" class="relative min-h-[540px] h-[78vh] flex items-end overflow-hidden bg-gradient-to-br from-[#E3DCCE] to-[#DCD4C4]">
+  {%- if has_image -%}
+    <div class="absolute inset-0" data-parallax="24">
+      {{
+        section.settings.image
+        | image_url: width: 1800
+        | image_tag:
+          loading: 'lazy',
+          class: 'w-full h-full object-cover scale-105',
+          alt: section.settings.heading,
+          widths: '900, 1200, 1800',
+          sizes: '100vw'
+      }}
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink/60 via-ink/20 to-transparent pointer-events-none" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="relative z-[1] w-full max-w-page mx-auto px-5 md:px-10 pb-10 md:pb-[70px]">
+    {%- if section.settings.subheading != blank -%}
+      <p class="font-body text-nav uppercase tracking-[0.24em] mb-3 {% if has_image %}text-bg/80{% else %}text-secondary{% endif %}">
+        {{ section.settings.subheading }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="font-display font-normal text-[44px] leading-[1.12] max-w-[18ch] m-0 {% if has_image %}text-bg{% else %}text-ink{% endif %}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="mt-[30px]">
+        {%- if has_image -%}
+          {% render 'dc-button', text: section.settings.button_label, url: section.settings.button_url, variant: 'inverse', class: 'h-[54px] px-10 tracking-[0.24em]' %}
+        {%- else -%}
+          {% render 'dc-button', text: section.settings.button_label, url: section.settings.button_url, variant: 'outline', class: 'h-[54px] px-10 tracking-[0.24em]' %}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Campaign",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Campaign image" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Shop New Lineup" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "It's Gold, Redefined." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Campaign" }]
+}
+{% endschema %}

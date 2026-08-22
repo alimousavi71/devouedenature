@@ -1,0 +1,34 @@
+{%- comment -%}
+  Claims row — pixel match redesign/Home.dc.html lines 85–91.
+  Params:
+    blocks    - {Array} blocks with type "claim"
+    embedded  - {Boolean} true when inside lineup section (adds mt-[80px])
+{%- endcomment -%}
+{%- liquid
+  assign embedded = embedded | default: false
+  assign row_classes = 'grid grid-cols-2 md:grid-cols-5 gap-[20px] py-[46px]'
+  if embedded
+    assign row_classes = row_classes | prepend: 'mt-[80px] '
+  endif
+  assign default_marks = 'circle,diamond,square,circle,diamond' | split: ','
+-%}
+<div class="{{ row_classes }}">
+  {%- for block in blocks -%}
+    {%- if block.type == 'claim' -%}
+      {%- liquid
+        assign mark = block.settings.mark
+        if mark == blank
+          assign mark = default_marks[forloop.index0] | default: 'circle'
+        endif
+      -%}
+      <div class="text-center" {{ block.shopify_attributes }}>
+        {% render 'dc-claim-mark', mark: mark %}
+        {%- if block.settings.label != blank -%}
+          <div class="mt-[18px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary">
+            {{ block.settings.label }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

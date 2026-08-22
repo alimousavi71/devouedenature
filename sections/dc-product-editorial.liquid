@@ -1,0 +1,66 @@
+{%- comment -%}
+  Editorial two-column band — redesign/Product.dc.html
+  Theme editor: section settings. Product admin: custom.editorial_lead, custom.editorial_body
+{%- endcomment -%}
+
+{%- liquid
+  assign lead = section.settings.lead
+  if product.metafields.custom.editorial_lead != blank
+    assign lead = product.metafields.custom.editorial_lead.value | default: product.metafields.custom.editorial_lead
+  endif
+
+  assign use_metafield_body = false
+  if product.metafields.custom.editorial_body != blank
+    assign use_metafield_body = true
+  endif
+-%}
+
+{%- unless section.settings.hide_section -%}
+  {%- if lead != blank or section.settings.body != blank or use_metafield_body -%}
+    <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[100px] items-start" data-reveal-stagger>
+        {%- if lead != blank -%}
+          <p class="m-0 font-display font-normal text-[27px] leading-[1.5] text-pretty text-ink">{{ lead }}</p>
+        {%- endif -%}
+        {%- if use_metafield_body or section.settings.body != blank -%}
+          <div class="font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] text-pretty [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
+            {%- if use_metafield_body -%}
+              {{ product.metafields.custom.editorial_body | metafield_tag }}
+            {%- else -%}
+              {{ section.settings.body }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Product editorial",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "hide_section",
+      "label": "Hide section",
+      "default": false
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead quote",
+      "default": "The house was founded on a single idea: a fragrance should be finished, not decorated. Nuit Vermeille is the seventh composition to carry the name.",
+      "info": "Per-product override: metafield custom.editorial_lead"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body (two columns)",
+      "default": "<p>Rose is harvested at dawn over eleven days in May, then distilled the same afternoon so the material never sits. The absolute that results is heavier than most, with a jam-like sweetness we correct with bitter orange peel pressed in Calabria.</p><p>Benzoin from Laos carries the base. It takes eight weeks in glass before the composition settles into itself, and a further two before it is filled. Each bottle is numbered on the underside of the collar.</p>",
+      "info": "Per-product override: metafield custom.editorial_body (rich text)"
+    }
+  ],
+  "presets": [{ "name": "Product editorial" }]
+}
+{% endschema %}

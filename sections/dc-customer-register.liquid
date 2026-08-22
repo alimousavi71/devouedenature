@@ -1,0 +1,112 @@
+{%- comment -%}
+  New customer registration page (Devoué de Nature redesign). Net-new —
+  does not reuse sections/main-register.liquid. Real Shopify `create_customer`
+  form. Styled per redesign/AccountAuth.dc.html.
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-4 md:px-6 py-7 md:py-8">
+  <div class="max-w-md mx-auto">
+    <h1 class="font-display text-h2 mb-6">{{ 'customer.register.title' | t | default: 'Create account' }}</h1>
+
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <p class="font-body text-body-sm text-error mb-4" role="alert">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label for="dc-RegisterForm-FirstName" class="block font-mono text-label uppercase text-muted mb-2">
+            {{ 'customer.register.first_name' | t | default: 'First name' }}
+          </label>
+          <input
+            type="text"
+            name="customer[first_name]"
+            id="dc-RegisterForm-FirstName"
+            {% if form.first_name %}value="{{ form.first_name }}"{% endif %}
+            autocomplete="given-name"
+            required
+            class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+          >
+        </div>
+        <div>
+          <label for="dc-RegisterForm-LastName" class="block font-mono text-label uppercase text-muted mb-2">
+            {{ 'customer.register.last_name' | t | default: 'Last name' }}
+          </label>
+          <input
+            type="text"
+            name="customer[last_name]"
+            id="dc-RegisterForm-LastName"
+            {% if form.last_name %}value="{{ form.last_name }}"{% endif %}
+            autocomplete="family-name"
+            required
+            class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+          >
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="dc-RegisterForm-email" class="block font-mono text-label uppercase text-muted mb-2">
+          {{ 'customer.register.email' | t | default: 'Email' }}
+        </label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="dc-RegisterForm-email"
+          {% if form.email %}value="{{ form.email }}"{% endif %}
+          spellcheck="false"
+          autocapitalize="off"
+          autocomplete="email"
+          required
+          {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="dc-RegisterForm-email-error"{% endif %}
+          class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+        >
+        {%- if form.errors contains 'email' -%}
+          <p id="dc-RegisterForm-email-error" class="font-body text-body-sm text-error mt-1">
+            {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <div class="mb-4">
+        <label for="dc-RegisterForm-password" class="block font-mono text-label uppercase text-muted mb-2">
+          {{ 'customer.register.password' | t | default: 'Password' }}
+        </label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="dc-RegisterForm-password"
+          autocomplete="new-password"
+          required
+          {% if form.errors contains 'password' %}aria-invalid="true" aria-describedby="dc-RegisterForm-password-error"{% endif %}
+          class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+        >
+        {%- if form.errors contains 'password' -%}
+          <p id="dc-RegisterForm-password-error" class="font-body text-body-sm text-error mt-1">
+            {{ form.errors.translated_fields['password'] | capitalize }} {{ form.errors.messages['password'] }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <label class="flex items-start gap-2 mb-6 font-body text-body-sm text-secondary">
+        <input type="checkbox" name="customer[accepts_marketing]" class="border-border mt-0.5">
+        {{ 'customer.register.newsletter' | t | default: 'Sign up for our newsletter' }}
+      </label>
+
+      <div class="flex items-center gap-4">
+        {%- assign register_submit_label = 'customer.register.submit' | t -%}
+        {% render 'dc-button', text: register_submit_label, variant: 'filled', sweep: true, type: 'submit' %}
+        <a href="{{ routes.account_login_url }}" class="font-body text-body-sm text-secondary hover:text-ink transition-colors duration-fast ease-fast underline">
+          {{ 'customer.register.login_link' | t | default: 'Sign in instead' }}
+        </a>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer register",
+  "tag": "section",
+  "class": "dc-customer-register-section"
+}
+{% endschema %}

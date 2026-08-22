@@ -1,0 +1,87 @@
+{%- comment -%}
+  Perfumer quote band — redesign/Product.dc.html
+  Theme editor: all fields. Product admin: custom.perfumer_*
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow
+  if product.metafields.custom.perfumer_eyebrow != blank
+    assign eyebrow = product.metafields.custom.perfumer_eyebrow.value | default: product.metafields.custom.perfumer_eyebrow
+  endif
+
+  assign heading = section.settings.heading
+  if product.metafields.custom.perfumer_heading != blank
+    assign heading = product.metafields.custom.perfumer_heading.value | default: product.metafields.custom.perfumer_heading
+  endif
+
+  assign image = section.settings.image
+  if product.metafields.custom.perfumer_image != blank
+    assign image = product.metafields.custom.perfumer_image.value
+  endif
+
+  assign quote = section.settings.quote
+  if product.metafields.custom.perfumer_quote != blank
+    assign quote = product.metafields.custom.perfumer_quote.value | default: product.metafields.custom.perfumer_quote
+  endif
+
+  assign attribution = section.settings.attribution
+  if product.metafields.custom.perfumer_attribution != blank
+    assign attribution = product.metafields.custom.perfumer_attribution.value | default: product.metafields.custom.perfumer_attribution
+  endif
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+    <header class="text-center mb-[60px]" data-reveal-stagger>
+      {%- if eyebrow != blank -%}
+        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+      {%- endif -%}
+      {%- if heading != blank -%}
+        <h2 class="font-display font-normal text-h2 text-ink mt-5 mb-0">{{ heading }}</h2>
+      {%- endif -%}
+    </header>
+
+    <div class="relative w-full aspect-[21/9] overflow-hidden bg-gradient-to-br from-[#EFE7DA] to-[#DCD4C4]" data-reveal>
+      {%- if image != blank -%}
+        {{ image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: heading, widths: '900, 1400, 1800', sizes: '100vw' }}
+      {%- endif -%}
+    </div>
+
+    <div data-reveal-stagger>
+    {%- if quote != blank -%}
+      <blockquote class="mt-[54px] mx-auto max-w-[62ch] text-center font-display font-normal text-[26px] leading-[1.6] text-pretty text-ink m-0">
+        “{{ quote | strip | remove: '"' }}”
+      </blockquote>
+    {%- endif -%}
+
+    {%- if attribution != blank -%}
+      <p class="text-center mt-[26px] font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ attribution }}</p>
+    {%- endif -%}
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Product perfumer",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "In her words" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A word from the perfumer" },
+    { "type": "image_picker", "id": "image", "label": "Portrait image (21:9)", "info": "Recommended: 2100 × 900 px (21:9). Full-width band. Per-product override: metafield custom.perfumer_image" },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "I wanted the rose to arrive late. For the first ten minutes you smell only citrus and skin, and then it opens."
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "Hélène Marchand — Master perfumer"
+    }
+  ],
+  "presets": [{ "name": "Product perfumer" }]
+}
+{% endschema %}

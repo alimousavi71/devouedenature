@@ -1,0 +1,290 @@
+{%- comment -%}
+  Search results page — redesign/Search.dc.html.
+  States: initial (no query), results, no results. Loading skeleton via search.js.
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow | default: 'Search'
+  assign heading = section.settings.heading | default: 'Search the maison'
+  assign intro = section.settings.intro | default: 'One template, three states: results, no result, and the loading pass. Suggestions appear from the second character.'
+  assign query_label = section.settings.query_label | default: 'Query'
+  assign clear_label = section.settings.clear_label | default: 'Clear'
+  assign products_label = section.settings.products_label | default: 'Products'
+  assign journal_label = section.settings.journal_label | default: 'Journal'
+  assign pages_label = section.settings.pages_label | default: 'Pages'
+  assign suggestions_heading = section.settings.suggestions_heading | default: 'Most searched'
+  assign no_results_heading = section.settings.no_results_heading | default: 'Nothing matches'
+  assign no_results_body = section.settings.no_results_body | default: 'Check the spelling, or write to us and we will find it. Our compositions are listed under their French names.'
+  assign browse_label = section.settings.browse_label | default: 'Browse all'
+  assign ask_label = section.settings.ask_label | default: 'Ask us'
+  assign browse_url = section.settings.browse_url | default: routes.all_products_collection_url
+  assign ask_url = section.settings.ask_url | default: routes.root_url
+  assign suggestion_blocks = section.blocks | where: 'type', 'suggestion'
+
+  assign search_products = search.results | where: 'object_type', 'product'
+  assign search_articles = search.results | where: 'object_type', 'article'
+  assign search_pages = search.results | where: 'object_type', 'page'
+  assign products_count = search_products | size
+  assign articles_count = search_articles | size
+  assign pages_count = search_pages | size
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <div class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]" data-dc-search-page>
+    <header class="pt-[70px] grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[100px] md:items-end" data-reveal>
+      <div>
+        {%- if eyebrow != blank -%}
+          <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+        {%- endif -%}
+        <h1 class="font-display font-normal text-[54px] leading-[1.08] text-ink mt-[18px] mb-0">{{ heading }}</h1>
+      </div>
+      {%- if intro != blank -%}
+        <p class="font-body text-[13px] leading-[1.95] text-secondary max-w-[52ch] m-0 text-pretty">{{ intro }}</p>
+      {%- endif -%}
+    </header>
+
+    <section class="pt-[70px]" data-reveal>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center gap-5 border-b border-ink pb-4" data-dc-search-form>
+        <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted shrink-0">{{ query_label }}</span>
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t | default: 'Search' }}"
+          autocomplete="off"
+          class="flex-1 min-w-0 bg-transparent border-0 font-display text-[32px] leading-none text-ink focus:outline-none placeholder:text-muted/60"
+          data-dc-search-input
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+        {%- if search.terms != blank -%}
+          <a href="{{ routes.search_url }}" class="font-body text-[10px] tracking-[0.2em] uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast shrink-0">
+            {{ clear_label }}
+          </a>
+        {%- endif -%}
+      </form>
+
+      <div data-dc-search-loading class="dc-search-loading hidden mt-10" aria-hidden="true">
+        <div class="inline-flex items-center gap-2 px-[14px] py-[7px] border border-border font-mono text-[9px] tracking-[0.16em] uppercase text-secondary">
+          <span class="w-1 h-1 rounded-full bg-gold" aria-hidden="true"></span>
+          State — loading
+        </div>
+        <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-10">
+          {%- for i in (1..4) -%}
+            <div class="dc-search-skeleton" aria-hidden="true">
+              <div class="aspect-[3/4] bg-[#EFE7DA]"></div>
+              <div class="mt-[18px] h-[9px] w-[40%] bg-[#EFE7DA]"></div>
+              <div class="mt-3 h-[14px] w-[70%] bg-[#EFE7DA]"></div>
+              <div class="mt-2.5 h-[9px] w-[26%] bg-[#EFE7DA]"></div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <div data-dc-search-content>
+        {%- if search.performed -%}
+          {%- if search.results_count == 0 -%}
+            <div class="mt-[110px] bg-elevated px-5 md:px-10 py-[64px] md:py-[100px]" data-reveal>
+              <div class="inline-flex items-center gap-2 px-[14px] py-[7px] border border-border font-mono text-[9px] tracking-[0.16em] uppercase text-secondary mb-10">
+                <span class="w-1 h-1 rounded-full bg-gold" aria-hidden="true"></span>
+                State — no results
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[100px] items-start">
+                <div>
+                  <h2 class="font-display font-normal text-[38px] leading-[1.15] text-ink m-0">
+                    {{ no_results_heading }} &ldquo;{{ search.terms }}&rdquo;
+                  </h2>
+                  <p class="font-body text-[13px] leading-[1.9] text-secondary max-w-[46ch] mt-5 mb-0">{{ no_results_body }}</p>
+                  <div class="mt-[34px] flex flex-wrap gap-3">
+                    {% render 'dc-button', text: browse_label, variant: 'filled', sweep: true, url: browse_url, class: 'h-[52px] px-[34px]' %}
+                    {% render 'dc-button', text: ask_label, variant: 'outline', url: ask_url, class: 'h-[52px] px-[34px]' %}
+                  </div>
+                </div>
+                {%- if suggestion_blocks.size > 0 -%}
+                  <div>
+                    <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ suggestions_heading }}</p>
+                    <div class="mt-[18px] flex flex-wrap gap-[10px]">
+                      {%- for block in suggestion_blocks -%}
+                        {%- assign term = block.settings.query | default: block.settings.label -%}
+                        {%- if term != blank -%}
+                          <a
+                            href="{{ routes.search_url }}?q={{ term | url_param_escape }}&options%5Bprefix%5D=last"
+                            class="h-[38px] px-[18px] inline-flex items-center border border-[#C4B69F] font-body text-[10px] tracking-[0.16em] uppercase text-secondary hover:border-ink hover:text-ink transition-colors duration-fast ease-fast"
+                            {{ block.shopify_attributes }}
+                          >
+                            {{ block.settings.label | default: term }}
+                          </a>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- else -%}
+            <div class="mt-[26px] flex flex-wrap justify-between items-center gap-5" data-reveal>
+              <div class="flex flex-wrap gap-2">
+                {%- if products_count > 0 -%}
+                  <span class="h-[34px] px-[18px] inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg">
+                    {{ products_label }} {{ products_count }}
+                  </span>
+                {%- else -%}
+                  <span class="h-[34px] px-[18px] inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary opacity-50">
+                    {{ products_label }} 0
+                  </span>
+                {%- endif -%}
+                {%- if articles_count > 0 -%}
+                  <span class="h-[34px] px-[18px] inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary">
+                    {{ journal_label }} {{ articles_count }}
+                  </span>
+                {%- endif -%}
+                {%- if pages_count > 0 -%}
+                  <span class="h-[34px] px-[18px] inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary">
+                    {{ pages_label }} {{ pages_count }}
+                  </span>
+                {%- endif -%}
+              </div>
+              <p class="font-body text-[10px] tracking-[0.18em] uppercase text-muted m-0">
+                {{ search.results_count }} results for &ldquo;{{ search.terms }}&rdquo;
+              </p>
+            </div>
+
+            {%- paginate search.results by section.settings.results_per_page -%}
+              {%- if products_count > 0 -%}
+                <ul class="mt-[50px] grid grid-cols-2 md:grid-cols-4 gap-10 list-none m-0 p-0" role="list" data-reveal-stagger>
+                  {%- for item in search_products -%}
+                    <li>
+                      {% render 'dc-product-card', card_product: item, show_save: false %}
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+              {%- if articles_count > 0 or pages_count > 0 -%}
+                <div class="mt-[70px] pt-10 border-t border-border grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10" data-reveal>
+                  {%- for item in search_articles -%}
+                    <a href="{{ item.url }}" class="group block hover:opacity-[0.97] transition-opacity duration-fast ease-fast">
+                      <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ journal_label }}</p>
+                      <p class="font-display text-[20px] leading-[1.3] text-ink mt-3 mb-0 group-hover:text-secondary transition-colors duration-fast ease-fast">{{ item.title }}</p>
+                    </a>
+                  {%- endfor -%}
+                  {%- for item in search_pages -%}
+                    <a href="{{ item.url }}" class="group block hover:opacity-[0.97] transition-opacity duration-fast ease-fast">
+                      <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ pages_label }}</p>
+                      <p class="font-display text-[20px] leading-[1.3] text-ink mt-3 mb-0 group-hover:text-secondary transition-colors duration-fast ease-fast">{{ item.title }}</p>
+                    </a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+
+              {%- if paginate.pages > 1 -%}
+                <nav class="mt-[70px] flex items-center justify-center gap-2" aria-label="{{ 'general.pagination.label' | t | default: 'Pagination' }}">
+                  {%- if paginate.previous -%}
+                    <a href="{{ paginate.previous.url }}" class="font-body text-[11px] tracking-[0.24em] uppercase px-3 py-2 hover:opacity-55 transition-opacity duration-fast ease-fast">{{ 'general.pagination.previous' | t | default: 'Previous' }}</a>
+                  {%- endif -%}
+                  {%- for part in paginate.parts -%}
+                    {%- if part.is_link -%}
+                      <a href="{{ part.url }}" class="font-mono text-[10px] px-3 py-2 border border-border hover:border-ink transition-colors duration-fast ease-fast">{{ part.title }}</a>
+                    {%- else -%}
+                      <span class="font-mono text-[10px] px-3 py-2 border border-ink bg-ink text-bg">{{ part.title }}</span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if paginate.next -%}
+                    <a href="{{ paginate.next.url }}" class="font-body text-[11px] tracking-[0.24em] uppercase px-3 py-2 hover:opacity-55 transition-opacity duration-fast ease-fast">{{ 'general.pagination.next' | t | default: 'Next' }}</a>
+                  {%- endif -%}
+                </nav>
+              {%- endif -%}
+            {%- endpaginate -%}
+          {%- endif -%}
+
+        {%- else -%}
+          <div class="mt-10" data-reveal>
+            {%- if suggestion_blocks.size > 0 -%}
+              <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ suggestions_heading }}</p>
+              <div class="mt-[18px] flex flex-wrap gap-[10px]">
+                {%- for block in suggestion_blocks -%}
+                  {%- assign term = block.settings.query | default: block.settings.label -%}
+                  {%- if term != blank -%}
+                    <a
+                      href="{{ routes.search_url }}?q={{ term | url_param_escape }}&options%5Bprefix%5D=last"
+                      class="h-[38px] px-[18px] inline-flex items-center border border-[#C4B69F] font-body text-[10px] tracking-[0.16em] uppercase text-secondary hover:border-ink hover:text-ink transition-colors duration-fast ease-fast"
+                      {{ block.shopify_attributes }}
+                    >
+                      {{ block.settings.label | default: term }}
+                    </a>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <p class="font-body text-[13px] leading-[1.9] text-secondary max-w-[46ch] m-0">
+                {{ section.settings.empty_prompt | default: 'Enter a composition, note, or topic above.' }}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </section>
+  </div>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Search results",
+  "tag": "section",
+  "class": "section-dc-search",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Search" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Search the maison" },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "One template, three states: results, no result, and the loading pass. Suggestions appear from the second character."
+    },
+    { "type": "text", "id": "query_label", "label": "Query label", "default": "Query" },
+    { "type": "text", "id": "clear_label", "label": "Clear label", "default": "Clear" },
+    { "type": "range", "id": "results_per_page", "label": "Results per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "header", "content": "Result type labels" },
+    { "type": "text", "id": "products_label", "label": "Products label", "default": "Products" },
+    { "type": "text", "id": "journal_label", "label": "Journal label", "default": "Journal" },
+    { "type": "text", "id": "pages_label", "label": "Pages label", "default": "Pages" },
+    { "type": "header", "content": "Empty / no results" },
+    { "type": "text", "id": "empty_prompt", "label": "Initial empty prompt", "default": "Enter a composition, note, or topic above." },
+    { "type": "text", "id": "suggestions_heading", "label": "Suggestions heading", "default": "Most searched" },
+    { "type": "text", "id": "no_results_heading", "label": "No results heading", "default": "Nothing matches" },
+    {
+      "type": "textarea",
+      "id": "no_results_body",
+      "label": "No results body",
+      "default": "Check the spelling, or write to us and we will find it. Our compositions are listed under their French names."
+    },
+    { "type": "text", "id": "browse_label", "label": "Browse button", "default": "Browse all" },
+    { "type": "url", "id": "browse_url", "label": "Browse link" },
+    { "type": "text", "id": "ask_label", "label": "Ask button", "default": "Ask us" },
+    { "type": "url", "id": "ask_url", "label": "Ask link" }
+  ],
+  "blocks": [
+    {
+      "type": "suggestion",
+      "name": "Search suggestion",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Nuit Vermeille" },
+        { "type": "text", "id": "query", "label": "Search query", "info": "Defaults to label when empty." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search results",
+      "blocks": [
+        { "type": "suggestion", "settings": { "label": "Nuit Vermeille" } },
+        { "type": "suggestion", "settings": { "label": "Refill" } },
+        { "type": "suggestion", "settings": { "label": "Coffret" } },
+        { "type": "suggestion", "settings": { "label": "Engraving" } },
+        { "type": "suggestion", "settings": { "label": "Iris" } },
+        { "type": "suggestion", "settings": { "label": "Vetiver" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

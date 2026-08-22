@@ -1,0 +1,106 @@
+{%- comment -%}
+  Contact FAQ — redesign/Contact.dc.html centered accordion list.
+  Reuses snippets/dc-accordion.liquid with contact-specific styling.
+{%- endcomment -%}
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow | default: 'Before you write'
+  assign heading = section.settings.heading | default: 'Common questions'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-[1000px] mx-auto px-5 md:px-10 py-[64px] md:py-[90px] xl:py-[130px]" data-reveal>
+    <header class="text-center">
+      {%- if eyebrow != blank -%}
+        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+      {%- endif -%}
+      {%- if heading != blank -%}
+        <h2 class="font-display font-normal text-[38px] leading-none text-ink mt-5 mb-0">{{ heading }}</h2>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="mt-[60px] border-t border-border">
+        {%- for block in section.blocks -%}
+          {%- assign question = block.settings.question -%}
+          {%- assign answer = block.settings.answer -%}
+          {%- if question != blank -%}
+            {% render 'dc-accordion',
+              heading: question,
+              body: answer,
+              class: 'dc-accordion--contact border-border'
+            %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Contact FAQ",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Before you write" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Common questions" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Can I have a bottle engraved" },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Yes, on the brass collar, up to eighteen characters in our own italic. Engraving is complimentary and adds two working days. Engraved bottles are not returnable.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact FAQ",
+      "blocks": [
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I have a bottle engraved",
+            "answer": "<p>Yes, on the brass collar, up to eighteen characters in our own italic. Engraving is complimentary and adds two working days. Engraved bottles are not returnable.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How does the refill work",
+            "answer": "<p>Bring the bottle to any boutique, or order a refill flask online. The refill is charged at sixty percent of the bottle price. We do not accept bottles with a damaged collar.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship outside Europe",
+            "answer": "<p>To thirty-two countries. Fragrance travels by ground and sea in some regions, so allow up to twelve working days outside the EU.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I order samples",
+            "answer": "<p>A set of five two-millilitre vials is available for twelve euros, credited against your first full bottle.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are the compositions ever discontinued",
+            "answer": "<p>Archive compositions are made in one annual batch and are listed as Archive on the collection page. When a batch is finished it is not repeated that year.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

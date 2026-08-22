@@ -1,0 +1,27 @@
+{%- comment -%}
+  Format / variant selector — redesign/Product.dc.html
+  Selected: 1px ink border, no fill. Wired by product-form.js.
+  Accepts: product
+{%- endcomment -%}
+
+{%- unless product.has_only_default_variant -%}
+  {%- for option in product.options_with_values -%}
+    <div class="{% if forloop.first %}mt-5{% endif %}" data-dc-option-index="{{ forloop.index0 }}">
+      <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[14px]">{{ option.name }}</p>
+      <div class="flex flex-wrap gap-[10px]">
+        {%- for value in option.values -%}
+          <button
+            type="button"
+            data-dc-option-value
+            data-option-index="{{ forloop.parentloop.index0 }}"
+            data-value="{{ value | escape }}"
+            class="h-12 px-[22px] bg-transparent cursor-pointer font-body text-[11px] tracking-[0.14em] border border-border text-secondary transition-[border-color,color] duration-normal ease-normal hover:border-ink disabled:text-[#C4B69F] disabled:border-divider disabled:line-through disabled:cursor-not-allowed data-[selected=true]:border-ink data-[selected=true]:text-ink"
+            {% if value == option.selected_value %}data-selected="true"{% endif %}
+          >
+            {{ value }}
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endfor -%}
+{%- endunless -%}

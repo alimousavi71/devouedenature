@@ -1,0 +1,121 @@
+{%- comment -%}
+  New account overview page — from scratch, does not reuse sections/main-account.liquid.
+  Real Shopify data only: customer.orders_count, customer.orders.first (last order),
+  customer.default_address. "Refills due"/"Collar number" style stats from the redesign
+  have no Shopify-native source and are intentionally NOT rendered here (see report).
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-5 md:px-6 py-7 grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-6 md:gap-[90px]">
+  {% render 'dc-account-nav', current: 'overview' %}
+
+  <div class="flex flex-col gap-6">
+    <h1 class="font-display text-page-title">{{ 'customer.account.title' | t | default: 'Account' }}</h1>
+
+    {%- comment -%} Stat tiles: only real data — orders count. {%- endcomment -%}
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-elevated p-4 flex flex-col gap-1">
+        <span class="font-display text-h2">{{ customer.orders_count }}</span>
+        <span class="font-mono text-caption uppercase text-muted">{{ 'customer.account.orders' | t | default: 'Orders' }}</span>
+      </div>
+      <div class="bg-ink p-4 flex flex-col gap-1">
+        <span class="font-display text-h2 text-gold">{{ customer.addresses_count }}</span>
+        <span class="font-mono text-caption uppercase text-gold/70">{{ 'customer.addresses.title' | t | default: 'Addresses' }}</span>
+      </div>
+      <div class="bg-elevated p-4 flex flex-col gap-1">
+        <span class="font-display text-h2">{% if customer.accepts_marketing %}{{ 'general.forms.yes' | t | default: 'Yes' }}{% else %}{{ 'general.forms.no' | t | default: 'No' }}{% endif %}</span>
+        <span class="font-mono text-caption uppercase text-muted">{{ 'customer.account.newsletter' | t | default: 'Newsletter' }}</span>
+      </div>
+    </div>
+
+    {%- comment -%} Last order summary {%- endcomment -%}
+    <div>
+      <div class="flex items-center justify-between border-b border-ink pb-3 mb-3">
+        <h2 class="font-display text-h3">{{ 'customer.orders.title' | t | default: 'Order history' }}</h2>
+        {%- if customer.orders.size > 1 -%}
+          <a href="{{ routes.account_url }}" class="font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast">{{ 'customer.account.details' | t | default: 'All orders' }}</a>
+        {%- endif -%}
+      </div>
+      {%- if customer.orders.size > 0 -%}
+        {%- assign last_order = customer.orders.first -%}
+        <a href="{{ last_order.customer_url }}" class="flex items-center justify-between gap-4 border border-border px-4 py-4 hover:border-ink transition-colors duration-fast ease-fast">
+          <div class="flex flex-col gap-1">
+            <span class="font-body text-body text-ink">{{ last_order.name }}</span>
+            <span class="font-mono text-caption text-muted">{{ last_order.created_at | time_tag: format: 'date' }}</span>
+          </div>
+          {% render 'dc-badge', text: last_order.fulfillment_status_label, style: 'outline' %}
+          <span class="font-body text-price">{{ last_order.total_price | money_with_currency }}</span>
+        </a>
+
+        {%- if customer.orders.size > 1 -%}
+          <div class="mt-3 flex flex-col divide-y divide-divider border-t border-divider">
+            {%- for order in customer.orders offset: 1 -%}
+              <a href="{{ order.customer_url }}" class="flex items-center justify-between gap-4 py-3 hover:opacity-70 transition-opacity duration-fast ease-fast">
+                <span class="font-body text-body-sm text-secondary">{{ order.name }}</span>
+                <span class="font-mono text-caption text-muted">{{ order.created_at | time_tag: format: 'date' }}</span>
+                {% render 'dc-badge', text: order.fulfillment_status_label, style: 'outline' %}
+                <span class="font-body text-body-sm">{{ order.total_price | money_with_currency }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="border border-border px-4 py-8 flex flex-col items-center gap-3 text-center">
+          <p class="font-body text-body text-secondary">
+            {{ section.settings.text_orders | default: "You haven't placed any orders yet." }}
+          </p>
+          {%- assign shop_btn_label = 'customer.account.account_button_shop' | t -%}
+          {% render 'dc-button', text: shop_btn_label, variant: 'outline', url: routes.collections_url %}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Profile fields — read-only display, Shopify has no storefront profile-edit form beyond addresses/password. {%- endcomment -%}
+    <div>
+      <h2 class="font-display text-h3 border-b border-ink pb-3 mb-3">{{ 'customer.account.details' | t | default: 'Profile' }}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-border p-4">
+        <div class="flex flex-col gap-1">
+          <span class="font-mono text-caption uppercase text-muted">{{ 'customer.addresses.first_name' | t | default: 'Name' }}</span>
+          <span class="font-body text-body">{{ customer.name | default: customer.email }}</span>
+        </div>
+        <div class="flex flex-col gap-1">
+          <span class="font-mono text-caption uppercase text-muted">{{ 'customer.account.email' | t | default: 'Email' }}</span>
+          <span class="font-body text-body">{{ customer.email }}</span>
+        </div>
+        {%- if customer.default_address.phone != blank -%}
+          <div class="flex flex-col gap-1">
+            <span class="font-mono text-caption uppercase text-muted">{{ 'customer.addresses.phone' | t | default: 'Phone' }}</span>
+            <span class="font-body text-body">{{ customer.default_address.phone }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Default address {%- endcomment -%}
+    {%- if customer.default_address != blank -%}
+      <div>
+        <h2 class="font-display text-h3 border-b border-ink pb-3 mb-3">{{ 'customer.addresses.default' | t | default: 'Default address' }}</h2>
+        <div class="border border-border p-4 flex items-center justify-between gap-4">
+          <address class="not-italic font-body text-body-sm text-secondary">
+            {{ customer.default_address | format_address }}
+          </address>
+          {%- assign manage_addresses_label = 'customer.addresses.manage' | t -%}
+          {% render 'dc-button', text: manage_addresses_label, variant: 'outline', url: routes.account_addresses_url %}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer account",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text_orders",
+      "label": "Empty orders message",
+      "default": "You haven't placed any orders yet."
+    }
+  ]
+}
+{% endschema %}

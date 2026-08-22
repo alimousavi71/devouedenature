@@ -1,0 +1,117 @@
+{%- comment -%}
+  New /cart page (Devoué de Nature redesign). Net-new — does not reuse
+  sections/main-cart-items.liquid. Styled per redesign/Cart.dc.html.
+  Progressive enhancement: <form method="post" action="{{ routes.cart_url }}">
+  works with JS disabled (full reload updates quantities); src/js/shopify/cart-page.js
+  enhances quantity/remove/note/discount without a reload when JS is available.
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-5 md:px-6 xl:px-10 py-6 md:py-10">
+  <nav aria-label="Breadcrumb" class="mb-6">
+    <ol class="flex items-center gap-2 font-mono text-caption uppercase text-muted">
+      <li><a href="{{ routes.root_url }}" class="hover:text-ink transition-colors duration-fast ease-fast">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a></li>
+      <li aria-hidden="true">/</li>
+      <li class="text-ink">{{ 'sections.cart.title' | t | default: 'Basket' }}</li>
+    </ol>
+  </nav>
+
+  <div class="flex items-baseline justify-between gap-4 mb-8 md:mb-10">
+    <div>
+      <p class="font-mono text-caption uppercase text-muted mb-2">{{ 'sections.cart.step' | t | default: 'Step one of three' }}</p>
+      <h1 class="font-display text-h2 text-ink">{{ 'sections.cart.title' | t | default: 'Your basket' }}</h1>
+    </div>
+    <a href="{{ routes.all_products_collection_url }}" class="hidden md:inline font-body text-nav uppercase hover:opacity-55 transition-opacity duration-fast ease-fast">
+      {{ 'general.continue_shopping' | t | default: 'Continue shopping' }}
+    </a>
+  </div>
+
+  {%- if cart.item_count == 0 -%}
+    <div class="flex flex-col items-center justify-center gap-4 py-24 text-center border-t border-divider">
+      <p class="font-body text-body text-secondary">{{ 'sections.cart.empty' | t | default: 'Your basket is empty.' }}</p>
+      {% render 'dc-button', text: 'general.continue_shopping' | t | default: 'Continue shopping', variant: 'filled', url: routes.all_products_collection_url %}
+    </div>
+  {%- else -%}
+    <form
+      id="dc-cart-form"
+      action="{{ routes.cart_url }}"
+      method="post"
+      class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_360px] xl:grid-cols-[minmax(0,1fr)_420px] gap-8 md:gap-10 items-start"
+    >
+      <div class="min-w-0">
+        <ul data-dc-cart-page-items class="divide-y divide-divider border-t border-divider">
+          {%- for item in cart.items -%}
+            {% render 'dc-cart-page-line-item', item: item %}
+          {%- endfor -%}
+        </ul>
+
+        <div class="mt-8">
+          <label for="dc-cart-note" class="font-mono text-caption uppercase text-muted block mb-2">
+            {{ 'sections.cart.note' | t | default: 'A note with your order' }}
+          </label>
+          <textarea
+            id="dc-cart-note"
+            name="note"
+            rows="3"
+            data-dc-cart-note
+            class="w-full border border-border bg-bg px-4 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+            placeholder="{{ 'sections.cart.note' | t | default: 'A note with your order' }}"
+          >{{ cart.note }}</textarea>
+        </div>
+      </div>
+
+      <aside class="md:sticky md:top-[120px] border border-border p-5 md:p-6 flex flex-col gap-5">
+        <div class="flex flex-col gap-3">
+          <div class="flex items-center justify-between font-body text-body">
+            <span class="text-secondary">{{ 'sections.cart.subtotal' | t | default: 'Subtotal' }}</span>
+            <span data-dc-cart-subtotal class="text-ink">{{ cart.original_total_price | money }}</span>
+          </div>
+          {%- if cart.total_discount > 0 -%}
+            <div class="flex items-center justify-between font-body text-body">
+              <span class="text-secondary">{{ 'sections.cart.discount' | t | default: 'Discount' }}</span>
+              <span data-dc-cart-discount class="text-ink">&minus;{{ cart.total_discount | money }}</span>
+            </div>
+          {%- endif -%}
+          <div class="flex items-center justify-between font-body text-body">
+            <span class="text-secondary">{{ 'sections.cart.shipping' | t | default: 'Delivery' }}</span>
+            <span class="text-muted">{{ 'sections.cart.shipping_at_checkout' | t | default: 'Calculated at checkout' }}</span>
+          </div>
+        </div>
+
+        <div class="border-t border-divider pt-4 flex items-center justify-between">
+          <span class="font-display text-h4 text-ink">{{ 'sections.cart.total' | t | default: 'Total' }}</span>
+          <span data-dc-cart-total class="font-body text-price text-ink">{{ cart.total_price | money }}</span>
+        </div>
+
+        {%- if cart.taxes_included -%}
+          <p class="font-mono text-caption text-muted -mt-2">{{ 'sections.cart.taxes_included' | t | default: 'Taxes included' }}</p>
+        {%- endif -%}
+
+        <div class="flex gap-2">
+          <label for="dc-cart-discount-code" class="visually-hidden">{{ 'sections.cart.discount_code' | t | default: 'Gift or promotional code' }}</label>
+          <input
+            type="text"
+            id="dc-cart-discount-code"
+            data-dc-discount-code
+            class="flex-1 min-w-0 border border-border bg-bg px-4 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+            placeholder="{{ 'sections.cart.discount_code' | t | default: 'Gift or promotional code' }}"
+          >
+          {% render 'dc-button', text: 'sections.cart.apply' | t | default: 'Apply', variant: 'outline', attributes: 'data-dc-discount-apply' %}
+        </div>
+
+        {% render 'dc-button', text: 'sections.cart.proceed_checkout' | t | default: 'Continue to delivery', variant: 'filled', sweep: true, type: 'submit', class: 'w-full', attributes: 'name="checkout"' %}
+
+        <a href="{{ routes.cart_url }}" class="text-center font-mono text-caption uppercase text-muted hover:text-ink transition-colors duration-fast ease-fast">
+          {{ 'sections.cart.view_full_cart' | t | default: 'View full basket' }}
+        </a>
+      </aside>
+    </form>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "DC Cart page",
+  "class": "section-dc-cart-page",
+  "settings": []
+}
+{% endschema %}

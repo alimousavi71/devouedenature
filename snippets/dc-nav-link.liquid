@@ -1,0 +1,18 @@
+{%- comment -%}
+  Header navigation link — roll hover per redesign/Overlays.dc.html.
+  Params:
+    url        - {String} required
+    label      - {String} required (HTML allowed, e.g. cart count span)
+    class      - {String} optional extra classes on <a>
+    attributes - {String} optional raw attributes (data-*, aria-*)
+{%- endcomment -%}
+<a
+  href="{{ url }}"
+  class="dc-nav-link font-body text-nav uppercase text-ink{% if class != blank %} {{ class }}{% endif %}"
+  {{ attributes }}
+>
+  <span class="dc-nav-link__roll">
+    <span class="dc-nav-link__text">{{ label }}</span>
+    <span class="dc-nav-link__text dc-nav-link__text--ghost" aria-hidden="true">{{ label }}</span>
+  </span>
+</a>

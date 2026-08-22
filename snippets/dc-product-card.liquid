@@ -1,0 +1,107 @@
+{%- comment -%}
+  Collection product card — matches redesign/Collection.dc.html product list.
+  Params:
+    card_product  - {Object} required
+    show_family   - {Boolean} optional, family/type label (default true)
+    show_note     - {Boolean} optional, scent note under meta (default true)
+    show_save     - {Boolean} optional, Save control on media (default true)
+  Usage: {% render 'dc-product-card', card_product: product %}
+{%- endcomment -%}
+{%- liquid
+  assign show_family = show_family | default: true
+  assign show_note = show_note | default: true
+  assign show_save = show_save | default: true
+
+  assign badge_text = ''
+  if card_product.metafields.custom.badges != blank
+    if card_product.metafields.custom.badges.list?
+      assign badge_text = card_product.metafields.custom.badges.value.first
+    else
+      assign badge_text = card_product.metafields.custom.badges
+    endif
+  elsif card_product.compare_at_price > card_product.price
+    assign badge_text = 'Sale'
+  elsif card_product.available == false
+    assign badge_text = 'Sold out'
+  endif
+
+  assign family_label = card_product.metafields.custom.family.value | default: card_product.metafields.custom.family | default: card_product.type
+  if family_label == blank and card_product.collections.first.title != blank
+    assign family_label = card_product.collections.first.title
+  endif
+
+  assign note_text = card_product.metafields.custom.card_note.value | default: card_product.metafields.custom.card_note | default: card_product.metafields.custom.notes.value | default: card_product.metafields.custom.notes
+  if note_text == blank and card_product.description != blank
+    assign note_text = card_product.description | strip_html | truncate: 72
+  endif
+
+  assign secondary_image = card_product.media[1]
+-%}
+<article class="dc-product-card group relative" data-reveal="1">
+  <div class="dc-product-card__media-wrap relative">
+    <a href="{{ card_product.url }}" class="dc-product-card__media block relative aspect-[3/4] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] hover:opacity-[0.97] transition-opacity duration-fast ease-fast" aria-label="{{ card_product.title | escape }}">
+      {%- if card_product.featured_image -%}
+        {{
+          card_product.featured_image
+          | image_url: width: 900
+          | image_tag:
+            loading: 'lazy',
+            class: 'dc-product-card__img dc-product-card__img--primary absolute inset-0 w-full h-full object-cover',
+            alt: card_product.title,
+            widths: '400, 600, 900',
+            sizes: '(min-width: 1024px) 33vw, (min-width: 390px) 50vw, 100vw'
+        }}
+      {%- endif -%}
+      {%- if secondary_image -%}
+        {{
+          secondary_image.preview_image
+          | image_url: width: 900
+          | image_tag:
+            loading: 'lazy',
+            class: 'dc-product-card__img dc-product-card__img--secondary absolute inset-0 w-full h-full object-cover',
+            alt: card_product.title,
+            widths: '400, 600, 900',
+            sizes: '(min-width: 1024px) 33vw, (min-width: 390px) 50vw, 100vw'
+        }}
+      {%- endif -%}
+
+      {%- if badge_text != blank -%}
+        <span class="absolute top-[16px] left-[16px] z-[1] font-body text-[9px] leading-none tracking-[0.2em] uppercase text-secondary">
+          {{ badge_text }}
+        </span>
+      {%- endif -%}
+    </a>
+
+    {%- if show_save -%}
+      <button
+        type="button"
+        data-dc-save-toggle
+        data-product-id="{{ card_product.id }}"
+        class="dc-product-card__save absolute z-[2] bottom-[16px] right-[16px] h-[30px] px-[14px] font-body text-[9px] tracking-[0.2em] uppercase border border-ink/25 bg-bg/70 text-secondary transition-all duration-normal ease-normal hover:border-ink aria-pressed:bg-ink aria-pressed:border-ink aria-pressed:text-bg"
+        aria-pressed="false"
+      >
+        <span data-dc-save-label>{{ 'products.product.save' | t | default: 'Save' }}</span>
+      </button>
+    {%- endif -%}
+  </div>
+
+  <a href="{{ card_product.url }}" class="dc-product-card__link block hover:opacity-[0.97] transition-opacity duration-fast ease-fast">
+    <div class="dc-product-card__meta mt-[20px] flex justify-between items-baseline gap-5">
+      <div class="min-w-0">
+        {%- if show_family and family_label != blank -%}
+          <p class="font-body text-label uppercase text-muted">{{ family_label }}</p>
+        {%- endif -%}
+        <p class="mt-[10px] font-display text-[22px] leading-none text-ink">{{ card_product.title }}</p>
+      </div>
+      <p class="shrink-0 font-body text-body-sm tracking-[0.05em] text-secondary whitespace-nowrap">
+        {{ card_product.price | money }}
+      </p>
+    </div>
+
+    {%- if show_note and note_text != blank -%}
+      <p class="dc-product-card__note mt-[10px] font-body text-body-sm leading-[1.7] text-muted max-w-[34ch]">
+        {{ note_text }}
+      </p>
+    {%- endif -%}
+  </a>
+</article>

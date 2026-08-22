@@ -1,0 +1,348 @@
+{%- comment -%}
+  Footer — redesign/DesignSystem.dc.html + Home.dc.html.
+  Clean 4-column grid, payment icons, compact contact links.
+{%- endcomment -%}
+{%- liquid
+  assign footer_muted = 'rgba(255,250,240,0.7)'
+  assign footer_border = 'rgba(255,250,240,0.16)'
+  assign footer_input_border = 'rgba(255,250,240,0.35)'
+
+  assign location = section.settings.location | default: 'Toronto'
+  assign contact_email = section.settings.contact_email | default: 'info@devouedenature.com'
+  assign contact_phone = section.settings.contact_phone | default: '+1 (647) 556-6199'
+  assign contact_page = section.settings.contact_page | default: '/pages/contact'
+  assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
+-%}
+
+<footer class="bg-ink text-[#EFE7DA]">
+  <div class="max-w-page mx-auto px-5 md:px-10 pt-12 md:pt-16 lg:pt-[70px] pb-4 md:pb-5">
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.15fr_repeat(3,minmax(0,1fr))] gap-x-6 gap-y-10 md:gap-x-8 lg:gap-x-12 pb-10 md:pb-12 border-b"
+      style="border-color: {{ footer_border }};"
+    >
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'subscribe' -%}
+            {%- liquid
+              assign eyebrow = block.settings.eyebrow | default: 'Correspondence'
+              assign nl_heading = block.settings.heading | default: 'Four letters a year, no more'
+              assign placeholder = block.settings.placeholder | default: 'Email address'
+              assign send_label = block.settings.button_label | default: 'Send'
+            -%}
+            <div class="col-span-2 md:col-span-4 lg:col-span-1 min-w-0" {{ block.shopify_attributes }}>
+              {%- if block.settings.logo != blank -%}
+                <a href="{{ routes.root_url }}" class="inline-block mb-4 opacity-90 hover:opacity-100 transition-opacity duration-normal ease-normal">
+                  {{
+                    block.settings.logo
+                    | image_url: width: 300
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'h-auto w-[120px] max-w-full',
+                      alt: shop.name,
+                      widths: '120, 240'
+                  }}
+                </a>
+              {%- endif -%}
+
+              <p class="font-body text-[10px] tracking-[0.24em] uppercase m-0" style="color: {{ footer_muted }};">
+                {{ eyebrow }}
+              </p>
+              <p class="mt-3 font-display text-[22px] md:text-[24px] leading-[1.35] text-[#EFE7DA] max-w-[22ch] m-0">
+                {{ nl_heading }}
+              </p>
+
+              {%- if block.settings.description != blank -%}
+                <p class="mt-3 font-body text-[13px] leading-[1.75] max-w-[40ch] m-0 opacity-[0.82]">
+                  {{ block.settings.description }}
+                </p>
+              {%- endif -%}
+
+              {%- form 'customer', id: 'DcFooterNewsletter', class: 'mt-5 max-w-[380px]' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="flex items-stretch border-b" style="border-color: {{ footer_input_border }};">
+                  <label class="sr-only" for="DcFooterNewsletter-email">{{ 'newsletter.label' | t | default: 'Email' }}</label>
+                  <input
+                    id="DcFooterNewsletter-email"
+                    type="email"
+                    name="contact[email]"
+                    value="{{ form.email }}"
+                    placeholder="{{ placeholder }}"
+                    class="flex-1 min-w-0 h-[46px] border-0 bg-transparent font-body text-[13px] tracking-[0.06em] outline-none placeholder:text-[#EFE7DA] placeholder:opacity-50"
+                    style="color: #EFE7DA;"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="email"
+                    required
+                  >
+                  <button
+                    type="submit"
+                    class="shrink-0 border-0 bg-transparent font-body text-[10px] tracking-[0.22em] uppercase cursor-pointer px-1 hover:opacity-60 transition-opacity duration-normal ease-normal"
+                    style="color: #EFE7DA;"
+                  >
+                    {{ send_label }}
+                  </button>
+                </div>
+
+                {%- if form.posted_successfully? -%}
+                  <p class="mt-3 font-body text-[10px] tracking-[0.18em] uppercase opacity-70 m-0" role="status">
+                    {{ 'newsletter.success' | t | default: 'Thank you for subscribing.' }}
+                  </p>
+                {%- elsif form.errors -%}
+                  <p class="mt-3 font-body text-[10px] tracking-[0.18em] uppercase text-error m-0" role="alert">
+                    {{ form.errors.messages['email'] | default: 'Please enter a valid email.' }}
+                  </p>
+                {%- endif -%}
+              {%- endform -%}
+            </div>
+
+          {%- when 'link_list' -%}
+            {%- liquid
+              assign col_heading = block.settings.heading
+              assign footer_menu = linklists[block.settings.menu]
+              if col_heading == blank and footer_menu.links.size > 0
+                assign col_heading = footer_menu.title
+              endif
+            -%}
+            <div class="min-w-0" {{ block.shopify_attributes }}>
+              {%- if col_heading != blank -%}
+                <p class="font-body text-[10px] tracking-[0.24em] uppercase m-0" style="color: {{ footer_muted }};">
+                  {{ col_heading }}
+                </p>
+              {%- endif -%}
+
+              <ul class="mt-4 flex flex-col gap-2.5 list-none p-0 m-0">
+                {%- if footer_menu.links.size > 0 -%}
+                  {%- for link in footer_menu.links -%}
+                    <li>
+                      <a href="{{ link.url }}" class="dc-footer-link">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                {%- elsif block.settings.fallback_links != blank -%}
+                  {%- assign fallback_lines = block.settings.fallback_links | newline_to_br | split: '<br />' -%}
+                  {%- for line in fallback_lines -%}
+                    {%- assign line = line | strip -%}
+                    {%- if line != blank -%}
+                      {%- assign parts = line | split: '|' -%}
+                      <li>
+                        <a
+                          href="{{ parts[1] | strip | default: '#' }}"
+                          class="dc-footer-link"
+                          {% if parts[1] contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                        >
+                          {{ parts[0] | strip }}
+                        </a>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- elsif block.settings.use_social_fallback -%}
+                  {%- if settings.social_instagram_link != blank -%}
+                    <li><a href="{{ settings.social_instagram_link }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                  {%- endif -%}
+                  {%- if settings.social_facebook_link != blank -%}
+                    <li><a href="{{ settings.social_facebook_link }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                  {%- endif -%}
+                  {%- if settings.social_tiktok_link != blank -%}
+                    <li><a href="{{ settings.social_tiktok_link }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+                  {%- endif -%}
+                {%- endif -%}
+
+                {%- if block.settings.append_contact -%}
+                  <li><a href="{{ contact_page }}" class="dc-footer-link">Contact</a></li>
+                  <li><a href="mailto:{{ contact_email }}" class="dc-footer-link">{{ contact_email }}</a></li>
+                  <li><a href="tel:{{ phone_href }}" class="dc-footer-link">{{ contact_phone }}</a></li>
+                {%- endif -%}
+              </ul>
+            </div>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60">
+        <span class="shrink-0">{{ shop.name }} — {{ location }}</span>
+
+        {%- if section.settings.payment_enable and shop.enabled_payment_types.size > 0 -%}
+          <ul class="hidden md:flex flex-wrap items-center gap-1 list-none p-0 m-0 md:mx-auto" role="list" aria-label="{{ section.settings.payment_label | default: 'We accept' }}">
+            {%- for type in shop.enabled_payment_types -%}
+              <li class="dc-footer-payment__item">
+                {{ type | payment_type_svg_tag: class: 'dc-footer-payment__icon' }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        {%- if section.settings.show_policy -%}
+          <span class="flex flex-wrap items-center md:justify-end shrink-0 ml-auto md:ml-0">
+            {%- assign policy_index = 0 -%}
+            {%- for policy in shop.policies -%}
+              {%- if policy != blank and policy.body != blank -%}
+                {%- if policy_index > 0 -%}<span class="px-2" aria-hidden="true">·</span>{%- endif -%}
+                <a href="{{ policy.url }}" class="hover:opacity-100 transition-opacity duration-normal ease-normal">{{ policy.title }}</a>
+                {%- assign policy_index = policy_index | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if policy_index == 0 -%}
+              {%- assign legal_fallback = section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' -%}
+              {%- assign legal_parts = legal_fallback | split: '·' -%}
+              {%- for part in legal_parts -%}
+                {%- assign part = part | strip -%}
+                {%- if part != blank -%}
+                  {%- unless forloop.first -%}<span class="px-2" aria-hidden="true">·</span>{%- endunless -%}
+                  <span>{{ part }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </span>
+        {%- else -%}
+          <span class="shrink-0 ml-auto md:ml-0 md:text-right">{{ section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' }}</span>
+        {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "location",
+      "label": "Location",
+      "default": "Toronto"
+    },
+    {
+      "type": "header",
+      "content": "Contact links (Client care column)"
+    },
+    {
+      "type": "url",
+      "id": "contact_page",
+      "label": "Contact page"
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Email",
+      "default": "info@devouedenature.com"
+    },
+    {
+      "type": "text",
+      "id": "contact_phone",
+      "label": "Phone",
+      "default": "+1 (647) 556-6199"
+    },
+    {
+      "type": "header",
+      "content": "Payment icons"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "label": "Show payment icons",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Payment label",
+      "default": "We accept"
+    },
+    {
+      "type": "header",
+      "content": "Legal bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_policy",
+      "label": "Show shop policy links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "legal_fallback",
+      "label": "Legal fallback text",
+      "default": "Legal · Privacy · Cookies"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "subscribe",
+      "name": "Newsletter",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo (optional)"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Correspondence"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Four letters a year, no more"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description (optional)"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Email placeholder",
+          "default": "Email address"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Submit label",
+          "default": "Send"
+        }
+      ]
+    },
+    {
+      "type": "link_list",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "link_list", "id": "menu", "label": "Menu" },
+        {
+          "type": "textarea",
+          "id": "fallback_links",
+          "label": "Fallback links",
+          "info": "One per line: Label|/path"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_social_fallback",
+          "label": "Use theme social links as fallback",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "append_contact",
+          "label": "Append contact links",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "subscribe" },
+      { "type": "link_list" },
+      { "type": "link_list" },
+      { "type": "link_list" }
+    ]
+  }
+}
+{% endschema %}

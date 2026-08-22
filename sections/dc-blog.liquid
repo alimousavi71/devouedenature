@@ -1,0 +1,93 @@
+{%- comment -%}
+  New blog listing section (Devoué de Nature redesign). Net-new — does not
+  reuse sections/main-blog.liquid or snippets/article-card*.liquid.
+  Styled per redesign/Blog.dc.html.
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-5 sm:px-6 lg:px-10 pt-[70px]">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-[100px] items-end">
+    <div>
+      <p class="font-mono text-caption uppercase text-muted">{{ 'sections.blog.title' | t | default: 'Blog template' }}</p>
+      <h1 class="font-display text-page-title text-ink mt-3">{{ blog.title }}</h1>
+    </div>
+    {%- if section.settings.description != blank -%}
+      <p class="font-body text-body text-secondary max-w-[52ch]">{{ section.settings.description }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{%- paginate blog.articles by 13 -%}
+<div class="max-w-page mx-auto px-5 sm:px-6 lg:px-10 pt-[70px]">
+  {%- if blog.all_tags.size > 0 -%}
+    <div class="flex gap-2 flex-wrap pb-6 border-b border-ink">
+      <a href="{{ blog.url }}" class="h-[34px] px-4 inline-flex items-center rounded-pill border font-mono text-caption uppercase transition-colors duration-fast ease-fast {% if current_tags == blank %}bg-ink text-bg border-ink{% else %}border-border text-secondary hover:border-ink{% endif %}">
+        {{ 'sections.blog.all_tags' | t | default: 'All' }}
+      </a>
+      {%- for tag in blog.all_tags -%}
+        <a
+          href="{{ blog.url }}/tagged/{{ tag | handle }}"
+          class="h-[34px] px-4 inline-flex items-center rounded-pill border font-mono text-caption uppercase transition-colors duration-fast ease-fast {% if current_tags contains tag %}bg-ink text-bg border-ink{% else %}border-border text-secondary hover:border-ink{% endif %}"
+        >
+          {{ tag }}
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign articles = blog.articles -%}
+  {%- if articles.size > 0 -%}
+    {%- assign lead_article = articles.first -%}
+    <a href="{{ lead_article.url }}" class="grid grid-cols-1 md:grid-cols-[1.25fr_1fr] gap-10 lg:gap-[70px] items-center py-12 border-b border-divider" data-reveal="1">
+      <div class="relative aspect-[16/10] bg-elevated overflow-hidden">
+        {%- if lead_article.image -%}
+          {{ lead_article.image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: lead_article.title }}
+        {%- endif -%}
+      </div>
+      <div>
+        <div class="flex gap-4 font-mono text-caption uppercase text-muted">
+          {%- if lead_article.tags.size > 0 -%}<span>{{ lead_article.tags.first }}</span>{%- endif -%}
+          <span>{{ lead_article.published_at | date: '%-d %B %Y' }}</span>
+        </div>
+        <h2 class="font-display text-h2 text-ink mt-5">{{ lead_article.title }}</h2>
+        {%- if lead_article.excerpt != blank -%}
+          <p class="font-body text-body text-secondary mt-5 max-w-[46ch]">{{ lead_article.excerpt | strip_html | truncate: 140 }}</p>
+        {%- endif -%}
+        <span class="inline-block mt-7 font-mono text-caption uppercase border-b border-ink pb-1">{{ 'sections.blog.read_note' | t | default: 'Read the note' }}</span>
+      </div>
+    </a>
+
+    {%- if articles.size > 1 -%}
+      <div class="mt-[70px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12">
+        {%- for card_article in articles offset: 1 -%}
+          {% render 'dc-article-card', card_article: card_article, data_reveal: true %}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <p class="font-body text-body text-secondary py-16">{{ 'sections.blog.no_articles' | t | default: 'No articles yet.' }}</p>
+  {%- endif -%}
+
+  {%- if paginate.pages > 1 -%}
+    <div class="mt-[90px] flex justify-center pb-[130px]">
+      {%- if paginate.next -%}
+        {% render 'dc-button', text: 'Older notes', variant: 'outline', url: paginate.next.url %}
+      {%- endif -%}
+    </div>
+  {%- else -%}
+    <div class="pb-[70px]"></div>
+  {%- endif -%}
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "DC Blog",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    }
+  ]
+}
+{% endschema %}

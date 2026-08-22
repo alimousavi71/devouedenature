@@ -1,0 +1,68 @@
+{
+  "type": "footer",
+  "name": "t:sections.footer.settings.footer-group.label",
+  "sections": {
+    "footer": {
+      "type": "dc-footer",
+      "blocks": {
+        "subscribe": {
+          "type": "subscribe",
+          "settings": {
+            "eyebrow": "Correspondence",
+            "heading": "Four letters a year, no more",
+            "placeholder": "Email address",
+            "button_label": "Send"
+          }
+        },
+        "link-list-1": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Client care",
+            "menu": "footer",
+            "fallback_links": "Contact|/pages/contact\nShipping|/policies/shipping-policy\nReturns|/policies/refund-policy\nEngraving|/pages/contact\nRefills|/pages/contact",
+            "use_social_fallback": false,
+            "append_contact": false
+          }
+        },
+        "link-list-2": {
+          "type": "link_list",
+          "settings": {
+            "heading": "The house",
+            "menu": "",
+            "fallback_links": "Our story|/pages/about\nPerfumers|/pages/about\nSustainability|/pages/about\nBoutiques|/pages/contact\nCareers|/pages/contact",
+            "use_social_fallback": false,
+            "append_contact": false
+          }
+        },
+        "link-list-3": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Follow",
+            "menu": "",
+            "fallback_links": "Journal|/blogs/news\nNewsletter|#DcFooterNewsletter-email",
+            "use_social_fallback": true,
+            "append_contact": false
+          }
+        }
+      },
+      "block_order": [
+        "subscribe",
+        "link-list-1",
+        "link-list-2",
+        "link-list-3"
+      ],
+      "settings": {
+        "location": "Toronto",
+        "contact_email": "info@devouedenature.com",
+        "contact_phone": "+1 (647) 556-6199",
+        "payment_enable": true,
+        "payment_label": "We accept",
+        "show_policy": true,
+        "legal_fallback": "Legal · Privacy · Cookies"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

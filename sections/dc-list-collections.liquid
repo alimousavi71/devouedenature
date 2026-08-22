@@ -1,0 +1,67 @@
+{%- comment -%}
+  List-collections grid — /collections route. Styled to match collection page rhythm.
+{%- endcomment -%}
+
+{%- liquid
+  assign title = section.settings.title | default: 'Explore Our Collections'
+  assign eyebrow = section.settings.eyebrow | default: 'Catalogue'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <div class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+    <header class="pt-[70px] mb-[70px]" data-reveal>
+      {%- if eyebrow != blank -%}
+        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="font-display font-normal text-[54px] leading-[1.08] text-ink mt-[18px] mb-0">{{ title }}</h1>
+    </header>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-[70px]">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'all' -%}
+          <a href="{{ collection.url }}" class="group block hover:opacity-[0.97] transition-opacity duration-fast ease-fast" data-reveal>
+            <div class="relative aspect-[3/4] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
+              {%- if collection.featured_image -%}
+                {{
+                  collection.featured_image
+                  | image_url: width: 900
+                  | image_tag:
+                    loading: 'lazy',
+                    class: 'absolute inset-0 w-full h-full object-cover',
+                    widths: '400, 600, 900',
+                    sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+                }}
+              {%- else -%}
+                <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted px-4 text-center">collection — {{ collection.title }}</span>
+              {%- endif -%}
+            </div>
+            <div class="mt-5 flex justify-between items-baseline gap-5">
+              <h2 class="font-display text-[22px] leading-none text-ink">{{ collection.title }}</h2>
+              {%- if section.settings.show_count -%}
+                <p class="shrink-0 font-body text-[12px] tracking-[0.05em] text-secondary whitespace-nowrap">
+                  {{ collection.all_products_count }}
+                </p>
+              {%- endif -%}
+            </div>
+            {%- if collection.description != blank -%}
+              <p class="mt-[10px] font-body text-[12px] leading-[1.7] text-muted max-w-[34ch]">{{ collection.description | strip_html | truncate: 72 }}</p>
+            {%- endif -%}
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Catalogue" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Explore Our Collections" },
+    { "type": "checkbox", "id": "show_count", "label": "Show product count", "default": true }
+  ],
+  "presets": [{ "name": "Collections list" }]
+}
+{% endschema %}

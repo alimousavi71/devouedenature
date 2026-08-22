@@ -1,0 +1,63 @@
+{%- comment -%}
+  Dark care CTA — redesign/Home.dc.html "We are here for you" block.
+  Fallbacks match Home.dc.html when settings are empty.
+{%- endcomment -%}
+{%- liquid
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = 'We are here for you'
+  endif
+
+  assign body_html = section.settings.text
+  if body_html == blank
+    assign body_html = '<p>Five people answer the client address, in French or English, within one working day.</p>'
+  endif
+
+  assign button_label = section.settings.button_label
+  if button_label == blank
+    assign button_label = 'Write to us'
+  endif
+
+  assign button_url = section.settings.button_url
+  if button_url == blank
+    assign button_url = 'https://wa.link/sgbrwa'
+  endif
+-%}
+
+<section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 pb-16 md:pb-[120px]">
+  <div class="relative bg-ink px-6 md:px-[60px] py-12 md:py-[90px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-[60px] items-center">
+    <div>
+      <h2 class="font-display font-normal text-[36px] leading-none text-bg m-0">
+        {{ heading }}
+      </h2>
+      <div class="mt-[16px] font-body text-body leading-[1.9] text-gold max-w-[46ch] [&_p]:m-0">
+        {{ body_html }}
+      </div>
+    </div>
+
+    <a
+      href="{{ button_url }}"
+      class="inline-flex items-center justify-center h-[54px] px-10 border border-gold bg-transparent text-bg font-body text-[11px] tracking-[0.24em] uppercase whitespace-nowrap transition-colors duration-normal ease-normal hover:bg-gold hover:text-ink shrink-0"
+    >
+      {{ button_label }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Care banner",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "We are here for you" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Five people answer the client address, in French or English, within one working day.</p>"
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Write to us" },
+    { "type": "url", "id": "button_url", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Care banner" }]
+}
+{% endschema %}

@@ -1,0 +1,85 @@
+{%- comment -%}
+  New mobile navigation drawer — Devoué de Nature theme migration.
+  Params:
+    menu       - {Object} required, linklist
+    logo       - {Object} optional header logo
+    logo_alt   - {Object} optional overlay logo
+    logo_width - {Number} optional logo width
+{%- endcomment -%}
+<div
+  id="DcMobileNav"
+  class="dc-dialog fixed inset-0 z-[100] hidden"
+  data-dc-dialog
+  data-dc-drawer-from="left"
+  aria-hidden="true"
+>
+  <div class="dc-dialog__scrim absolute inset-0 bg-scrim opacity-0" data-dc-dialog-close></div>
+
+  <div
+    class="dc-dialog__panel absolute inset-y-0 left-0 w-[86vw] md:w-[420px] bg-bg shadow-2 flex flex-col will-change-transform"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'general.navigation' | t | default: 'Navigation' }}"
+  >
+    <div class="flex items-center justify-between px-5 py-5 border-b border-divider min-w-0">
+      {% render 'dc-header-logo', logo: logo, logo_alt: logo_alt, logo_width: logo_width, class: 'max-w-[70%]' %}
+      <button type="button" class="font-mono text-caption uppercase text-secondary" data-dc-dialog-close>
+        {{ 'accessibility.close' | t | default: 'Close' }}
+      </button>
+    </div>
+
+    <div class="px-5 py-4 border-b border-divider">
+      <form action="{{ routes.search_url }}" method="get" role="search" data-dc-search-form>
+        <input
+          type="search"
+          name="q"
+          value="{{ search.terms | escape }}"
+          placeholder="{{ 'general.search.placeholder' | t | default: 'Search' }}"
+          class="w-full font-body text-body border-b border-border focus:border-ink focus:outline-none py-2 bg-transparent"
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+      </form>
+    </div>
+
+    <nav class="flex-1 overflow-y-auto px-5 py-4">
+      {%- for link in menu.links -%}
+        <div class="border-b border-divider" data-dc-drawer-item>
+          {%- if link.links.size > 0 -%}
+            <button
+              type="button"
+              class="dc-mobile-nav__row w-full flex items-center justify-between py-4 font-body text-nav uppercase"
+              data-dc-expand="mobile-nav-{{ forloop.index }}"
+              aria-expanded="false"
+            >
+              <span>{{ link.title }}</span>
+              <span class="dc-mobile-nav__plus font-body text-h4 text-muted" aria-hidden="true">+</span>
+            </button>
+            <div id="mobile-nav-{{ forloop.index }}" class="dc-mobile-nav__panel hidden pb-4 pl-2">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}" class="dc-link block py-2 font-body text-body text-secondary">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- else -%}
+            <a href="{{ link.url }}" class="dc-link block py-4 font-body text-nav uppercase">{{ link.title }}</a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </nav>
+
+    <div class="px-5 py-5 border-t border-divider flex flex-col gap-3">
+      <a
+        href="{% render 'dc-account-link-url' %}"
+        class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary"
+        data-dc-drawer-item
+      >
+        {{ 'customer.account.title' | t | default: 'Account' }}
+      </a>
+      <a href="{{ routes.account_url }}" class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary" data-dc-drawer-item>
+        {{ 'general.saved' | t | default: 'Saved' }}
+      </a>
+      <a href="{{ pages.contact.url | default: routes.root_url }}" class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary" data-dc-drawer-item>
+        {{ 'general.client_care' | t | default: 'Client care' }}
+      </a>
+    </div>
+  </div>
+</div>

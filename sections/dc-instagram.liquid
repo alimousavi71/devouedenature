@@ -1,0 +1,192 @@
+{%- comment -%}
+  Instagram grid — redesign/Home.dc.html "Latest on Instagram".
+  Five image tiles + one "view more" CTA tile. Fallbacks when settings/blocks are empty.
+{%- endcomment -%}
+{%- liquid
+  assign default_labels = 'golden by nature|portrait — campaign|bottle on linen|refill bar, paris|billboard, milan' | split: '|'
+
+  assign eyebrow = section.settings.eyebrow
+  if eyebrow == blank
+    assign eyebrow = 'Follow for the latest'
+  endif
+
+  assign heading = section.settings.heading
+  if heading == blank
+    assign heading = 'Latest on Instagram'
+  endif
+
+  assign follow_label = section.settings.follow_label
+  if follow_label == blank
+    assign follow_label = 'Follow'
+  endif
+
+  assign follow_url = section.settings.link_account
+  if follow_url == blank
+    assign follow_url = 'https://www.instagram.com/devoueskin/'
+  endif
+
+  assign cta_label = section.settings.cta_label
+  if cta_label == blank
+    assign cta_label = 'View more at @devoueskin'
+  endif
+
+  assign cta_url = section.settings.cta_url
+  if cta_url == blank
+    assign cta_url = follow_url
+  endif
+-%}
+
+<section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 pb-16 md:pb-[130px]">
+  <div class="flex justify-between items-end gap-8">
+    <div>
+      <p class="font-body text-caption uppercase tracking-[0.28em] text-muted m-0">
+        {{ eyebrow }}
+      </p>
+      <h2 class="font-display font-normal text-[34px] leading-none text-ink mt-[18px] m-0">
+        {{ heading }}
+      </h2>
+    </div>
+    <a
+      href="{{ follow_url }}"
+      class="shrink-0 font-body text-label uppercase tracking-[0.22em] text-ink border-b border-ink pb-1 hover:opacity-60 transition-opacity duration-normal ease-normal"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {{ follow_label }}
+    </a>
+  </div>
+
+  <div class="mt-8 md:mt-[46px] grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-[14px]" data-reveal-stagger>
+    {%- assign post_index = 0 -%}
+    {%- for block in section.blocks limit: 5 -%}
+      {%- if block.type == 'image' -%}
+        {%- liquid
+          assign tile_label = block.settings.label
+          if tile_label == blank
+            assign tile_label = default_labels[post_index]
+          endif
+          assign post_index = post_index | plus: 1
+        -%}
+        <a
+          href="{{ follow_url }}"
+          class="aspect-square block overflow-hidden {% if block.settings.image == blank %}bg-[repeating-linear-gradient(135deg,#EFE7DA_0_14px,#F8F3E8_14px_28px)] flex items-center justify-center{% endif %}"
+          target="_blank"
+          rel="noopener noreferrer"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 600
+              | image_tag:
+                loading: 'lazy',
+                class: 'w-full h-full object-cover',
+                alt: tile_label,
+                widths: '200, 400, 600',
+                sizes: '(min-width: 768px) 16vw, 33vw'
+            }}
+          {%- else -%}
+            <span class="font-mono text-[9px] tracking-[0.12em] uppercase text-muted text-center px-[10px]">
+              {{ tile_label }}
+            </span>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    {%- else -%}
+      {%- for i in (1..5) -%}
+        {%- assign tile_label = default_labels[forloop.index0] -%}
+        <a
+          href="{{ follow_url }}"
+          class="aspect-square bg-[repeating-linear-gradient(135deg,#EFE7DA_0_14px,#F8F3E8_14px_28px)] flex items-center justify-center"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="font-mono text-[9px] tracking-[0.12em] uppercase text-muted text-center px-[10px]">
+            {{ tile_label }}
+          </span>
+        </a>
+      {%- endfor -%}
+    {%- endfor -%}
+
+    <a
+      href="{{ cta_url }}"
+      class="aspect-square bg-elevated flex items-center justify-center hover:opacity-[0.94] transition-opacity duration-normal ease-normal"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <span class="font-body text-body-sm tracking-[0.14em] uppercase text-secondary text-center px-[10px]">
+        {{ cta_label }}
+      </span>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Instagram",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Follow for the latest"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Latest on Instagram"
+    },
+    {
+      "type": "text",
+      "id": "follow_label",
+      "label": "Follow link label",
+      "default": "Follow"
+    },
+    {
+      "type": "url",
+      "id": "link_account",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "View-more tile label",
+      "default": "View more at @devoueskin"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "View-more tile URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 5,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Placeholder label",
+          "info": "Shown when no image is set. Falls back to Home.dc.html defaults."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

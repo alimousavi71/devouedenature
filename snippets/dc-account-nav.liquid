@@ -1,0 +1,27 @@
+{%- comment -%}
+  Shared sticky account sidebar nav — Overview / Orders / Addresses / Sign out.
+  Usage: {% render 'dc-account-nav', current: 'overview' %}
+  current: 'overview' | 'addresses' (order-detail pages should pass 'overview' since
+  there's no standalone "orders" listing page in Shopify's default customer routes —
+  order history lives on the account overview page itself).
+{%- endcomment -%}
+<nav class="md:sticky md:top-[120px] flex flex-col gap-1 font-body text-nav uppercase" aria-label="{{ 'customer.account.title' | t | default: 'Account' }}">
+  <a
+    href="{{ routes.account_url }}"
+    class="py-2 {% if current == 'overview' %}text-ink{% else %}text-secondary hover:text-ink{% endif %} transition-colors duration-fast ease-fast"
+  >
+    {{ 'customer.account.title' | t | default: 'Overview' }}
+  </a>
+  <a
+    href="{{ routes.account_addresses_url }}"
+    class="py-2 {% if current == 'addresses' %}text-ink{% else %}text-secondary hover:text-ink{% endif %} transition-colors duration-fast ease-fast"
+  >
+    {{ 'customer.addresses.title' | t | default: 'Addresses' }}
+  </a>
+  <a
+    href="{{ routes.account_logout_url }}"
+    class="py-2 text-secondary hover:text-ink transition-colors duration-fast ease-fast"
+  >
+    {{ 'customer.log_out' | t | default: 'Sign out' }}
+  </a>
+</nav>

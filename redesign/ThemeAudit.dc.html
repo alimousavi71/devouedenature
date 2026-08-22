@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600&family=Jost:wght@300;400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  body { margin: 0; background: #FFFAF0; -webkit-font-smoothing: antialiased; }
+  a { color: #30271D; text-decoration: none; }
+  a:hover { color: #755F45; }
+  * { box-sizing: border-box; }
+  ::selection { background: #E7E3DB; }
+</style>
+</helmet>
+
+<div style="font-family: 'Jost', system-ui, sans-serif; color: #30271D; background: #FFFAF0; min-height: 100vh; overflow-x: clip">
+
+  <div style="position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 90; display: flex; flex-wrap: nowrap; gap: 2px; padding: 4px; background: rgba(48,39,29,0.92); backdrop-filter: blur(8px); border-radius: 999px">
+    <a href="./Home.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Home</a>
+    <a href="./Product.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Product</a>
+    <a href="./Collection.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Collection</a>
+    <a href="./Cart.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Cart</a>
+    <a href="./Search.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Search</a>
+    <a href="./Account.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">Account</a>
+    <a href="./Index.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">All templates</a>
+    <a href="./DesignSystem.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: transparent; color: rgba(255,250,240,0.66)">System</a>
+    <a href="./ThemeAudit.dc.html" style="font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: #FFFAF0; color: #30271D">Audit</a>
+  </div>
+
+  <div style="background: #30271D; color: #FFFAF0; text-align: center; padding: 10px 24px; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase">Internal document — theme architecture and completeness audit</div>
+
+  <main style="max-width: 1400px; margin: 0 auto; padding: 90px 40px 160px">
+
+    <section style="display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: end; padding-bottom: 70px; border-bottom: 1px solid #E0D9CC">
+      <div>
+        <div style="font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: #9C8A74">Sévigné — Shopify theme</div>
+        <h1 style="font-family: 'Syne', sans-serif; font-weight: 400; font-size: 54px; line-height: 1.08; margin: 18px 0 0">Structure and completeness audit</h1>
+      </div>
+      <p style="margin: 0; font-size: 13px; line-height: 1.95; color: #755F45; max-width: 52ch; text-wrap: pretty">All twenty-one template files are designed and live as separate files, and the four design-system gaps are closed. The directory lists every file; what remains is Liquid conversion, responsive passes at 768 and 390, and real photography.</p>
+    </section>
+
+    <section style="padding: 70px 0; border-bottom: 1px solid #E0D9CC">
+      <div style="font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: #9C8A74">Phase 1 — completed</div>
+      <h2 style="font-family: 'Syne', sans-serif; font-weight: 400; font-size: 34px; margin: 18px 0 0">One file per template</h2>
+      <p style="margin: 18px 0 0; font-size: 13px; line-height: 1.9; color: #755F45; max-width: 74ch">The combined file has been split. Announcement bar, header, footer and every token remain byte-identical across the six files, so each maps to one Shopify template and its sections without a redesign step.</p>
+      <div style="margin-top: 46px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px">
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">Home.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">templates/index.json<br />sections: hero, lineup, claims, announcement, campaign, faq, care-banner, instagram</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">Product.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">templates/product.json<br />sections: main-product, story, campaign, composition, perfumer, formats, related, ritual</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">Collection.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">templates/collection.json<br />sections: banner, facets bar, product-grid, journal</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">Cart.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">templates/cart.json<br />sections: main-cart-items, cart-footer, samples, cross-sell</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">Contact.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">templates/page.contact.json<br />sections: contact-form, boutiques, faq</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 20px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 21px">DesignSystem.dc.html</div>
+          <div style="margin-top: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1.8; color: #755F45">not a template — the token and component source of truth</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 70px 0; border-bottom: 1px solid #E0D9CC">
+      <div style="font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: #9C8A74">Phase 2 — audit</div>
+      <h2 style="font-family: 'Syne', sans-serif; font-weight: 400; font-size: 34px; margin: 18px 0 0">Against a production theme</h2>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px">
+        <div style="background: #E7E3DB; padding: 30px 28px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 40px">21</div>
+          <div style="margin-top: 8px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #755F45">Designed</div>
+        </div>
+        <div style="background: #E7E3DB; padding: 30px 28px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 40px">4</div>
+          <div style="margin-top: 8px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #755F45">System additions</div>
+        </div>
+        <div style="background: #30271D; color: #FFFAF0; padding: 30px 28px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 40px; color: #DBB281">0</div>
+          <div style="margin-top: 8px; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #DBB281">Missing</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 60px; display: grid; grid-template-columns: 210px 1fr; gap: 40px; padding: 26px 0; border-bottom: 1px solid #E0D9CC; align-items: start">
+        <div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Now complete</div>
+        <div style="font-size: 13px; line-height: 1.95; color: #755F45">Variant unavailability, sold out, coming soon, reviews, recently viewed and wishlist are in ProductStates. Filter drawer, mega menu, mobile navigation, cart drawer, quick view, quick add, toasts, cookie consent and the promotional popup are in Overlays. Filtering, sorting, pagination, infinite scroll, empty and skeleton states are in CollectionStates. The FAQ now has its own template.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 1fr; gap: 40px; padding: 26px 0; border-bottom: 1px solid #E0D9CC; align-items: start">
+        <div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Storefront</div>
+        <div style="font-size: 13px; line-height: 1.95; color: #755F45">Search results, empty state and loading pass — Search. Cart drawer, quick view, quick add — Overlays. Wishlist and recently viewed — ProductStates.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 1fr; gap: 40px; padding: 26px 0; border-bottom: 1px solid #E0D9CC; align-items: start">
+        <div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Photography</div>
+        <div style="font-size: 13px; line-height: 1.95; color: #755F45">Login, register, recovery and reset — AccountAuth. Dashboard and profile — Account. History and order detail — AccountOrders. List, add and edit — AccountAddresses. One shell, one form pattern across all twelve screens.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 1fr; gap: 40px; padding: 26px 0; border-bottom: 1px solid #E0D9CC; align-items: start">
+        <div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">Content</div>
+        <div style="font-size: 13px; line-height: 1.95; color: #755F45">Standard page and About — Page. FAQ template — FAQ. Listing — Blog. Article — Article. All four policies share one template — Policy.</div>
+      </div>
+      <div style="display: grid; grid-template-columns: 210px 1fr; gap: 40px; padding: 26px 0; border-bottom: 1px solid #E0D9CC; align-items: start">
+        <div style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase">States</div>
+        <div style="font-size: 13px; line-height: 1.95; color: #755F45">Sold out, unavailable variant, coming soon, reviews — ProductStates. Empty collection, pagination, infinite scroll, skeletons — CollectionStates. 404, generic error and the shared empty-state pattern — Error. Consent and popup — Overlays.</div>
+      </div>
+    </section>
+
+    <section style="padding: 70px 0; border-bottom: 1px solid #E0D9CC">
+      <div style="font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: #9C8A74">Phase 3 — what remains</div>
+      <h2 style="font-family: 'Syne', sans-serif; font-weight: 400; font-size: 34px; margin: 18px 0 0">Order of implementation</h2>
+      <div style="margin-top: 46px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px">
+        <div style="border-top: 1px solid #30271D; padding-top: 22px">
+          <div style="font-size: 13px; color: #755F45">01.</div>
+          <div style="margin-top: 14px; font-family: 'Syne', sans-serif; font-size: 21px">Liquid conversion</div>
+          <div style="margin-top: 14px; font-size: 12px; line-height: 1.85; color: #755F45">Sections and blocks for the core four templates, then the state variants. Each design file maps to one template with named sections.</div>
+          <div style="margin-top: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8A74">Designs are final</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 22px">
+          <div style="font-size: 13px; color: #755F45">02.</div>
+          <div style="margin-top: 14px; font-family: 'Syne', sans-serif; font-size: 21px">Responsive passes</div>
+          <div style="margin-top: 14px; font-size: 12px; line-height: 1.85; color: #755F45">Tablet at 768 and mobile at 390 for all twenty-one files. Grids collapse 5 → 2, 3 → 2, sidebars stack, drawers take 86 vw.</div>
+          <div style="margin-top: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8A74">Rules are in the system, screens are not drawn</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 22px">
+          <div style="font-size: 13px; color: #755F45">03.</div>
+          <div style="margin-top: 14px; font-family: 'Syne', sans-serif; font-size: 21px">Photography</div>
+          <div style="margin-top: 14px; font-size: 12px; line-height: 1.85; color: #755F45">Every placeholder is labelled with its subject and ratio. Packshots, campaign, boutiques, atelier, journal images.</div>
+          <div style="margin-top: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8A74">Blocked on your assets</div>
+        </div>
+        <div style="border-top: 1px solid #30271D; padding-top: 22px">
+          <div style="font-size: 13px; color: #755F45">04.</div>
+          <div style="margin-top: 14px; font-family: 'Syne', sans-serif; font-size: 21px">Second wave</div>
+          <div style="margin-top: 14px; font-size: 12px; line-height: 1.85; color: #755F45">Subscriptions, gift cards, store locator with live stock, and a compare view. None are in the current scope.</div>
+          <div style="margin-top: 16px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9C8A74">Not required for launch</div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 70px 0 0">
+      <div style="font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: #9C8A74">Added to the system</div>
+      <h2 style="font-family: 'Syne', sans-serif; font-weight: 400; font-size: 34px; margin: 18px 0 0">Four additions, now in place</h2>
+      <p style="margin: 18px 0 0; font-size: 13px; line-height: 1.9; color: #755F45; max-width: 74ch">Documented in DesignSystem.dc.html and used by the new pages. No new visual style was invented outside the system.</p>
+      <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px">
+        <div style="background: #E7E3DB; padding: 34px 30px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 22px">Overlay and modal</div>
+          <div style="margin-top: 12px; font-size: 12px; line-height: 1.85; color: #755F45">Scrim value, drawer width, close affordance, entrance timing. Required by cart drawer, quick view, filters, cookie consent and popups.</div>
+        </div>
+        <div style="background: #E7E3DB; padding: 34px 30px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 22px">Long-form prose</div>
+          <div style="margin-top: 12px; font-size: 12px; line-height: 1.85; color: #755F45">Heading levels below H4, lists, block quotes, tables and measure for policies, articles and about.</div>
+        </div>
+        <div style="background: #E7E3DB; padding: 34px 30px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 22px">Data table and status</div>
+          <div style="margin-top: 12px; font-size: 12px; line-height: 1.85; color: #755F45">Order history rows, fulfilment and payment badges, empty rows. No badge or status style exists today.</div>
+        </div>
+        <div style="background: #E7E3DB; padding: 34px 30px">
+          <div style="font-family: 'Syne', sans-serif; font-size: 22px">Feedback and skeleton</div>
+          <div style="margin-top: 12px; font-size: 12px; line-height: 1.85; color: #755F45">Toast, inline field error, form-level error and success, and a loading skeleton fill. Only field focus is defined.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="background: #30271D; color: #EFE7DA; padding: 60px 40px">
+    <div style="max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.7">
+      <span>Sévigné — theme audit</span>
+      <span>Twenty-one template files · design system complete</span>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+</body>
+</html>

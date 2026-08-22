@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "dc-article",
+      "settings": {
+        "cross_sell_product": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,115 @@
+{%- comment -%}
+  New addresses page — from scratch, does not reuse sections/main-addresses.liquid.
+  Uses the real Shopify `country_option_tags` global (the old section referenced an
+  undefined `all_country_option_tags` variable — not carried over, that looks like a
+  pre-existing bug, not something to preserve).
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-5 md:px-6 py-7 grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-6 md:gap-[90px]">
+  {% render 'dc-account-nav', current: 'addresses' %}
+
+  <div class="flex flex-col gap-6">
+    <h1 class="font-display text-page-title">{{ 'customer.addresses.title' | t | default: 'Addresses' }}</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {%- for address in customer.addresses -%}
+        <div class="border {% if address == customer.default_address %}border-ink{% else %}border-border{% endif %} p-4 flex flex-col gap-3">
+          {%- if address == customer.default_address -%}
+            {%- assign default_address_label = 'customer.addresses.default' | t -%}
+            {% render 'dc-badge', text: default_address_label, style: 'filled' %}
+          {%- endif -%}
+          <address class="not-italic font-body text-body-sm text-secondary">
+            {{ address | format_address }}
+          </address>
+          <div class="flex gap-4 mt-auto pt-2">
+            <button
+              type="button"
+              class="font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast"
+              aria-expanded="false"
+              aria-controls="EditAddress-{{ address.id }}"
+              data-dc-address-edit-toggle="{{ address.id }}"
+            >
+              {{ 'customer.addresses.edit' | t | default: 'Edit' }}
+            </button>
+            {%- form 'customer_address', address, class: 'inline' -%}
+              <input type="hidden" name="_method" value="delete">
+              <button
+                type="submit"
+                class="font-mono text-caption uppercase text-secondary hover:text-error transition-colors duration-fast ease-fast"
+                onclick="return confirm('{{ 'customer.addresses.delete_confirm' | t | default: 'Are you sure you wish to delete this address?' }}')"
+              >
+                {{ 'customer.addresses.delete' | t | default: 'Delete' }}
+              </button>
+            {%- endform -%}
+          </div>
+
+          {%- assign edit_form_id = 'EditAddress-' | append: address.id -%}
+          {%- form 'customer_address', address, id: edit_form_id -%}
+            <div id="EditAddress-{{ address.id }}" class="hidden mt-3 pt-3 border-t border-divider grid grid-cols-1 sm:grid-cols-2 gap-3" data-dc-address-edit-panel="{{ address.id }}">
+              {% render 'dc-address-fields', form: form, id_suffix: address.id %}
+              <label class="sm:col-span-2 flex items-center gap-2 font-body text-body-sm">
+                <input type="checkbox" name="address[default]" {% if address == customer.default_address %}checked{% endif %}>
+                {{ 'customer.addresses.set_default' | t | default: 'Set as default address' }}
+              </label>
+              {%- assign update_address_label = 'customer.addresses.update' | t -%}
+              {% render 'dc-button', text: update_address_label, variant: 'filled', type: 'submit' %}
+            </div>
+          {%- endform -%}
+        </div>
+      {%- endfor -%}
+
+      <div class="border border-dashed border-border p-4 flex flex-col">
+        <button
+          type="button"
+          class="flex-1 flex items-center justify-center font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast"
+          aria-expanded="false"
+          aria-controls="AddAddress"
+          data-dc-address-edit-toggle="new"
+        >
+          {{ 'customer.addresses.add_new' | t | default: 'Add an address' }}
+        </button>
+        {%- form 'customer_address', customer.new_address -%}
+          <div id="AddAddress" class="hidden mt-3 pt-3 border-t border-divider grid grid-cols-1 sm:grid-cols-2 gap-3" data-dc-address-edit-panel="new">
+            {% render 'dc-address-fields', form: form, id_suffix: 'new' %}
+            <label class="sm:col-span-2 flex items-center gap-2 font-body text-body-sm">
+              <input type="checkbox" name="address[default]">
+              {{ 'customer.addresses.set_default' | t | default: 'Set as default address' }}
+            </label>
+            {%- assign add_address_label = 'customer.addresses.add' | t -%}
+            {% render 'dc-button', text: add_address_label, variant: 'filled', type: 'submit' %}
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-dc-address-edit-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-dc-address-edit-toggle')
+      var panel = document.querySelector('[data-dc-address-edit-panel="' + id + '"]')
+      if (!panel) return
+      var open = panel.classList.toggle('hidden') === false
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false')
+    })
+  })
+
+  // Real Shopify-provided country->province cascade (Shopify.CountryProvinceSelector,
+  // shipped by Shopify's own shopify_common.js on customer account pages).
+  document.querySelectorAll('select[id^="address_country_"]').forEach(function (countrySelect) {
+    var suffix = countrySelect.id.replace('address_country_', '')
+    if (window.Shopify && window.Shopify.CountryProvinceSelector) {
+      new window.Shopify.CountryProvinceSelector('address_country_' + suffix, 'address_province_' + suffix, {
+        hideElement: 'address_province_' + suffix,
+      })
+    }
+  })
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-addresses.name",
+  "settings": []
+}
+{% endschema %}

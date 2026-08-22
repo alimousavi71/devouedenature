@@ -1,0 +1,62 @@
+{%- comment -%}
+  Cart PAGE line item row (distinct from snippets/dc-cart-line-item.liquid,
+  which is the compact drawer row). Server-rendered from `item` (real Shopify
+  cart line item object). src/js/shopify/cart-page.js mirrors this exact
+  markup/class structure when re-rendering after AJAX quantity/remove updates
+  — keep the two in sync if you change this file.
+  Params: item {Object} — a cart.items[n] object
+{%- endcomment -%}
+<li class="dc-cart-page-line flex gap-4 py-6" data-dc-cart-line data-key="{{ item.key }}" data-index="{{ item.index | plus: 1 }}">
+  <a href="{{ item.url }}" class="shrink-0 w-24 h-24 md:w-28 md:h-28 bg-elevated overflow-hidden">
+    {%- if item.image -%}
+      {{ item.image | image_url: width: 224 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover' }}
+    {%- endif -%}
+  </a>
+
+  <div class="flex-1 min-w-0 flex flex-col gap-2">
+    <div class="flex items-start justify-between gap-3">
+      <div class="min-w-0">
+        {%- if item.product.vendor != blank -%}
+          <p class="font-mono text-caption uppercase text-muted mb-1">{{ item.product.vendor }}</p>
+        {%- endif -%}
+        <a href="{{ item.url }}" class="font-body text-body-lg text-ink hover:text-secondary transition-colors duration-fast ease-fast">
+          {{ item.product.title }}
+        </a>
+        {%- if item.variant.title != 'Default Title' -%}
+          <p class="font-mono text-caption text-muted mt-1">{{ item.variant.title }}</p>
+        {%- endif -%}
+        {%- for property in item.properties -%}
+          {%- assign property_first_char = property.first | slice: 0 -%}
+          {%- if property.last != blank and property_first_char != '_' -%}
+            <p class="font-mono text-caption text-muted mt-1">{{ property.first }}: {{ property.last }}</p>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <span data-dc-line-price class="shrink-0 font-body text-price text-ink">{{ item.final_line_price | money }}</span>
+    </div>
+
+    <div class="flex items-center justify-between mt-2">
+      <div data-dc-qty-stepper class="dc-qty-stepper">
+        <button type="button" data-dc-qty-decrease class="dc-qty-stepper__btn" aria-label="{{ 'products.product.quantity.decrease' | t: product: item.product.title | default: 'Decrease quantity' }}">
+          −
+        </button>
+        <input
+          type="number"
+          name="updates[{{ item.key }}]"
+          value="{{ item.quantity }}"
+          min="0"
+          data-dc-qty-value
+          data-index="{{ item.index | plus: 1 }}"
+          class="dc-qty-stepper__input"
+          aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | default: 'Quantity' }}"
+        >
+        <button type="button" data-dc-qty-increase class="dc-qty-stepper__btn" aria-label="{{ 'products.product.quantity.increase' | t: product: item.product.title | default: 'Increase quantity' }}">
+          +
+        </button>
+      </div>
+      <button type="button" data-dc-cart-remove class="font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast" aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | default: 'Remove' }}">
+        {{ 'sections.cart.remove' | t | default: 'Remove' }}
+      </button>
+    </div>
+  </div>
+</li>

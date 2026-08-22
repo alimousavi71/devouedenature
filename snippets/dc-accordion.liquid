@@ -1,0 +1,26 @@
+{%- comment -%}
+  Accordion row component — single source of truth (Home/Product/Contact FAQ, product info accordion).
+  Native <details>/<summary>, no JS required; animated via CSS grid-rows on .dc-accordion__body.
+  Params:
+    heading  - {String} required
+    body     - {String} required, rendered as-is (rte HTML allowed)
+    open     - {Boolean} optional, expanded by default
+    class    - {String} optional extra classes on <details>
+  Usage:
+    {% render 'dc-accordion', heading: 'Shipping', body: block.settings.description %}
+{%- endcomment -%}
+<details class="dc-accordion group border-b border-divider {{ class }}" {% if open %}open{% endif %}>
+  <summary class="dc-accordion__summary flex items-center justify-between py-4 cursor-pointer list-none font-body text-accordion uppercase">
+    <span>{{ heading }}</span>
+    <span class="dc-accordion__icon shrink-0" aria-hidden="true">
+      {% render 'icon', name: 'plus' %}
+    </span>
+  </summary>
+  <div class="dc-accordion__body">
+    <div class="dc-accordion__panel overflow-hidden">
+      <div class="pb-4 font-body text-body text-secondary">
+        {{ body }}
+      </div>
+    </div>
+  </div>
+</details>

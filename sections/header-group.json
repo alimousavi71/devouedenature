@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "t:sections.header.settings.header-group.label",
+  "sections": {
+    "header": {
+      "type": "dc-header",
+      "settings": {
+        "show_announcement": true,
+        "announcement_text": "Complimentary engraving and samples with every order",
+        "logo": "shopify://shop_images/Group_1410108868.svg",
+        "logo_2": "shopify://shop_images/Group_22.svg",
+        "logo_width": 140,
+        "menu": "main-menu",
+        "transparent_on_index": true
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}

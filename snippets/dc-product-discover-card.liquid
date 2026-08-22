@@ -1,0 +1,47 @@
+{%- comment -%}
+  Discover / related product card — redesign/Product.dc.html "Continue" grid.
+  Params: card_product
+{%- endcomment -%}
+{%- liquid
+  assign badge_text = ''
+  if card_product.metafields.custom.badges != blank
+    if card_product.metafields.custom.badges.list?
+      assign badge_text = card_product.metafields.custom.badges.value.first
+    else
+      assign badge_text = card_product.metafields.custom.badges
+    endif
+  elsif card_product.tags contains 'new'
+    assign badge_text = 'New'
+  elsif card_product.tags contains 'limited'
+    assign badge_text = 'Limited'
+  endif
+
+  assign category_label = card_product.type | default: card_product.vendor
+  if category_label == blank and card_product.collections.first.title != blank
+    assign category_label = card_product.collections.first.title
+  endif
+-%}
+<a href="{{ card_product.url }}" class="block hover:opacity-[0.94] transition-opacity duration-normal ease-normal">
+  <div class="relative aspect-[3/4] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] flex items-center justify-center">
+    {%- if card_product.featured_image -%}
+      {{
+        card_product.featured_image
+        | image_url: width: 900
+        | image_tag:
+          loading: 'lazy',
+          class: 'absolute inset-0 w-full h-full object-cover',
+          alt: card_product.title,
+          widths: '400, 600, 900',
+          sizes: '(min-width: 1024px) 33vw, 50vw'
+      }}
+    {%- endif -%}
+    {%- if badge_text != blank -%}
+      <span class="absolute top-4 left-4 z-[1] font-body text-[9px] tracking-[0.2em] uppercase text-secondary">{{ badge_text }}</span>
+    {%- endif -%}
+  </div>
+  {%- if category_label != blank -%}
+    <p class="mt-5 font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ category_label }}</p>
+  {%- endif -%}
+  <p class="mt-[10px] font-display text-[21px] leading-none text-ink">{{ card_product.title }}</p>
+  <p class="mt-2 font-body text-[12px] tracking-[0.05em] text-secondary">{{ card_product.price | money }}</p>
+</a>

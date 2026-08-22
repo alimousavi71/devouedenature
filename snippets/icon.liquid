@@ -1,0 +1,41 @@
+{%- comment -%}
+  Centralized icon accessor. Renders the matching snippets/icon-*.liquid.
+  Usage: {% render 'icon', name: 'search' %}
+  Snippet names must be string literals — dynamic {% render %} is not supported.
+{%- endcomment -%}
+{%- case name -%}
+  {%- when 'box' -%}
+    {% render 'icon-box' %}
+  {%- when 'facebook' -%}
+    {% render 'icon-facebook' %}
+  {%- when 'hamburger' -%}
+    {% render 'icon-hamburger' %}
+  {%- when 'instagram' -%}
+    {% render 'icon-instagram' %}
+  {%- when 'minus' -%}
+    {% render 'icon-minus' %}
+  {%- when 'page' -%}
+    {% render 'icon-page' %}
+  {%- when 'pinterest' -%}
+    {% render 'icon-pinterest' %}
+  {%- when 'plus' -%}
+    {% render 'icon-plus' %}
+  {%- when 'remove' -%}
+    {% render 'icon-remove' %}
+  {%- when 'search' -%}
+    {% render 'icon-search' %}
+  {%- when 'snapchat' -%}
+    {% render 'icon-snapchat' %}
+  {%- when 'tick' -%}
+    {% render 'icon-tick' %}
+  {%- when 'tiktok' -%}
+    {% render 'icon-tiktok' %}
+  {%- when 'tumblr' -%}
+    {% render 'icon-tumblr' %}
+  {%- when 'twitter' -%}
+    {% render 'icon-twitter' %}
+  {%- when 'vimeo' -%}
+    {% render 'icon-vimeo' %}
+  {%- when 'youtube' -%}
+    {% render 'icon-youtube' %}
+{%- endcase -%}

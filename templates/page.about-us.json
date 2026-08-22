@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "main": {
+      "type": "dc-page",
+      "blocks": {
+        "nav-1": {
+          "type": "nav_anchor",
+          "settings": {
+            "label": "The idea",
+            "anchor": "the-idea"
+          }
+        },
+        "nav-2": {
+          "type": "nav_anchor",
+          "settings": {
+            "label": "The materials",
+            "anchor": "the-materials"
+          }
+        },
+        "nav-3": {
+          "type": "nav_anchor",
+          "settings": {
+            "label": "The atelier",
+            "anchor": "the-atelier"
+          }
+        },
+        "nav-4": {
+          "type": "nav_anchor",
+          "settings": {
+            "label": "The people",
+            "anchor": "the-people"
+          }
+        },
+        "fact-1": {
+          "type": "stat_fact",
+          "settings": {
+            "number": "2011",
+            "label": "Founded, rue Chapon"
+          }
+        },
+        "fact-2": {
+          "type": "stat_fact",
+          "settings": {
+            "number": "19",
+            "label": "Ingredients, average"
+          }
+        },
+        "fact-3": {
+          "type": "stat_fact",
+          "settings": {
+            "number": "11 s",
+            "label": "Between fillings"
+          }
+        }
+      },
+      "block_order": ["nav-1", "nav-2", "nav-3", "nav-4", "fact-1", "fact-2", "fact-3"],
+      "settings": {
+        "eyebrow": "The house",
+        "heading": "The maison",
+        "intro": "One prose column at sixty-eight characters, an optional full-bleed image, and a facts list. Used for About and any editorial page.",
+        "show_image_placeholder": true,
+        "image_placeholder": "the atelier in grasse — full bleed",
+        "lead_quote": "The house was founded on a single idea: a fragrance should be finished, not decorated.",
+        "facts_heading": "In short",
+        "cta_heading": "Visit the refill bar",
+        "cta_text": "Bring any bottle with an undamaged collar. Refills are charged at sixty percent.",
+        "cta_button_label": "Book a visit",
+        "cta_button_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,26 @@
+{%- comment -%}
+  Cart quantity stepper — DesignSystem.dc.html (118×44, − / value / +).
+  Used in cart drawer; cart.js lineItemHTML mirrors this markup.
+  Params:
+    quantity - {Number} required
+    class      - {String} optional extra classes on wrapper
+{%- endcomment -%}
+<div data-dc-qty-stepper class="dc-qty-stepper {{ class }}">
+  <button
+    type="button"
+    data-dc-qty-decrease
+    class="dc-qty-stepper__btn"
+    aria-label="{{ 'products.product.quantity.decrease' | t | default: 'Decrease quantity' }}"
+  >
+    −
+  </button>
+  <span data-dc-qty-value class="dc-qty-stepper__value tabular-nums">{{ quantity }}</span>
+  <button
+    type="button"
+    data-dc-qty-increase
+    class="dc-qty-stepper__btn"
+    aria-label="{{ 'products.product.quantity.increase' | t | default: 'Increase quantity' }}"
+  >
+    +
+  </button>
+</div>

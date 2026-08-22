@@ -1,0 +1,44 @@
+{%- comment -%}
+  New mega-menu panel — Devoué de Nature theme migration.
+  Renders one dropdown panel for a single top-level menu link that has children.
+  Params:
+    link          - {Object} required, a linklist link with .links (its children)
+    panel_id      - {String} required, unique id for aria-controls wiring
+    featured_image - {Object} optional, section.settings image for the 4th column tile
+    featured_title - {String} optional
+    featured_url   - {String} optional
+{%- endcomment -%}
+<div
+  id="{{ panel_id }}"
+  class="dc-mega-menu absolute left-0 top-full w-full bg-surface border-t border-divider shadow-1 opacity-0 invisible z-40"
+  role="region"
+  aria-label="{{ link.title }}"
+>
+  <div class="mx-auto max-w-page px-5 md:px-10 py-8 md:py-10 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-[30px]">
+    {%- for column in link.links limit: 3 -%}
+      <div data-dc-mega-col>
+        <div class="font-mono text-caption text-muted uppercase">{{ column.title }}</div>
+        <div class="mt-4 flex flex-col gap-3">
+          {%- for item in column.links -%}
+            <a href="{{ item.url }}" class="dc-link font-body text-body text-secondary">
+              {{ item.title }}
+            </a>
+          {%- else -%}
+            <a href="{{ column.url }}" class="dc-link font-body text-body text-secondary">
+              {{ column.title }}
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <a href="{{ featured_url | default: link.url }}" class="relative block overflow-hidden bg-elevated aspect-[4/5] group" data-dc-mega-col>
+      {%- if featured_image -%}
+        {{ featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover transition-transform duration-slow ease-slow group-hover:scale-105' }}
+      {%- endif -%}
+      {%- if featured_title -%}
+        <span class="absolute bottom-4 left-4 font-body text-nav uppercase text-bg bg-ink/80 px-3 py-2">{{ featured_title }}</span>
+      {%- endif -%}
+    </a>
+  </div>
+</div>

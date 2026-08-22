@@ -1,0 +1,114 @@
+{%- comment -%}
+  New single-order-detail page (Shopify's customers/order.json is always a
+  single-order template — the full order list lives on the account page).
+  From scratch, does not reuse sections/main-order.liquid.
+{%- endcomment -%}
+
+<div class="max-w-page mx-auto px-5 md:px-6 py-7 grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-6 md:gap-[90px]">
+  {% render 'dc-account-nav', current: 'overview' %}
+
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h1 class="font-display text-page-title">{{ 'customer.order.title' | t: name: order.name | default: order.name }}</h1>
+        <p class="font-mono text-caption text-muted mt-1">{{ order.created_at | time_tag: format: 'date_at_time' }}</p>
+      </div>
+      <div class="flex gap-2">
+        {% render 'dc-badge', text: order.financial_status_label, style: 'outline' %}
+        {% render 'dc-badge', text: order.fulfillment_status_label, style: 'outline' %}
+      </div>
+    </div>
+
+    {%- if order.cancelled -%}
+      <p class="font-body text-body-sm text-error">
+        {{ 'customer.order.cancelled_html' | t: date: order.cancelled_at | date: '%D' | default: 'This order was cancelled.' }}
+      </p>
+    {%- endif -%}
+
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_320px] gap-6">
+      <ul class="flex flex-col divide-y divide-divider border-t border-b border-divider">
+        {%- for line_item in order.line_items -%}
+          <li class="flex gap-3 py-4">
+            <a href="{{ line_item.product.url | default: '#' }}" class="shrink-0 w-20 h-20 bg-elevated overflow-hidden">
+              {%- if line_item.image -%}
+                {{ line_item.image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover' }}
+              {%- endif -%}
+            </a>
+            <div class="flex-1 min-w-0 flex flex-col gap-1">
+              <a href="{{ line_item.product.url | default: '#' }}" class="font-body text-body text-ink hover:text-secondary transition-colors duration-fast ease-fast">
+                {{ line_item.title }}
+              </a>
+              {%- unless line_item.product.has_only_default_variant -%}
+                <p class="font-mono text-caption text-muted">
+                  {%- for option in line_item.options_with_values -%}
+                    {{ option.value }}{% unless forloop.last %}, {% endunless %}
+                  {%- endfor -%}
+                </p>
+              {%- endunless -%}
+              {%- if line_item.sku != blank -%}
+                <p class="font-mono text-caption text-muted">{{ line_item.sku }}</p>
+              {%- endif -%}
+              {%- if line_item.fulfillment.tracking_url -%}
+                <a href="{{ line_item.fulfillment.tracking_url }}" class="font-mono text-caption uppercase underline text-secondary hover:text-ink transition-colors duration-fast ease-fast">
+                  {{ 'customer.order.track_shipment' | t | default: 'Track shipment' }}
+                </a>
+              {%- endif -%}
+              <div class="flex items-center justify-between mt-1">
+                <span class="font-mono text-caption text-muted">{{ 'customer.order.quantity' | t | default: 'Qty' }} {{ line_item.quantity }}</span>
+                <span class="font-body text-price">{{ line_item.final_line_price | money }}</span>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <aside class="lg:sticky lg:top-[120px] h-fit flex flex-col gap-4">
+        <div class="flex flex-col gap-2 font-body text-body-sm">
+          <div class="flex justify-between">
+            <span class="text-secondary">{{ 'customer.order.subtotal' | t | default: 'Subtotal' }}</span>
+            <span>{{ order.line_items_subtotal_price | money }}</span>
+          </div>
+          {%- for shipping_method in order.shipping_methods -%}
+            <div class="flex justify-between">
+              <span class="text-secondary">{{ shipping_method.title }}</span>
+              <span>{{ shipping_method.price | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- for tax_line in order.tax_lines -%}
+            <div class="flex justify-between">
+              <span class="text-secondary">{{ tax_line.title }} ({{ tax_line.rate | times: 100 }}%)</span>
+              <span>{{ tax_line.price | money }}</span>
+            </div>
+          {%- endfor -%}
+          {%- if order.total_refunded_amount > 0 -%}
+            <div class="flex justify-between text-error">
+              <span>{{ 'customer.order.refunded' | t | default: 'Refunded' }}</span>
+              <span>-{{ order.total_refunded_amount | money }}</span>
+            </div>
+          {%- endif -%}
+          <div class="flex justify-between font-display text-h4 pt-2 border-t border-divider">
+            <span>{{ 'customer.order.total' | t | default: 'Total' }}</span>
+            <span>{{ order.total_net_amount | default: order.total_price | money_with_currency }}</span>
+          </div>
+        </div>
+
+        {%- if order.shipping_address != null -%}
+          <div class="border-t border-divider pt-4">
+            <p class="font-mono text-caption uppercase text-muted mb-2">{{ 'customer.order.shipping_address' | t | default: 'Delivered to' }}</p>
+            <address class="not-italic font-body text-body-sm text-secondary">{{ order.shipping_address | format_address }}</address>
+          </div>
+        {%- endif -%}
+
+        {%- assign order_back_label = 'customer.order.back' | t -%}
+        {% render 'dc-button', text: order_back_label, variant: 'outline', url: routes.account_url %}
+      </aside>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer order",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "dc-search",
+      "blocks": {
+        "suggestion-1": { "type": "suggestion", "settings": { "label": "Nuit Vermeille" } },
+        "suggestion-2": { "type": "suggestion", "settings": { "label": "Refill" } },
+        "suggestion-3": { "type": "suggestion", "settings": { "label": "Coffret" } },
+        "suggestion-4": { "type": "suggestion", "settings": { "label": "Engraving" } },
+        "suggestion-5": { "type": "suggestion", "settings": { "label": "Iris" } },
+        "suggestion-6": { "type": "suggestion", "settings": { "label": "Vetiver" } }
+      },
+      "block_order": ["suggestion-1", "suggestion-2", "suggestion-3", "suggestion-4", "suggestion-5", "suggestion-6"],
+      "settings": {
+        "eyebrow": "Search",
+        "heading": "Search the maison",
+        "intro": "One template, three states: results, no result, and the loading pass. Suggestions appear from the second character.",
+        "ask_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

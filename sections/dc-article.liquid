@@ -1,0 +1,110 @@
+{%- comment -%}
+  New single-article section (Devoué de Nature redesign). Net-new — does not
+  reuse sections/main-article.liquid. Styled per redesign/Article.dc.html.
+  Rich-text `article.content` wrapper uses Tailwind arbitrary-variant
+  selectors to style genuine merchant-authored content — the established
+  exception pattern for rich text in this project.
+{%- endcomment -%}
+
+{%- liquid
+  assign words = article.content | strip_html | split: ' ' | size
+  assign read_minutes = words | divided_by: 200 | at_least: 1
+  assign cross_sell = section.settings.cross_sell_product
+-%}
+
+<div class="max-w-page mx-auto px-5 sm:px-6 lg:px-10 pt-[70px] pb-16">
+  <div class="flex gap-4 font-mono text-caption uppercase text-muted">
+    {%- if article.tags.size > 0 -%}<span>{{ article.tags.first }}</span>{%- endif -%}
+    <span>{{ article.published_at | date: '%-d %B %Y' }}</span>
+    {%- if article.author != blank -%}<span>{{ article.author }}</span>{%- endif -%}
+    <span>{{ read_minutes }} min</span>
+  </div>
+  <h1 class="font-display text-page-title text-ink mt-5 max-w-[24ch]">{{ article.title }}</h1>
+</div>
+
+{%- if article.image -%}
+  <div class="w-full aspect-[21/9] bg-elevated overflow-hidden">
+    {{ article.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: article.title }}
+  </div>
+{%- endif -%}
+
+<div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 pt-16 lg:pt-20 grid grid-cols-1 lg:grid-cols-[220px_minmax(0,1fr)_220px] gap-10 lg:gap-[70px] items-start">
+  <aside class="hidden lg:flex sticky top-[120px] border-t border-ink pt-5 font-mono text-caption uppercase text-secondary flex-col gap-3">
+    {%- comment -%} In-page nav is generated from H2s in article.content in a real Shopify theme only via a JS scan, or left as a static index if the content structure is fixed. Left minimal here since content is merchant-authored and its heading count/text isn't knowable ahead of render. {%- endcomment -%}
+    <span class="font-body text-body-sm text-muted">{{ 'sections.article.in_this_note' | t | default: 'In this note' }}</span>
+  </aside>
+
+  <div
+    class="font-body text-body-lg text-ink max-w-[68ch]
+      [&_p]:my-[22px] [&_p]:text-secondary
+      [&_h2]:font-display [&_h2]:text-[28px] [&_h2]:text-ink [&_h2]:mt-11 [&_h2]:mb-[18px]
+      [&_h3]:font-display [&_h3]:text-h4 [&_h3]:text-ink [&_h3]:mt-9 [&_h3]:mb-4
+      [&_blockquote]:font-display [&_blockquote]:text-[23px] [&_blockquote]:leading-[1.6] [&_blockquote]:text-ink [&_blockquote]:border-l [&_blockquote]:border-gold [&_blockquote]:pl-6 [&_blockquote]:my-10 [&_blockquote]:not-italic
+      [&_a]:underline [&_a:hover]:text-secondary
+      [&_img]:w-full [&_img]:h-auto"
+  >
+    {{ article.content }}
+  </div>
+
+  <aside class="lg:sticky lg:top-[120px] lg:border-t lg:border-ink lg:pt-5">
+    <div class="font-mono text-caption uppercase text-muted">{{ 'sections.article.share' | t | default: 'Share' }}</div>
+    <div class="mt-4 flex flex-col gap-3 font-mono text-body-sm uppercase text-secondary">
+      <button type="button" data-dc-copy-link class="text-left hover:text-ink transition-colors duration-fast ease-fast">{{ 'sections.article.copy_link' | t | default: 'Copy link' }}</button>
+      <a href="https://www.instagram.com/" class="hover:text-ink transition-colors duration-fast ease-fast">{{ 'sections.article.instagram' | t | default: 'Instagram' }}</a>
+      <a href="mailto:?subject={{ article.title | url_encode }}" class="hover:text-ink transition-colors duration-fast ease-fast">{{ 'sections.article.email' | t | default: 'Email' }}</a>
+    </div>
+
+    {%- if cross_sell != blank -%}
+      <div class="mt-9 font-mono text-caption uppercase text-muted">{{ 'sections.article.in_this_note' | t | default: 'In this note' }}</div>
+      <a href="{{ cross_sell.url }}" class="block mt-4">
+        <div class="relative aspect-[3/4] bg-elevated overflow-hidden">
+          {%- if cross_sell.featured_image -%}
+            {{ cross_sell.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: cross_sell.title }}
+          {%- endif -%}
+        </div>
+        <div class="mt-3 font-display text-h4 text-ink">{{ cross_sell.title }}</div>
+        <div class="mt-1 font-body text-body-sm text-secondary">{{ cross_sell.price | money }}</div>
+      </a>
+    {%- endif -%}
+  </aside>
+</div>
+
+<script>
+  (function () {
+    var btn = document.currentScript.previousElementSibling.querySelector('[data-dc-copy-link]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      navigator.clipboard && navigator.clipboard.writeText(window.location.href);
+    });
+  })();
+</script>
+
+{%- assign other_articles = blog.articles -%}
+<div class="max-w-[1400px] mx-auto px-5 sm:px-6 lg:px-10 pt-24 lg:pt-[110px] pb-16 lg:pb-[130px]">
+  <div class="flex justify-between items-baseline pb-8 border-b border-divider">
+    <h2 class="font-display text-h2 text-ink">{{ 'sections.article.continue_reading' | t | default: 'Continue reading' }}</h2>
+    <a href="{{ blog.url }}" class="font-mono text-caption uppercase border-b border-ink pb-1">{{ 'sections.article.all_notes' | t | default: 'All notes' }}</a>
+  </div>
+  <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    {%- assign shown = 0 -%}
+    {%- for other_article in other_articles -%}
+      {%- if other_article.id != article.id and shown < 3 -%}
+        {% render 'dc-article-card', card_article: other_article %}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "DC Article",
+  "settings": [
+    {
+      "type": "product",
+      "id": "cross_sell_product",
+      "label": "Cross-sell product"
+    }
+  ]
+}
+{% endschema %}

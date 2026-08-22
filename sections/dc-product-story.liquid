@@ -1,0 +1,49 @@
+{%- comment -%}
+  Product story bands — image + heading + text from product metafields
+  custom.section_N_heading / section_N_image / section_N_text (N = 1..3).
+{%- endcomment -%}
+
+{%- for i in (1..3) -%}
+  {%- assign h_key = 'section_' | append: i | append: '_heading' -%}
+  {%- assign i_key = 'section_' | append: i | append: '_image' -%}
+  {%- assign t_key = 'section_' | append: i | append: '_text' -%}
+  {%- assign heading = product.metafields.custom[h_key].value -%}
+  {%- assign image = product.metafields.custom[i_key].value -%}
+  {%- assign body = product.metafields.custom[t_key] -%}
+  {%- assign reverse = false -%}
+  {%- if i == 2 -%}
+    {%- assign reverse = true -%}
+  {%- endif -%}
+
+  {%- if heading != blank or image != blank or body != blank -%}
+    <section class="max-w-page mx-auto px-5 md:px-10 py-12 md:py-[90px]" data-reveal>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] items-center">
+        <div class="{% if reverse %}md:order-2{% endif %}">
+          {%- if image != blank -%}
+            <div class="aspect-[4/5] overflow-hidden bg-elevated">
+              {{ image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', widths: '600, 900, 1200' }}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="{% if reverse %}md:order-1{% endif %}">
+          {%- if heading != blank -%}
+            <h2 class="font-display text-h2">{{ heading }}</h2>
+          {%- endif -%}
+          {%- if body != blank -%}
+            <div class="font-body text-body text-secondary mt-5 max-w-[52ch] [&_p]:mb-4">
+              {{ body | metafield_tag }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+{%- endfor -%}
+
+{% schema %}
+{
+  "name": "Product story",
+  "settings": [],
+  "presets": [{ "name": "Product story" }]
+}
+{% endschema %}

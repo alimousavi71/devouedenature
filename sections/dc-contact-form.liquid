@@ -1,0 +1,242 @@
+{%- comment -%}
+  Contact form + sidebar — redesign/Contact.dc.html main grid.
+  Real Shopify data: {% form 'contact' %}, info blocks, map image.
+{%- endcomment -%}
+
+{%- liquid
+  assign subjects_raw = section.settings.subjects | default: 'An order, A return, Refills, Engraving, Press, Something else'
+  assign subject_list = subjects_raw | split: ','
+  assign consent_label = section.settings.consent_label | default: 'Send me the quarterly letter'
+  assign send_label = section.settings.send_button_label | default: 'Send the message'
+  assign map_placeholder = section.settings.map_placeholder | default: 'map — rue de sévigné, paris'
+  assign first_name_label = 'templates.contact.form.first_name' | t | default: 'First name'
+  assign last_name_label = 'templates.contact.form.last_name' | t | default: 'Family name'
+  assign email_label = 'templates.contact.form.email' | t | default: 'Email address'
+  assign order_label = 'templates.contact.form.order_number' | t | default: 'Order number — optional'
+  assign subject_label = 'templates.contact.form.subject' | t | default: 'Subject'
+  assign message_label = 'templates.contact.form.comment' | t | default: 'Your message'
+  assign success_message = 'templates.contact.form.post_success' | t | default: 'Received — we will reply shortly'
+  assign info_blocks = section.blocks | where: 'type', 'info'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-page mx-auto px-5 md:px-10 pt-[100px] pb-[130px] grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-10 lg:gap-[100px] items-start">
+    <div data-reveal>
+      {%- form 'contact', id: 'ContactForm', class: 'dc-contact-form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="font-body text-body text-success border border-success px-4 py-3 m-0">
+            {{ success_message }}
+          </p>
+        {%- else -%}
+          {%- if form.errors -%}
+            <p class="font-body text-body-sm text-error m-0 mb-6">
+              {{ form.errors | default_errors }}
+            </p>
+          {%- endif -%}
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-[34px] gap-x-10">
+            <label class="dc-field block">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ first_name_label }}</span>
+              <input
+                type="text"
+                name="contact[first_name]"
+                autocomplete="given-name"
+                value="{{ form.first_name }}"
+                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+              >
+            </label>
+            <label class="dc-field block">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ last_name_label }}</span>
+              <input
+                type="text"
+                name="contact[last_name]"
+                autocomplete="family-name"
+                value="{{ form.last_name }}"
+                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+              >
+            </label>
+            <label class="dc-field block">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ email_label }}*</span>
+              <input
+                type="email"
+                name="contact[email]"
+                autocomplete="email"
+                value="{{ form.email }}"
+                required
+                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+              >
+            </label>
+            <label class="dc-field block">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ order_label }}</span>
+              <input
+                type="text"
+                name="contact[order_number]"
+                value="{{ form.order_number }}"
+                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+              >
+            </label>
+          </div>
+
+          {%- if subject_list.size > 0 -%}
+            <div class="mt-[46px]">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted block mb-4">{{ subject_label }}</span>
+              <div class="flex flex-wrap gap-[10px]">
+                {%- for subject in subject_list -%}
+                  {%- assign subject_value = subject | strip -%}
+                  {%- if subject_value != blank -%}
+                    <label class="h-10 px-5 inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase border cursor-pointer transition-all duration-normal ease-normal border-border text-secondary has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-bg">
+                      <input type="radio" name="contact[subject]" value="{{ subject_value }}" class="sr-only" {% if forloop.first %}checked{% endif %}>
+                      {{ subject_value }}
+                    </label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+
+          <label class="dc-field block mt-[46px]">
+            <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ message_label }}*</span>
+            <textarea
+              name="contact[body]"
+              rows="5"
+              required
+              class="w-full mt-2 pb-[14px] bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] leading-[1.8] text-ink resize-y min-h-[120px]"
+            >{{ form.body }}</textarea>
+          </label>
+
+          <label class="flex gap-3 items-center mt-[34px] font-body text-[12px] tracking-[0.06em] text-secondary cursor-pointer">
+            <input
+              type="checkbox"
+              name="contact[newsletter]"
+              class="dc-contact-consent shrink-0"
+            >
+            {{ consent_label }}
+          </label>
+
+          {% render 'dc-button', text: send_label, variant: 'filled', sweep: true, type: 'submit', class: 'w-full max-w-[320px] h-[58px] mt-[38px]' %}
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    {%- if info_blocks.size > 0 or section.settings.map_image != blank or section.settings.show_map_placeholder -%}
+      <aside class="border-t border-ink pt-[26px] lg:sticky lg:top-[120px] self-start" data-reveal>
+        {%- for block in info_blocks -%}
+          {%- liquid
+            assign block_label = block.settings.label
+            assign block_value = block.settings.value
+            assign block_note = block.settings.note
+          -%}
+          {%- if block_label != blank or block_value != blank or block_note != blank -%}
+            <div class="py-[26px] border-b border-border" {{ block.shopify_attributes }}>
+              {%- if block_label != blank -%}
+                <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ block_label }}</p>
+              {%- endif -%}
+              {%- if block_value != blank -%}
+                <p class="font-display text-[20px] leading-[1.4] text-ink mt-[14px] mb-0">{{ block_value }}</p>
+              {%- endif -%}
+              {%- if block_note != blank -%}
+                <p class="font-body text-[12px] leading-[1.75] text-muted max-w-[32ch] mt-2 mb-0">{{ block_note }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.map_image != blank -%}
+          <div class="relative aspect-[4/3] mt-[34px] overflow-hidden">
+            {{ section.settings.map_image | image_url: width: 840 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', widths: '420, 630, 840' }}
+          </div>
+        {%- elsif section.settings.show_map_placeholder -%}
+          <div class="relative aspect-[4/3] mt-[34px] bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] flex items-center justify-center">
+            <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">{{ map_placeholder }}</span>
+          </div>
+        {%- endif -%}
+      </aside>
+    {%- endif -%}
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Contact form",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    {
+      "type": "text",
+      "id": "subjects",
+      "label": "Subjects (comma separated)",
+      "default": "An order, A return, Refills, Engraving, Press, Something else"
+    },
+    {
+      "type": "text",
+      "id": "consent_label",
+      "label": "Newsletter consent label",
+      "default": "Send me the quarterly letter"
+    },
+    {
+      "type": "text",
+      "id": "send_button_label",
+      "label": "Send button label",
+      "default": "Send the message"
+    },
+    { "type": "header", "content": "Map" },
+    { "type": "image_picker", "id": "map_image", "label": "Map image", "info": "Recommended 840 × 630 px (4:3)." },
+    { "type": "checkbox", "id": "show_map_placeholder", "label": "Show map placeholder when no image", "default": true },
+    { "type": "text", "id": "map_placeholder", "label": "Map placeholder label", "default": "map — rue de sévigné, paris" }
+  ],
+  "blocks": [
+    {
+      "type": "info",
+      "name": "Contact detail",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "By letter" },
+        { "type": "text", "id": "value", "label": "Value", "default": "clients@maison-sevigne.com" },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note",
+          "default": "Replied to within one working day, Monday to Friday."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact form",
+      "blocks": [
+        {
+          "type": "info",
+          "settings": {
+            "label": "By letter",
+            "value": "clients@maison-sevigne.com",
+            "note": "Replied to within one working day, Monday to Friday."
+          }
+        },
+        {
+          "type": "info",
+          "settings": {
+            "label": "By telephone",
+            "value": "+33 1 42 74 08 19",
+            "note": "Weekdays, 10h — 18h Paris time."
+          }
+        },
+        {
+          "type": "info",
+          "settings": {
+            "label": "Head office",
+            "value": "14 rue de Sévigné, 75004 Paris",
+            "note": "By appointment only. Not a retail address."
+          }
+        },
+        {
+          "type": "info",
+          "settings": {
+            "label": "Press and partnerships",
+            "value": "presse@maison-sevigne.com",
+            "note": "Samples and imagery on request."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

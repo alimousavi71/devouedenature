@@ -1,0 +1,219 @@
+{
+  "sections": {
+    "main": {
+      "type": "dc-faq-grouped",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "Where do you currently deliver?",
+            "answer": "<p>We currently ship across Canada and the United States. Shipping availability and rates are calculated at checkout based on your location.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "When can I expect to receive my order?",
+            "answer": "<p>Orders are processed within 1–2 business days. Once shipped, you will receive a confirmation email with tracking information from the chosen courier. \n\nDelivery times may vary depending on location and customs processing. Once our team has carefully processed your order, we ship it according to your instructions. If sent via standard shipping, it will take approximately 4 to 8 business days depending on the destination. For deliveries to remote areas, kindly bear in mind that shipping times may be longer.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "How do I track my order?",
+            "answer": "<p>Once your order ships, you will receive a tracking number via email to monitor delivery in real time.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "Do you offer complementary shipping?",
+            "answer": "<p>We offer complimentary shipping on qualifying orders over $250 CAD/USD. Thresholds may vary by region and are displayed at checkout.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "Will my order be subject to customs or duty charges?",
+            "answer": "<p>We do our best to arrange shipments as prepaid (duties and taxes included), however in some cases additional customs or duty charges may still apply depending on the destination and local regulations. While we aim to minimize this, it cannot be guaranteed.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "group_name": "Shipping",
+            "question": "What should I do if my order has not arrived?",
+            "answer": "<p>Your satisfaction is our utmost concern. While most parcels arrive on time, there can be the occasional delay. Very rarely, the tracking may show as \"delivered\" when in fact you have not received your parcel. If you believe this is the case with your order, we suggest that you:\n\n- Check if an attempted delivery notice has been left in your letter box.\n- Use the delivery confirmation and tracking number sent by email to contact the courier.\n\nYou may also contact us to obtain confirmation of shipping or information on the shipping status.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "group_name": "Returns & Exchanges",
+            "question": "What is your return policy?",
+            "answer": "<p>If you are not fully satisfied with your Dévoué de Nature purchase, eligible returns may be requested within 14 days of delivery.\n\nProducts must be unused or gently used (approximately less than 5% used), returned in their original packaging, and accompanied by proof of purchase. Return shipping costs are the responsibility of the customer unless the item arrived damaged, defective, or incorrect.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "group_name": "Returns & Exchanges",
+            "question": "Can I return a product if it’s been opened?",
+            "answer": "<p>Due to hygiene and safety standards, most opened or excessively used products are not eligible for return.\n\nHowever, if you experience a skin sensitivity or compatibility concern with your first use, we offer a one-time return per product, even if gently used. Please contact our support team for personalized assistance.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "group_name": "Returns & Exchanges",
+            "question": "How do I initiate a return?",
+            "answer": "<p>To initiate a return, please contact our support team at return@devouedenature.com with the following details:\n\n* Order number\n* Item(s) you wish to return\n* Reason for return\n\nOur team will review your request and provide personalized return instructions.\n\nPlease note that returns sent without prior authorization may not be accepted.</p>"
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "group_name": "Returns & Exchanges",
+            "question": "When will I receive my refund?",
+            "answer": "<p>Once your return is received and inspected, approved refunds are processed to the original payment method within approximately 5–10 business days.\n\nPlease note that original shipping fees, duties, taxes, and brokerage charges are non-refundable. Financial institutions may require additional processing time before the refund appears on your statement.</p>"
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "group_name": "Returns & Exchanges",
+            "question": "What if my order arrives damaged?",
+            "answer": "<p>If your order arrives damaged, defective, or incorrect, please contact us within 48 hours of delivery at return@devouedenature.com with photos of the item and packaging.\n\nOur team will evaluate the issue and resolve it at no additional cost to you.</p>"
+          }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "group_name": "Cancellations & Changes",
+            "question": "Can I modify or cancel my order after it has been placed?",
+            "answer": "<p>Should you wish to alter your order once it has been submitted via our website, please feel free to contact us immediately. Kindly bear in mind that orders from Dévoué De Nature are fulfilled in a timely manner and may have already shipped.</p>"
+          }
+        },
+        "q13": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "What makes Dévoué different from other skincare brands?",
+            "answer": "<p>Dévoué is a physician-led luxury skincare brand that combines advanced biotechnology with high-performance ingredients. Our formulations are designed to support skin communication, barrier function, and regeneration, delivering both immediate and long-term visible results.</p>"
+          }
+        },
+        "q14": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "Is your Exfoliating Cleanser suitable for daily use?",
+            "answer": "<p>The L’Or Celeste Exfoliating Cleanser is formulated with a gentle physical exfoliant and is best used 3–4 times per week. This ensures effective exfoliation while maintaining the skin’s natural balance and avoiding over-exfoliation.</p>"
+          }
+        },
+        "q15": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "Are your products suitable for all skin types?",
+            "answer": "<p>Yes. Our formulations are crafted to be both effective and gentle, making them suitable for most skin types. In particular, our Anti-Aging Serum, Day Cream, and Night Cream have successfully passed hypoallergenic testing, making them ideal for sensitive skin. However, we still recommend performing a patch test before use.</p>"
+          }
+        },
+        "q16": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "What are exosomes/extracellular vesicles and what do they do in skincare?",
+            "answer": "<p>Exosomes, also known as extracellular vesicles, are microscopic biological messengers that support cell-to-cell communication within the skin. In skincare, they help promote visible skin renewal and repair while enhancing the skin’s responsiveness to active ingredients—allowing formulas to perform more effectively over time.</p>"
+          }
+        },
+        "q17": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "What are peptides and how do they benefit the skin?",
+            "answer": "<p>Peptides are short chains of amino acids that act as cellular messengers within the skin.\n\nThey help support collagen production, improve the appearance of firmness, and soften the look of fine lines—contributing to a smoother, more refined complexion.</p>"
+          }
+        },
+        "q18": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "What is the correct order to use the L’Or Celeste Ritual?",
+            "answer": "<p>For best results, follow this sequence:\n\n1-  Exfoliating Cleanser (recommended 3-4 times a week)\n2-  Essence\n3-  Serum\n4-  Day Cream (morning) or Night Cream (evening)\n\nEach step is designed to build upon the last, allowing the skin to fully absorb and benefit from every formulation.\n\nIn the morning, we recommend finishing your routine with a broad-spectrum sunscreen to protect the skin and preserve results.</p>"
+          }
+        },
+        "q19": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "What is an essence and how does it benefit the skin?",
+            "answer": "<p>An essence is a lightweight, fast-absorbing step used after cleansing to hydrate, activate, and prepare the skin for optimal absorption of active ingredients. The Dévoué de Nature L’Or Celeste Essence helps to:\n\n-  Deeply hydrate and replenish moisture\n-  Support cellular communication with green tea–derived exosomes\n-  Enhance the absorption and performance of the products that follow\n\nFormulated with advanced hydration exosome technology, peptides, hyaluronic acid, and our highest concentration of gold, it works to plump, smooth, and visibly brighten the skin—creating the ideal foundation for your routine.</p>"
+          }
+        },
+        "q20": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "Do I really need an essence?",
+            "answer": "<p>While not essential, an essence significantly enhances the performance of your skincare routine.\n\nIt helps the skin draw in and retain moisture—visibly plumping and softening—while improving the absorption of active ingredients, allowing your routine to work more effectively and deliver results more efficiently. Think of it as the foundation that elevates every step that follows.</p>"
+          }
+        },
+        "q21": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "Are your products clinically tested?",
+            "answer": "<p>Our formulations are developed using clinically supported ingredients and grounded in dermatological science. We prioritize evidence-based actives known for their efficacy, safety, and skin compatibility.</p>"
+          }
+        },
+        "q22": {
+          "type": "question",
+          "settings": {
+            "group_name": "Product",
+            "question": "Can I use your products with other brands?",
+            "answer": "<p>Yes, Dévoué products are designed to integrate seamlessly into your existing routine. For optimal results and a fully elevated experience, we recommend using them as part of the complete L’Or Celeste Ritual.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11",
+        "q12",
+        "q13",
+        "q14",
+        "q15",
+        "q16",
+        "q17",
+        "q18",
+        "q19",
+        "q20",
+        "q21",
+        "q22"
+      ],
+      "settings": {
+        "eyebrow": "FAQ",
+        "heading": "Common questions",
+        "intro": "Answers about shipping, returns, and the L’Or Celeste ritual.",
+        "contact_url": "/pages/contact",
+        "contact_label": "Still stuck? Write to us"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

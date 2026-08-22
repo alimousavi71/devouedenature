@@ -1,0 +1,73 @@
+{%- comment -%}
+  Contact hero — redesign/Contact.dc.html breadcrumb + intro header.
+{%- endcomment -%}
+
+{%- liquid
+  assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Maison'
+  assign breadcrumb_current = section.settings.breadcrumb_current | default: page.title | default: 'Contact'
+  assign eyebrow = section.settings.eyebrow | default: 'Client care'
+  assign heading = section.settings.heading | default: 'Write to us'
+  assign intro = section.settings.intro | default: 'Five people answer this address. Written enquiries are replied to within one working day, in French or English.'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  {%- if section.settings.show_breadcrumb -%}
+    <nav
+      class="max-w-page mx-auto px-5 md:px-10 pt-[22px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
+      aria-label="{{ 'general.breadcrumbs.home' | t | default: 'Breadcrumb' }}"
+    >
+      <ol class="flex flex-wrap items-center gap-[10px] list-none m-0 p-0">
+        {%- if section.settings.breadcrumb_parent_url != blank -%}
+          <li>
+            <a href="{{ section.settings.breadcrumb_parent_url }}" class="text-muted hover:text-ink transition-colors duration-fast ease-fast">
+              {{ breadcrumb_parent }}
+            </a>
+          </li>
+        {%- else -%}
+          <li class="text-muted">{{ breadcrumb_parent }}</li>
+        {%- endif -%}
+        <li aria-hidden="true">/</li>
+        <li class="text-ink" aria-current="page">{{ breadcrumb_current }}</li>
+      </ol>
+    </nav>
+  {%- endif -%}
+
+  <header
+    class="max-w-page mx-auto px-5 md:px-10 pt-[70px] grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[100px] md:items-end"
+    data-reveal
+  >
+    <div>
+      {%- if eyebrow != blank -%}
+        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="font-display font-normal text-[54px] leading-[1.08] text-ink mt-[18px] mb-0">{{ heading }}</h1>
+    </div>
+    {%- if intro != blank -%}
+      <p class="font-body text-[13px] leading-[1.95] text-secondary max-w-[50ch] m-0 text-pretty">{{ intro }}</p>
+    {%- endif -%}
+  </header>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Contact hero",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "header", "content": "Breadcrumb" },
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "text", "id": "breadcrumb_parent", "label": "Breadcrumb parent", "default": "Maison" },
+    { "type": "url", "id": "breadcrumb_parent_url", "label": "Breadcrumb parent link" },
+    { "type": "text", "id": "breadcrumb_current", "label": "Breadcrumb current page", "default": "Contact" },
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Client care" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Write to us" },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Five people answer this address. Written enquiries are replied to within one working day, in French or English."
+    }
+  ],
+  "presets": [{ "name": "Contact hero" }]
+}
+{% endschema %}

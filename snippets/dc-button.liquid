@@ -1,0 +1,65 @@
+{%- comment -%}
+  Devoué de Nature button component — single source of truth for all buttons.
+  Params:
+    text          - {String} required, visible label
+    url           - {String} optional, renders <a> instead of <button>
+    variant       - {String} 'filled' (default) | 'outline' | 'pill' | 'inverse'
+    sweep         - {Boolean} adds the sweep-fill hover/active animation (CTAs: add to bag, checkout, send)
+    type          - {String} button[type], default 'button'
+    id            - {String} optional element id
+    class         - {String} optional extra classes
+    disabled      - {Boolean}
+    attributes    - {String} optional raw extra attributes, e.g. 'data-foo="bar"'
+  Usage:
+    {% render 'dc-button', text: 'Add to the bag', variant: 'filled', sweep: true %}
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = variant | default: 'filled'
+  assign el_type = type | default: 'button'
+
+  assign base_classes = 'dc-btn inline-flex items-center justify-center font-body text-nav uppercase transition-colors duration-fast ease-fast rounded-none'
+
+  case variant
+    when 'filled'
+      assign variant_classes = 'bg-ink text-bg px-4 py-3 hover:bg-hover'
+    when 'outline'
+      assign variant_classes = 'border border-ink text-ink px-4 py-3 hover:bg-ink hover:text-bg'
+    when 'pill'
+      assign variant_classes = 'rounded-pill border border-border text-ink px-3 py-2 hover:border-ink'
+    when 'inverse'
+      assign variant_classes = 'bg-bg text-ink px-4 py-3 hover:bg-ink hover:text-bg'
+    else
+      assign variant_classes = 'bg-ink text-bg px-4 py-3 hover:bg-hover'
+  endcase
+
+  if sweep
+    assign variant_classes = variant_classes | append: ' relative overflow-hidden sweep-cta'
+  endif
+
+  assign final_classes = base_classes | append: ' ' | append: variant_classes
+  if class
+    assign final_classes = final_classes | append: ' ' | append: class
+  endif
+-%}
+{%- if url -%}
+  <a
+    href="{{ url }}"
+    class="{{ final_classes }}"
+    {% if id %}id="{{ id }}"{% endif %}
+    {% if disabled %}aria-disabled="true" tabindex="-1"{% endif %}
+    {{ attributes }}
+  >
+    <span class="sweep-cta__label dc-btn__label">{{ text }}</span>
+  </a>
+{%- else -%}
+  <button
+    type="{{ el_type }}"
+    class="{{ final_classes }}"
+    {% if id %}id="{{ id }}"{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {{ attributes }}
+  >
+    <span class="sweep-cta__label dc-btn__label">{{ text }}</span>
+  </button>
+{%- endif -%}

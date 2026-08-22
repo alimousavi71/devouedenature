@@ -1,0 +1,65 @@
+{%- comment -%}
+  New cart drawer (Devoué de Nature redesign). Net-new — does not reuse
+  legacy cart drawer code.
+  Styled per redesign/Overlays.dc.html "Cart drawer" pattern.
+  Behavior wired by src/js/shopify/cart.js (real Shopify Ajax Cart API).
+{%- endcomment -%}
+
+<dc-cart-drawer id="DcCartDrawer" class="fixed inset-0 z-[90] hidden" aria-hidden="true">
+  <div data-dc-cart-scrim class="absolute inset-0 bg-scrim opacity-0"></div>
+
+  <div
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ 'sections.cart.title' | t | default: 'Your basket' }}"
+    data-dc-cart-panel
+    class="absolute right-0 top-0 h-full w-[86vw] md:w-[420px] max-w-full bg-bg shadow-2 flex flex-col will-change-transform"
+  >
+    <header class="flex items-start justify-between px-4 py-4 border-b border-divider">
+      <div>
+        <h2 class="font-display text-h4">{{ 'sections.cart.title' | t | default: 'Your basket' }}</h2>
+        <p class="font-mono text-caption text-muted mt-1">{{ 'sections.cart.held_for' | t | default: 'Held for sixty minutes' }}</p>
+      </div>
+      <button type="button" data-dc-cart-close class="font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast" aria-label="{{ 'accessibility.close' | t }}">
+        {{ 'general.close' | t | default: 'Close' }}
+      </button>
+    </header>
+
+    <div data-dc-cart-empty class="{% if cart.item_count > 0 %}hidden {% endif %}flex-1 flex flex-col items-center justify-center gap-4 px-4 text-center">
+      <p class="font-body text-body text-secondary">{{ 'sections.cart.empty' | t | default: 'Your basket is empty.' }}</p>
+      {% render 'dc-button', text: 'Continue shopping', variant: 'outline', url: routes.all_products_collection_url %}
+    </div>
+
+    <div data-dc-cart-body class="{% if cart.item_count == 0 %}hidden {% endif %}flex-1 flex flex-col min-h-0">
+      <ul data-dc-cart-items class="flex-1 overflow-y-auto divide-y divide-divider px-4">
+        {%- comment -%} Server-rendered first paint from Liquid `cart` object; cart.js re-renders this list after each AJAX call using the same markup shape. {%- endcomment -%}
+        {%- for item in cart.items -%}
+          {% render 'dc-cart-line-item', item: item %}
+        {%- endfor -%}
+      </ul>
+
+      <div class="border-t border-divider px-4 py-4 space-y-4">
+        <div class="flex items-center gap-2">
+          <input
+            type="text"
+            name="discount"
+            placeholder="{{ 'sections.cart.discount_code' | t | default: 'Promo code' }}"
+            class="flex-1 border border-border bg-transparent px-3 py-2 font-body text-body focus:outline-none focus:border-ink"
+          >
+          {% render 'dc-button', text: 'Apply', variant: 'outline' %}
+        </div>
+
+        <div class="flex items-center justify-between font-body text-body">
+          <span>{{ 'sections.cart.subtotal' | t | default: 'Total' }}</span>
+          <span data-dc-cart-total>{{ cart.total_price | money }}</span>
+        </div>
+
+        {% render 'dc-button', text: 'Continue to delivery', variant: 'filled', sweep: true, url: routes.cart_url, class: 'w-full', attributes: 'data-dc-cart-checkout' %}
+
+        <a href="{{ routes.cart_url }}" class="block text-center font-mono text-caption uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast">
+          {{ 'sections.cart.view_cart' | t | default: 'View full cart' }}
+        </a>
+      </div>
+    </div>
+  </div>
+</dc-cart-drawer>

@@ -1,0 +1,64 @@
+{%- comment -%}
+  Shop policy page (Devoué de Nature redesign). Net-new. Styled per
+  redesign/Policy.dc.html: sticky policy-switcher sidebar, numbered clauses,
+  closing contact callout. Real Shopify data: shop.policies.*
+{%- endcomment -%}
+
+{%- assign all_policies = shop.policies -%}
+
+<header class="max-w-page mx-auto px-5 md:px-10 pt-10 md:pt-16 pb-8" data-reveal="1">
+  <h1 class="font-display text-page-title">{{ policy.title | default: 'Policies' }}</h1>
+</header>
+
+<div class="max-w-page mx-auto px-5 md:px-10 py-10 md:py-[70px] grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-8 md:gap-[40px]">
+  <nav class="md:sticky md:top-[120px] self-start">
+    <ul class="space-y-3">
+      {%- for p in all_policies -%}
+        {%- if p.body != blank -%}
+          <li>
+            <a
+              href="{{ p.url }}"
+              class="font-body text-nav uppercase {% if p.url == request.path %}text-ink{% else %}text-secondary hover:text-ink{% endif %} transition-colors duration-fast ease-fast"
+            >
+              {{ p.title }}
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+    {%- if policy.title != blank -%}
+      <p class="font-mono text-caption text-muted mt-6">{{ 'general.policy.last_updated' | t | default: 'Last updated' }}</p>
+    {%- endif -%}
+  </nav>
+
+  <div class="font-body text-body text-ink [&_h2]:font-display [&_h2]:text-h2 [&_h2]:mt-10 [&_h2]:mb-4 [&_p]:mb-[22px] [&_ul]:list-disc [&_ul]:pl-5 [&_a]:underline [&_a:hover]:text-secondary max-w-[68ch]">
+    {{ policy.body }}
+  </div>
+</div>
+
+{%- if section.settings.contact_heading != blank -%}
+  <div class="bg-elevated text-center px-5 py-12" data-reveal="1">
+    <h2 class="font-display text-h3">{{ section.settings.contact_heading }}</h2>
+    {%- if section.settings.contact_text != blank -%}
+      <p class="font-body text-body text-secondary mt-2">{{ section.settings.contact_text }}</p>
+    {%- endif -%}
+    {%- if section.settings.contact_button_label != blank -%}
+      <div class="mt-6">
+        {% render 'dc-button', text: section.settings.contact_button_label, url: section.settings.contact_button_url, variant: 'outline' %}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Policy",
+  "settings": [
+    { "type": "header", "content": "Closing contact callout" },
+    { "type": "text", "id": "contact_heading", "label": "Heading", "default": "Questions about this policy?" },
+    { "type": "text", "id": "contact_text", "label": "Text" },
+    { "type": "text", "id": "contact_button_label", "label": "Button label", "default": "Contact us" },
+    { "type": "url", "id": "contact_button_url", "label": "Button link" }
+  ]
+}
+{% endschema %}

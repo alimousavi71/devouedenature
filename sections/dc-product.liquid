@@ -1,0 +1,269 @@
+{%- comment -%}
+  Product PDP — redesign/Product.dc.html (source of truth).
+  Layout, spacing, typography match Product.dc.html exactly.
+{%- endcomment -%}
+
+{%- liquid
+  assign breadcrumb_collection = collection
+  if breadcrumb_collection == blank and product.collections.size > 0
+    assign breadcrumb_collection = product.collections.first
+  endif
+
+  assign category_label = product.type | default: product.vendor
+  if section.settings.category_label != blank
+    assign category_label = section.settings.category_label
+  endif
+
+  assign show_refillable = false
+  if section.settings.refillable_badge == 'always'
+    assign show_refillable = true
+  elsif section.settings.refillable_badge == 'auto'
+    if product.metafields.custom.refillable.value == true or product.tags contains 'refillable'
+      assign show_refillable = true
+    endif
+  endif
+
+  assign in_stock_message = section.settings.in_stock_message
+  assign sold_out_message = section.settings.sold_out_message
+  assign add_to_bag_label = section.settings.add_to_bag_label
+  assign save_label = section.settings.save_label
+  assign refillable_label = section.settings.refillable_label
+  assign add_to_bag_disabled = false
+  if product.selected_or_first_available_variant.available == false
+    assign add_to_bag_disabled = true
+  endif
+
+  assign accordion_blocks = section.blocks | where: 'type', 'dropdown_information'
+-%}
+
+{%- if section.settings.show_breadcrumbs and breadcrumb_collection -%}
+  <nav
+    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[22px] flex flex-wrap items-center gap-[10px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
+    aria-label="{{ 'general.breadcrumb' | t | default: 'Breadcrumb' }}"
+  >
+    <a href="{{ breadcrumb_collection.url }}" class="text-muted hover:text-secondary transition-colors duration-fast ease-fast">{{ breadcrumb_collection.title }}</a>
+    <span aria-hidden="true">/</span>
+    {%- if product.type != blank -%}
+      <span>{{ product.type }}</span>
+      <span aria-hidden="true">/</span>
+    {%- endif -%}
+    <span class="text-ink">{{ product.title }}</span>
+  </nav>
+{%- endif -%}
+
+<section
+  class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-5 pb-[64px] md:pb-[90px] xl:pb-7"
+  data-dc-product-root
+>
+  <script type="application/json" data-dc-product-json>
+    {{ product | json }}
+  </script>
+
+  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_340px] lg:grid-cols-[minmax(0,1fr)_420px] gap-[40px] md:gap-[80px] items-start">
+    <div data-dc-product-gallery>
+      {% render 'dc-product-gallery', product: product %}
+    </div>
+
+    <div class="md:sticky md:top-[120px] self-start pt-2" data-dc-product-buy>
+      {%- if category_label != blank -%}
+        <p class="font-body text-[10px] tracking-[0.26em] uppercase text-muted" data-dc-product-item>{{ category_label }}</p>
+      {%- endif -%}
+
+      <h1 class="font-display font-normal text-h1 text-ink mt-[14px] mb-0" data-dc-product-item>{{ product.title }}</h1>
+
+      <div class="mt-[18px] font-body text-price text-ink" data-dc-price data-dc-product-item>
+        <span data-dc-price-value>{{ product.selected_or_first_available_variant.price | money }}</span>
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+          <span data-dc-compare-price class="text-muted line-through ml-3">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {%- endif -%}
+        {%- unless product.has_only_default_variant -%}
+          <span data-dc-active-size class="text-muted tracking-[0.14em] text-[11px] uppercase ml-3">{{ product.selected_or_first_available_variant.title }}</span>
+        {%- endunless -%}
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="mt-[26px] font-body text-[14px] leading-[1.85] text-secondary max-w-[42ch] text-pretty [&_p]:m-0" data-dc-product-item>
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+
+      <div data-dc-product-item>
+        {% render 'dc-variant-selector', product: product %}
+      </div>
+
+      <div class="mt-[30px] flex flex-wrap items-center gap-7" data-dc-product-item>
+        <div>
+          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[14px]">{{ 'products.product.quantity.label' | t | default: 'Quantity' }}</p>
+          {% render 'dc-qty-stepper', name: 'quantity', value: 1, id: 'dc-product-qty' %}
+        </div>
+        <div class="pt-6 font-body text-[11px] tracking-[0.1em] text-secondary flex items-center gap-2" data-dc-stock>
+          <span class="w-[5px] h-[5px] rounded-pill shrink-0" data-dc-stock-dot style="background:{% if product.selected_or_first_available_variant.available %}#6E7F5B{% else %}#C4B69F{% endif %}"></span>
+          <span data-dc-stock-label>
+            {%- if product.selected_or_first_available_variant.available -%}
+              {{ in_stock_message }}
+            {%- else -%}
+              {{ sold_out_message }}
+            {%- endif -%}
+          </span>
+        </div>
+      </div>
+
+      <form
+        data-dc-product-form
+        class="mt-[38px]"
+        data-dc-product-item
+        data-dc-add-label="{{ add_to_bag_label | escape }}"
+        data-dc-added-label="{{ section.settings.added_to_bag_label | escape }}"
+        data-dc-in-stock="{{ in_stock_message | escape }}"
+        data-dc-sold-out="{{ sold_out_message | escape }}"
+      >
+        <input type="hidden" name="id" data-dc-variant-id value="{{ product.selected_or_first_available_variant.id }}">
+        {% render 'dc-button',
+          text: add_to_bag_label,
+          variant: 'filled',
+          sweep: true,
+          type: 'submit',
+          id: 'dc-add-to-bag',
+          disabled: add_to_bag_disabled,
+          class: 'w-full h-[58px] text-[11px] tracking-[0.24em]'
+        %}
+      </form>
+
+      <div class="mt-[18px] flex justify-between items-center" data-dc-product-item>
+        <button
+          type="button"
+          data-dc-toggle-saved
+          class="border-0 bg-transparent p-0 pb-[3px] cursor-pointer font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal"
+        >
+          {{ save_label }}
+        </button>
+        {%- if show_refillable -%}
+          <span class="font-body text-[10px] tracking-[0.16em] uppercase text-muted">{{ refillable_label }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if accordion_blocks.size > 0 -%}
+        <div class="dc-product-accordions mt-[52px] border-t border-border" data-dc-product-item>
+          {%- for block in accordion_blocks -%}
+            {%- liquid
+              assign body = block.settings.description
+              if block.settings.use_metafield != blank and product.metafields.custom[block.settings.use_metafield] != blank
+                assign mf = product.metafields.custom[block.settings.use_metafield]
+                assign body = mf | metafield_tag
+              elsif block.settings.characteristics and product.metafields.characteristics.name.value.size > 0
+                assign body = ''
+              endif
+            -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'dc-product-accordion', heading: block.settings.heading, body: body %}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="mt-6" {{ block.shopify_attributes }}>{% render block %}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DC Product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Gallery images are uploaded in Shopify Admin → Products → Media (not here). Recommended: 1400 × 1750 px (4:5) for the main image; additional angles at the same ratio. Thumbnails (64 × 80) are generated automatically."
+    },
+    { "type": "checkbox", "id": "show_breadcrumbs", "label": "Show breadcrumbs", "default": true },
+    {
+      "type": "text",
+      "id": "category_label",
+      "label": "Category label override",
+      "info": "Leave blank to use product type or vendor"
+    },
+    {
+      "type": "text",
+      "id": "in_stock_message",
+      "label": "In stock message",
+      "default": "In stock — ships within 48 hours"
+    },
+    {
+      "type": "text",
+      "id": "sold_out_message",
+      "label": "Sold out message",
+      "default": "Sold out"
+    },
+    {
+      "type": "text",
+      "id": "add_to_bag_label",
+      "label": "Add to bag button",
+      "default": "Add to the bag"
+    },
+    {
+      "type": "text",
+      "id": "added_to_bag_label",
+      "label": "Added to bag button",
+      "default": "Added to your bag"
+    },
+    {
+      "type": "text",
+      "id": "save_label",
+      "label": "Save link label",
+      "default": "Add to your list"
+    },
+    {
+      "type": "select",
+      "id": "refillable_badge",
+      "label": "Refillable badge",
+      "default": "auto",
+      "options": [
+        { "value": "auto", "label": "Show when product has tag refillable or metafield" },
+        { "value": "always", "label": "Always show" },
+        { "value": "never", "label": "Never show" }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "refillable_label",
+      "label": "Refillable badge text",
+      "default": "Refillable"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "dropdown_information",
+      "name": "Accordion",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "description", "label": "Description" },
+        {
+          "type": "text",
+          "id": "use_metafield",
+          "label": "Or use product metafield key",
+          "info": "e.g. full_ingredients — overrides description when set on product"
+        },
+        { "type": "checkbox", "id": "characteristics", "label": "Use characteristics metafield", "default": false }
+      ]
+    },
+    { "type": "@app" }
+  ],
+  "presets": [
+    {
+      "name": "DC Product",
+      "blocks": [
+        { "type": "dropdown_information", "settings": { "heading": "Description" } },
+        { "type": "dropdown_information", "settings": { "heading": "Composition" } },
+        { "type": "dropdown_information", "settings": { "heading": "The bottle" } },
+        { "type": "dropdown_information", "settings": { "heading": "Shipping" } },
+        { "type": "dropdown_information", "settings": { "heading": "Returns and care" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,16 @@
+{%- comment -%}
+  New Customer Accounts redirect to shopify.com/account on production, but
+  theme dev rewrites that to /{shop_id}/account on localhost and returns 404.
+  Liquid request.path becomes /404 on that route, so redirect client-side.
+{%- endcomment -%}
+<script>
+  (function () {
+    var shopId = {{ shop.id | json }};
+    var prefix = '/' + shopId + '/account';
+    var path = window.location.pathname;
+
+    if (path === prefix || path.indexOf(prefix + '/') === 0) {
+      window.location.replace('https://shopify.com' + path + window.location.search);
+    }
+  })();
+</script>

@@ -1,0 +1,58 @@
+{%- comment -%}
+  Format finder band — redesign/Product.dc.html
+  Theme editor: all fields. Product admin: custom.formats_*
+{%- endcomment -%}
+
+{%- liquid
+  assign image = section.settings.image
+  if product.metafields.custom.formats_image != blank
+    assign image = product.metafields.custom.formats_image.value
+  endif
+
+  assign heading = section.settings.heading
+  if product.metafields.custom.formats_heading != blank
+    assign heading = product.metafields.custom.formats_heading.value | default: product.metafields.custom.formats_heading
+  endif
+
+  assign link_label = section.settings.link_label
+  assign link_url = section.settings.link_url
+  if product.metafields.custom.formats_link != blank
+    assign link_url = product.metafields.custom.formats_link.value | default: product.metafields.custom.formats_link
+  endif
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="bg-elevated py-[64px] md:py-[90px] xl:py-7 px-[20px] md:px-[24px] xl:px-5">
+    <div class="max-w-[1100px] mx-auto" data-reveal-stagger>
+      <div class="relative w-full aspect-[16/7] overflow-hidden bg-[repeating-linear-gradient(135deg,#E3DCCE_0_18px,#F2ECE1_18px_36px)]">
+        {%- if image != blank -%}
+          {{ image | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: heading, widths: '700, 1100, 1400' }}
+        {%- endif -%}
+      </div>
+      <div class="text-center mt-[46px]">
+        {%- if heading != blank -%}
+          <h2 class="font-display font-normal text-[36px] leading-none text-ink m-0">{{ heading }}</h2>
+        {%- endif -%}
+        {%- if link_label != blank and link_url != blank -%}
+          <a href="{{ link_url }}" class="inline-block mt-[22px] font-body text-[10px] tracking-[0.22em] uppercase border-b border-ink pb-1 hover:text-secondary transition-colors duration-fast ease-fast">
+            {{ link_label }}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Product formats",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "image_picker", "id": "image", "label": "Formats image (16:7)", "info": "Recommended: 1600 × 700 px (16:7). Max display width ~1100px. Per-product override: metafield custom.formats_image" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your format" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Compare the range" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ],
+  "presets": [{ "name": "Product formats" }]
+}
+{% endschema %}

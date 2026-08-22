@@ -1,0 +1,238 @@
+{%- comment -%}
+  Collection product grid — matches redesign/Collection.dc.html product list.
+  Uses Shopify collection.filters + sort_by + paginate, with manual filter pill fallback.
+{%- endcomment -%}
+
+{%- liquid
+  assign per_page = section.settings.products_per_page
+  assign has_active_filters = false
+  for filter in collection.filters
+    if filter.active_values.size > 0 or filter.min_value.value != null or filter.max_value.value != null
+      assign has_active_filters = true
+    endif
+  endfor
+
+  assign manual_pills = section.blocks | where: 'type', 'filter_pill'
+  assign has_list_filters = false
+  for filter in collection.filters
+    if filter.type == 'list' and filter.values.size > 0
+      assign has_list_filters = true
+      break
+    endif
+  endfor
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+    {%- paginate collection.products by per_page -%}
+
+      <div class="sticky z-[60] -mx-5 md:-mx-10 px-5 md:px-10 bg-bg/95 backdrop-blur-[10px] border-b border-border mt-[70px]" style="top: var(--dc-header-offset, 78px);">
+        <div class="h-[62px] flex flex-wrap items-center justify-between gap-3 md:gap-6">
+          <div class="flex flex-wrap items-center gap-2" data-dc-filter-pills>
+            {%- if has_list_filters -%}
+              {%- unless has_active_filters -%}
+                <span class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg">
+                  {{ section.settings.all_label | default: 'All' }}
+                </span>
+              {%- else -%}
+                <a
+                  href="{{ collection.url }}"
+                  class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal"
+                >
+                  {{ section.settings.all_label | default: 'All' }}
+                </a>
+              {%- endunless -%}
+
+              {%- for filter in collection.filters -%}
+                {%- if filter.type == 'list' -%}
+                  {%- for value in filter.values limit: 8 -%}
+                    <a
+                      href="{% if value.active %}{{ value.url_to_remove }}{% else %}{{ value.url_to_add }}{% endif %}"
+                      data-dc-filter-pill
+                      data-param="{{ value.param_name }}"
+                      data-value="{{ value.value }}"
+                      class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal {% if value.active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %} {% if value.count == 0 and value.active == false %}opacity-40 pointer-events-none{% endif %}"
+                    >
+                      {{ value.label }}
+                    </a>
+                  {%- endfor -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- elsif manual_pills.size > 0 -%}
+              {%- unless has_active_filters -%}
+                <span class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg">
+                  {{ section.settings.all_label | default: 'All' }}
+                </span>
+              {%- else -%}
+                <a
+                  href="{{ collection.url }}"
+                  class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal"
+                >
+                  {{ section.settings.all_label | default: 'All' }}
+                </a>
+              {%- endunless -%}
+
+              {%- for block in manual_pills -%}
+                {%- liquid
+                  assign pill_label = block.settings.label
+                  assign pill_param = block.settings.filter_param
+                  assign pill_value = block.settings.filter_value
+                  assign pill_active = false
+                  if pill_param != blank and pill_value != blank
+                    assign pill_check = pill_param | append: '=' | append: pill_value
+                    if request.query_string contains pill_check
+                      assign pill_active = true
+                    endif
+                  endif
+                -%}
+                {%- if pill_label != blank and pill_param != blank and pill_value != blank -%}
+                  <a
+                    href="{{ collection.url }}?{{ pill_param | url_encode }}={{ pill_value | url_encode }}"
+                    class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal {% if pill_active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ pill_label }}
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+
+          <div class="flex items-center gap-[26px]">
+            <p class="font-body text-[10px] tracking-[0.18em] uppercase text-muted whitespace-nowrap" data-dc-result-count>
+              {%- if collection.products_count == 1 -%}
+                {{ collection.products_count }} composition
+              {%- else -%}
+                {{ collection.products_count }} compositions
+              {%- endif -%}
+            </p>
+            <select
+              name="sort_by"
+              data-dc-sort-select
+              class="h-[34px] border-0 bg-transparent font-body text-[10px] tracking-[0.18em] uppercase text-ink outline-none cursor-pointer"
+              aria-label="{{ 'products.facets.sort_by_label' | t | default: 'Sort by' }}"
+            >
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value | escape }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                  Sort — {{ option.name | escape }}
+                </option>
+              {%- endfor -%}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {%- if has_active_filters -%}
+        <div class="mt-4">
+          <a href="{{ collection.url }}" class="font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-0.5 hover:text-ink transition-colors duration-fast ease-fast">
+            {{ section.settings.clear_label | default: 'Clear all' }}
+          </a>
+        </div>
+      {%- endif -%}
+
+      <div data-dc-collection-grid class="pt-[70px]">
+        {%- if collection.products.size == 0 -%}
+          <div class="flex flex-col items-center justify-center gap-4 py-20 text-center bg-elevated" data-dc-empty-state>
+            <p class="font-display text-[26px] text-ink">{{ section.settings.empty_heading | default: 'No compositions match your filters.' }}</p>
+            <div class="flex flex-wrap justify-center gap-3">
+              {%- assign clear_filters_label = section.settings.clear_label | default: 'Clear filters' -%}
+              {%- assign all_compositions_label = section.settings.all_products_label | default: 'All compositions' -%}
+              {% render 'dc-button', text: clear_filters_label, variant: 'outline', url: collection.url %}
+              {% render 'dc-button', text: all_compositions_label, variant: 'filled', url: routes.all_products_collection_url %}
+            </div>
+          </div>
+        {%- else -%}
+          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-[70px]" data-reveal-stagger>
+            {%- for product in collection.products -%}
+              <li>
+                {% render 'dc-product-card', card_product: product %}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.archive_label != blank -%}
+        <div class="flex justify-center pt-[110px]">
+          {%- liquid
+            assign archive_href = section.settings.archive_url
+            if archive_href == blank and paginate.next
+              assign archive_href = paginate.next.url
+            endif
+            if archive_href == blank
+              assign archive_href = routes.all_products_collection_url
+            endif
+          -%}
+          <a
+            href="{{ archive_href }}"
+            class="inline-flex items-center justify-center h-[54px] px-[46px] border border-ink bg-transparent text-ink font-body text-[11px] tracking-[0.24em] uppercase transition-all duration-normal ease-normal hover:bg-ink hover:text-bg"
+          >
+            {{ section.settings.archive_label }}
+          </a>
+        </div>
+      {%- elsif paginate.pages > 1 -%}
+        <nav class="pt-[110px] flex items-center justify-center gap-2" aria-label="{{ 'general.pagination.label' | t | default: 'Pagination' }}">
+          {%- if paginate.previous -%}
+            <a href="{{ paginate.previous.url }}" class="font-body text-[11px] tracking-[0.24em] uppercase px-3 py-2 hover:opacity-55 transition-opacity duration-fast ease-fast">{{ 'general.pagination.previous' | t | default: 'Previous' }}</a>
+          {%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="font-mono text-[10px] px-3 py-2 border border-border hover:border-ink transition-colors duration-fast ease-fast">{{ part.title }}</a>
+            {%- else -%}
+              <span class="font-mono text-[10px] px-3 py-2 border border-ink bg-ink text-bg">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" class="font-body text-[11px] tracking-[0.24em] uppercase px-3 py-2 hover:opacity-55 transition-opacity duration-fast ease-fast">{{ 'general.pagination.next' | t | default: 'Next' }}</a>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+
+    {%- endpaginate -%}
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Collection grid",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 6, "max": 48, "step": 3, "default": 9 },
+    { "type": "text", "id": "all_label", "label": "All filter label", "default": "All" },
+    { "type": "text", "id": "clear_label", "label": "Clear filters label", "default": "Clear all" },
+    { "type": "text", "id": "empty_heading", "label": "Empty state heading", "default": "No compositions match your filters." },
+    { "type": "text", "id": "all_products_label", "label": "All products button label", "default": "All compositions" },
+    { "type": "text", "id": "archive_label", "label": "Archive button label", "default": "Show the archive" },
+    { "type": "url", "id": "archive_url", "label": "Archive button link" }
+  ],
+  "blocks": [
+    {
+      "type": "filter_pill",
+      "name": "Filter pill",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Floral" },
+        {
+          "type": "text",
+          "id": "filter_param",
+          "label": "Filter parameter",
+          "default": "filter.p.tag",
+          "info": "e.g. filter.p.tag or filter.p.m.custom.family"
+        },
+        { "type": "text", "id": "filter_value", "label": "Filter value", "default": "Floral" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection grid",
+      "blocks": [
+        { "type": "filter_pill", "settings": { "label": "Floral", "filter_param": "filter.p.tag", "filter_value": "Floral" } },
+        { "type": "filter_pill", "settings": { "label": "Woody", "filter_param": "filter.p.tag", "filter_value": "Woody" } },
+        { "type": "filter_pill", "settings": { "label": "Amber", "filter_param": "filter.p.tag", "filter_value": "Amber" } },
+        { "type": "filter_pill", "settings": { "label": "Fresh", "filter_param": "filter.p.tag", "filter_value": "Fresh" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

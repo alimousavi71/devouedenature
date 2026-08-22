@@ -1,0 +1,23 @@
+{%- comment -%}
+  Status / product badge component — single source of truth.
+  Params:
+    text    - {String} required
+    style   - {String} 'filled' (positive, e.g. New/Delivered) | 'outline' (neutral, e.g. Preparing/Sold out) default 'outline'
+    class   - {String} optional extra classes
+  Usage:
+    {% render 'dc-badge', text: 'New', style: 'filled' %}
+{%- endcomment -%}
+{%- liquid
+  assign style = style | default: 'outline'
+  assign base_classes = 'inline-flex items-center font-mono text-caption uppercase px-2 py-1 rounded-none'
+  if style == 'filled'
+    assign variant_classes = 'bg-ink text-bg'
+  else
+    assign variant_classes = 'border border-border text-secondary'
+  endif
+  assign final_classes = base_classes | append: ' ' | append: variant_classes
+  if class
+    assign final_classes = final_classes | append: ' ' | append: class
+  endif
+-%}
+<span class="{{ final_classes }}">{{ text }}</span>

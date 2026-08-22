@@ -1,0 +1,66 @@
+{
+  "sections": {
+    "banner": {
+      "type": "dc-collection-banner",
+      "settings": {
+        "show_breadcrumb": true,
+        "breadcrumb_parent": "Fragrance",
+        "eyebrow": "The collection",
+        "show_description": true,
+        "intro_fallback": "Nine compositions, each aged in glass before filling. Every bottle is refillable and numbered on the underside of the collar."
+      }
+    },
+    "product-grid": {
+      "type": "dc-collection-grid",
+      "blocks": {
+        "filter-floral": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Floral",
+            "filter_param": "filter.p.tag",
+            "filter_value": "Floral"
+          }
+        },
+        "filter-woody": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Woody",
+            "filter_param": "filter.p.tag",
+            "filter_value": "Woody"
+          }
+        },
+        "filter-amber": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Amber",
+            "filter_param": "filter.p.tag",
+            "filter_value": "Amber"
+          }
+        },
+        "filter-fresh": {
+          "type": "filter_pill",
+          "settings": {
+            "label": "Fresh",
+            "filter_param": "filter.p.tag",
+            "filter_value": "Fresh"
+          }
+        }
+      },
+      "block_order": ["filter-floral", "filter-woody", "filter-amber", "filter-fresh"],
+      "settings": {
+        "products_per_page": 9,
+        "archive_label": "Show the archive"
+      }
+    },
+    "editorial": {
+      "type": "dc-collection-editorial",
+      "settings": {
+        "eyebrow": "Journal",
+        "heading": "Why we fill by hand",
+        "body": "Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp.",
+        "link_label": "Read the note"
+      }
+    }
+  },
+  "order": ["banner", "product-grid", "editorial"]
+}

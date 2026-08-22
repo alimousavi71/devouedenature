@@ -1,0 +1,44 @@
+{%- comment -%}
+  Standalone claims row — same markup as lineup embed (redesign/Home.dc.html).
+{%- endcomment -%}
+<section class="max-w-page mx-auto px-5 md:px-10">
+  {% render 'dc-claims-row', blocks: section.blocks %}
+</section>
+
+{% schema %}
+{
+  "name": "Claims",
+  "blocks": [
+    {
+      "type": "claim",
+      "name": "Claim",
+      "settings": [
+        {
+          "type": "select",
+          "id": "mark",
+          "label": "Mark",
+          "default": "circle",
+          "options": [
+            { "value": "circle", "label": "Circle" },
+            { "value": "diamond", "label": "Diamond" },
+            { "value": "square", "label": "Square" }
+          ]
+        },
+        { "type": "text", "id": "label", "label": "Label" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Claims",
+      "blocks": [
+        { "type": "claim", "settings": { "mark": "circle", "label": "Grasse distillation" } },
+        { "type": "claim", "settings": { "mark": "diamond", "label": "Nineteen ingredients" } },
+        { "type": "claim", "settings": { "mark": "square", "label": "Refillable in glass" } },
+        { "type": "claim", "settings": { "mark": "circle", "label": "Filled by hand" } },
+        { "type": "claim", "settings": { "mark": "diamond", "label": "Numbered collar" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

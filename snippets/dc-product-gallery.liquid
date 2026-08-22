@@ -1,0 +1,180 @@
+{%- comment -%}
+  Product gallery — redesign/Product.dc.html
+  Sticky 64×80 thumbnail rail + 4/5 main image + full-screen zoom lightbox.
+  Accepts: product
+{%- endcomment -%}
+
+<div data-dc-gallery-wrap>
+<div class="grid grid-cols-1 md:grid-cols-[64px_minmax(0,1fr)] gap-[28px] items-start" data-dc-gallery>
+  <div class="hidden md:flex flex-col gap-3 sticky top-[120px] self-start max-h-[calc(100vh-140px)] overflow-y-auto">
+    {%- for media in product.media -%}
+      {%- assign media_alt = media.alt | default: product.title | escape -%}
+      <button
+        type="button"
+        data-dc-gallery-thumb
+        data-index="{{ forloop.index0 }}"
+        data-media-src="{{ media | image_url: width: 1400 }}"
+        data-media-srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 1400 }} 1400w"
+        data-media-src-hires="{{ media | image_url: width: 2400 }}"
+        data-media-srcset-hires="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1800 }} 1800w, {{ media | image_url: width: 2400 }} 2400w"
+        data-media-alt="{{ media_alt }}"
+        class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent cursor-pointer transition-[border-color] duration-normal ease-normal border {% if forloop.first %}border-ink{% else %}border-transparent{% endif %}"
+        {% if forloop.first %}aria-current="true"{% endif %}
+        aria-label="View image {{ forloop.index }}"
+      >
+        {{ media.preview_image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
+      </button>
+    {%- endfor -%}
+  </div>
+
+  <div class="min-w-0">
+    <button
+      type="button"
+      data-dc-gallery-main
+      data-dc-gallery-zoom
+      class="dc-gallery-zoom relative w-full aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#F8F3E8] to-[#E7E3DB] cursor-zoom-in border-0 p-0 text-left"
+      aria-label="{{ 'products.product.media.zoom' | t | default: 'Zoom product image' }}"
+    >
+      {%- if product.featured_media -%}
+        {%- assign featured_image = product.featured_media.preview_image -%}
+        {%- assign featured_alt = product.featured_media.alt | default: product.title | escape -%}
+        <img
+          src="{{ featured_image | image_url: width: 1400 }}"
+          srcset="{{ featured_image | image_url: width: 700 }} 700w, {{ featured_image | image_url: width: 1000 }} 1000w, {{ featured_image | image_url: width: 1400 }} 1400w"
+          sizes="(min-width: 1024px) 55vw, 100vw"
+          width="{{ featured_image.width }}"
+          height="{{ featured_image.height }}"
+          loading="eager"
+          decoding="async"
+          class="dc-gallery-layer absolute inset-0 w-full h-full object-cover pointer-events-none"
+          alt="{{ featured_alt }}"
+          data-dc-gallery-img
+          data-dc-gallery-active
+        >
+        <img
+          class="dc-gallery-layer absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
+          data-dc-gallery-img
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        >
+      {%- else -%}
+        <div class="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(48,39,29,0.035)_0_14px,rgba(48,39,29,0)_14px_28px)]" aria-hidden="true"></div>
+      {%- endif -%}
+      <span class="absolute bottom-[18px] right-5 z-[1] font-body text-[10px] tracking-[0.2em] uppercase text-muted pointer-events-none">
+        {{ 'products.product.media.zoom' | t | default: 'Zoom' }}
+      </span>
+    </button>
+
+    {%- if product.media.size > 0 -%}
+      <div class="flex md:hidden gap-3 mt-3 overflow-x-auto pb-1 -mx-[20px] px-[20px] md:mx-0 md:px-0">
+        {%- for media in product.media -%}
+          {%- assign media_alt = media.alt | default: product.title | escape -%}
+          <button
+            type="button"
+            data-dc-gallery-thumb
+            data-index="{{ forloop.index0 }}"
+            data-media-src="{{ media | image_url: width: 1400 }}"
+            data-media-srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 1400 }} 1400w"
+            data-media-src-hires="{{ media | image_url: width: 2400 }}"
+            data-media-srcset-hires="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1800 }} 1800w, {{ media | image_url: width: 2400 }} 2400w"
+            data-media-alt="{{ media_alt }}"
+            class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent border {% if forloop.first %}border-ink{% else %}border-transparent{% endif %}"
+            {% if forloop.first %}aria-current="true"{% endif %}
+            aria-label="View image {{ forloop.index }}"
+          >
+            {{ media.preview_image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+  {%- if product.media.size > 0 -%}
+    <div
+      data-dc-gallery-lightbox
+      class="dc-gallery-lightbox hidden"
+      aria-hidden="true"
+    >
+      <div
+        data-dc-gallery-lightbox-scrim
+        class="dc-gallery-lightbox__scrim absolute inset-0 opacity-0"
+        aria-hidden="true"
+      ></div>
+
+      <div
+        data-dc-gallery-lightbox-panel
+        role="dialog"
+        aria-modal="true"
+        aria-label="{{ 'products.product.media.gallery' | t | default: 'Product gallery' }}"
+        class="dc-gallery-lightbox__panel relative z-[1] flex h-full w-full flex-col"
+      >
+        <header class="dc-gallery-lightbox__header absolute inset-x-0 top-0 z-20 flex justify-end px-5 pt-5 md:px-10 md:pt-10">
+          <button
+            type="button"
+            data-dc-gallery-lightbox-close-btn
+            class="dc-gallery-lightbox__close font-body text-[10px] tracking-[0.2em] uppercase"
+          >
+            {{ 'general.close' | t | default: 'Close' }}
+          </button>
+        </header>
+
+        <div class="dc-gallery-lightbox__stage relative flex flex-1 items-center justify-center px-12 pb-20 pt-14 md:px-16 md:pb-24 md:pt-16">
+          <button
+            type="button"
+            data-dc-gallery-lightbox-prev
+            class="dc-gallery-lightbox__arrow dc-gallery-lightbox__arrow--prev {% if product.media.size < 2 %}hidden{% endif %}"
+            aria-label="{{ 'general.pagination.previous' | t | default: 'Previous image' }}"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+              <path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div
+            data-dc-gallery-lightbox-track
+            class="dc-gallery-lightbox__track relative w-full max-w-[min(100%,1400px)] max-h-[calc(100dvh-128px)] aspect-[4/5] md:aspect-auto md:h-[calc(100dvh-128px)] overflow-hidden"
+          >
+            <img
+              data-dc-gallery-lightbox-img
+              data-dc-gallery-lightbox-active
+              class="dc-gallery-lightbox__img absolute inset-0 w-full h-full object-contain will-change-transform"
+              alt=""
+              decoding="async"
+            >
+            <img
+              data-dc-gallery-lightbox-img
+              class="dc-gallery-lightbox__img absolute inset-0 w-full h-full object-contain opacity-0 pointer-events-none will-change-transform"
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+            >
+          </div>
+
+          <button
+            type="button"
+            data-dc-gallery-lightbox-next
+            class="dc-gallery-lightbox__arrow dc-gallery-lightbox__arrow--next {% if product.media.size < 2 %}hidden{% endif %}"
+            aria-label="{{ 'general.pagination.next' | t | default: 'Next image' }}"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div
+          data-dc-gallery-lightbox-nav
+          class="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center px-5 pb-5 md:px-10 md:pb-8 {% if product.media.size < 2 %}hidden{% endif %}"
+        >
+          <span
+            data-dc-gallery-lightbox-counter
+            class="font-mono text-[10px] tracking-[0.12em] uppercase text-bg/75"
+            aria-live="polite"
+          ></span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>

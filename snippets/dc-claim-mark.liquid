@@ -1,0 +1,16 @@
+{%- comment -%}
+  Geometric claim mark — matches redesign/Home.dc.html claims row.
+  Params:
+    mark  - {String} 'circle' | 'diamond' | 'square' (default 'circle')
+{%- endcomment -%}
+{%- liquid
+  assign mark = mark | default: 'circle'
+  assign shape_classes = 'block w-[16px] h-[16px] mx-auto border border-ink'
+  case mark
+    when 'circle'
+      assign shape_classes = shape_classes | append: ' rounded-pill'
+    when 'diamond'
+      assign shape_classes = shape_classes | append: ' rotate-45'
+  endcase
+-%}
+<span class="{{ shape_classes }}" aria-hidden="true"></span>

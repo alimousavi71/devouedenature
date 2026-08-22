@@ -1,0 +1,139 @@
+{%- comment -%}
+  New customer login page (Devoué de Nature redesign). Net-new — does not
+  reuse sections/main-login.liquid. Shopify's customers/login template
+  natively hosts both the sign-in form and the #recover password-recovery
+  form on one page; toggling between them is done here with a small
+  unavoidable inline <style> using :target/:has (see note below — this is
+  the one legitimate Tailwind-can't-reach exception on this page).
+  Styled per redesign/AccountAuth.dc.html.
+{%- endcomment -%}
+
+<style>
+  #dc-recover:not(:target) { display: none; }
+  #dc-login:has(~ #dc-recover:target) { display: none; }
+</style>
+
+<div class="max-w-page mx-auto px-4 md:px-6 py-7 md:py-8">
+  <div class="max-w-md mx-auto">
+
+    <div id="dc-login">
+      <h1 class="font-display text-h2 mb-6">{{ 'customer.login_page.welcome' | t | default: 'Sign in' }}</h1>
+
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <p class="font-body text-body-sm text-error mb-4" role="alert">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+
+        <div class="mb-4">
+          <label for="dc-CustomerEmail" class="block font-mono text-label uppercase text-muted mb-2">
+            {{ 'customer.login_page.email' | t | default: 'Email' }}
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="dc-CustomerEmail"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}
+            class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+          >
+        </div>
+
+        {%- if form.password_needed -%}
+          <div class="mb-4">
+            <label for="dc-CustomerPassword" class="block font-mono text-label uppercase text-muted mb-2">
+              {{ 'customer.login_page.password' | t | default: 'Password' }}
+            </label>
+            <input
+              type="password"
+              name="customer[password]"
+              id="dc-CustomerPassword"
+              autocomplete="current-password"
+              required
+              {% if form.errors contains 'form' %}aria-invalid="true"{% endif %}
+              class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+            >
+          </div>
+        {%- endif -%}
+
+        <label class="flex items-center gap-2 mb-6 font-body text-body-sm text-secondary">
+          <input type="checkbox" name="customer[remember_me]" class="border-border">
+          {{ 'customer.login_page.remember_me' | t | default: 'Keep me signed in' }}
+        </label>
+
+        <div class="flex items-center justify-between gap-4 mb-4">
+          {%- assign sign_in_label = 'customer.login_page.title' | t -%}
+          {% render 'dc-button', text: sign_in_label, variant: 'filled', sweep: true, type: 'submit' %}
+          <a href="{{ routes.account_register_url }}" class="font-body text-body-sm text-secondary hover:text-ink transition-colors duration-fast ease-fast underline">
+            {{ 'customer.login_page.create_account' | t | default: 'Create account' }}
+          </a>
+        </div>
+
+        <a href="#dc-recover" class="font-body text-body-sm text-secondary hover:text-ink transition-colors duration-fast ease-fast underline">
+          {{ 'customer.login_page.forgot_password' | t | default: 'Forgot your password?' }}
+        </a>
+      {%- endform -%}
+    </div>
+
+    <div id="dc-recover">
+      <h1 class="font-display text-h2 mb-6">{{ 'customer.recover_password.title' | t | default: 'Reset your password' }}</h1>
+
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="font-body text-body text-success border border-border px-3 py-3 mb-4">
+            {{ 'customer.recover_password.success' | t | default: 'A password reset link has been sent to your email.' }}
+          </p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <p class="font-body text-body-sm text-error mb-4" role="alert">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+
+        <p class="font-body text-body text-secondary mb-4">
+          {{ 'customer.recover_password.subtext' | t | default: "We will send you an email to reset your password." }}
+        </p>
+
+        <div class="mb-6">
+          <label for="dc-RecoverEmail" class="block font-mono text-label uppercase text-muted mb-2">
+            {{ 'customer.login_page.email' | t | default: 'Email' }}
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="dc-RecoverEmail"
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="email"
+            class="w-full border border-border bg-bg px-3 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
+          >
+        </div>
+
+        <div class="flex items-center gap-4">
+          {%- assign reset_submit_label = 'customer.login_page.submit' | t -%}
+          {%- assign reset_cancel_label = 'customer.login_page.cancel' | t -%}
+          {% render 'dc-button', text: reset_submit_label, variant: 'filled', sweep: true, type: 'submit' %}
+          {% render 'dc-button', text: reset_cancel_label, variant: 'outline', url: '#dc-login' %}
+        </div>
+      {%- endform -%}
+    </div>
+
+    {%- if shop.checkout.guest_login -%}
+      <div class="mt-8 pt-8 border-t border-divider">
+        {%- form 'guest_login' -%}
+          {%- assign guest_continue_label = 'customer.login_page.guest_continue' | t -%}
+          {% render 'dc-button', text: guest_continue_label, variant: 'outline', type: 'submit' %}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer login",
+  "tag": "section",
+  "class": "dc-customer-login-section"
+}
+{% endschema %}

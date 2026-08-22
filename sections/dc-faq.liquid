@@ -1,0 +1,52 @@
+{%- comment -%}
+  FAQ accordion. Net-new — does not reuse sections/collapsible-content.liquid.
+  Reuses snippets/dc-accordion.liquid. Styled per redesign/Home.dc.html faq section.
+{%- endcomment -%}
+<section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 py-16 md:py-[120px]">
+  <div class="flex items-center justify-between gap-8">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="font-display text-h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      {% render 'dc-button', text: section.settings.button_label, url: section.settings.button_url, variant: 'outline' %}
+    {%- endif -%}
+  </div>
+
+  <div class="mt-6">
+    {%- for block in section.blocks -%}
+      {% render 'dc-accordion', heading: block.settings.question, body: block.settings.answer %}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Read all" },
+    { "type": "url", "id": "button_url", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        { "type": "question", "settings": { "question": "Are your products clinically tested?", "answer": "<p>Our formulations are developed using clinically supported ingredients and grounded in dermatological science. We prioritize evidence-based actives known for their efficacy, safety, and skin compatibility.</p>" } },
+        { "type": "question", "settings": { "question": "Do your products really contain 24K gold?", "answer": "<p>Absolutely. We use pure 24K gold in our skincare formulations, carefully blended with advanced active ingredients to enhance radiance and support youthful-looking skin.</p>" } },
+        { "type": "question", "settings": { "question": "How long will it take to see results?", "answer": "<p>Many customers notice an instant glow and smoother texture after the first application. Long-term results, such as improved elasticity and reduced fine lines, are typically seen within 4–6 weeks of consistent use.</p>" } },
+        { "type": "question", "settings": { "question": "Can I use your products with other brands?", "answer": "<p>Yes, Dévoué products are designed to integrate seamlessly into your existing routine. For optimal results and a fully elevated experience, we recommend using them as part of the complete L’Or Celeste Ritual.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

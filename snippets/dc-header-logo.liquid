@@ -1,0 +1,50 @@
+{%- comment -%}
+  Header logo — dynamic image/SVG from section settings (original theme).
+  Params:
+    logo        - {Object} primary logo image
+    logo_alt    - {Object} optional overlay logo (light mark on transparent header)
+    logo_width  - {Number} display width in px
+    class       - {String} optional link wrapper classes
+{%- endcomment -%}
+{%- liquid
+  assign logo_width = logo_width | default: 140
+  assign logo_width_2x = logo_width | times: 2 | at_most: 5760
+-%}
+
+<a
+  href="{{ routes.root_url }}"
+  class="dc-header-logo inline-flex items-center justify-center min-w-0 {{ class }}"
+  style="--dc-logo-width: {{ logo_width }}px;"
+  aria-label="{{ shop.name | escape }}"
+>
+  {%- if logo != blank -%}
+    {%- assign logo_height = logo_width | divided_by: logo.aspect_ratio | round -%}
+    <span class="dc-header-logo__mark relative inline-flex max-w-full">
+      <img
+        src="{{ logo | image_url: width: logo_width_2x }}"
+        srcset="{{ logo | image_url: width: logo_width }} 1x, {{ logo | image_url: width: logo_width_2x }} 2x"
+        width="{{ logo_width }}"
+        height="{{ logo_height }}"
+        alt="{{ logo.alt | default: shop.name | escape }}"
+        loading="eager"
+        class="dc-header-logo__img dc-header-logo__img--primary"
+      >
+      {%- if logo_alt != blank -%}
+        {%- assign logo_alt_height = logo_width | divided_by: logo_alt.aspect_ratio | round -%}
+        <img
+          src="{{ logo_alt | image_url: width: logo_width_2x }}"
+          srcset="{{ logo_alt | image_url: width: logo_width }} 1x, {{ logo_alt | image_url: width: logo_width_2x }} 2x"
+          width="{{ logo_width }}"
+          height="{{ logo_alt_height }}"
+          alt="{{ logo_alt.alt | default: shop.name | escape }}"
+          loading="eager"
+          class="dc-header-logo__img dc-header-logo__img--overlay"
+        >
+      {%- endif -%}
+    </span>
+  {%- else -%}
+    <span class="font-display text-h4 md:text-[21px] uppercase tracking-[0.34em] text-center text-ink">
+      {{ shop.name }}
+    </span>
+  {%- endif -%}
+</a>
