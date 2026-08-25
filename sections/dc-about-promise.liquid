@@ -1,0 +1,111 @@
+{%- comment -%}
+  About promise — dark band with three pillars + closing quote
+{%- endcomment -%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="bg-ink text-bg mt-[64px] md:mt-[90px] xl:mt-[130px] py-[64px] md:py-[90px] xl:py-[120px] px-[20px] md:px-[24px] xl:px-5">
+    <div class="max-w-page mx-auto">
+      <header class="text-center" data-reveal-stagger>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="font-display font-normal text-[32px] md:text-[42px] text-bg m-0">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="mt-[22px] mx-auto font-body text-[14px] leading-[1.9] text-gold m-0">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </header>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="mt-[46px] md:mt-[70px] grid grid-cols-1 md:grid-cols-3 gap-6" data-reveal-stagger>
+          {%- for block in section.blocks -%}
+            <div class="border-t border-gold pt-[34px]" {{ block.shopify_attributes }}>
+              {%- if block.settings.title != blank -%}
+                <h3 class="font-display font-normal text-[22px] md:text-[26px] text-bg m-0">{{ block.settings.title }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <p class="mt-4 font-body text-[13px] leading-[1.85] text-gold max-w-[32ch] m-0">{{ block.settings.text }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <p class="mt-[46px] md:mt-[70px] mx-auto max-w-[76ch] text-center font-display text-[18px] md:text-[22px] leading-[1.6] text-bg m-0" data-reveal>
+          {{ section.settings.quote }}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "About promise",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Promise to You"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "We promise to ensure that is:"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Closing quote",
+      "default": "Dévoué de Nature is an invitation — to slow down, to care deeply, and to experience skincare as a moment of devotion."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Intentional Luxury" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Luxury as restraint. Nothing added for appearance."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About promise",
+      "blocks": [
+        {
+          "type": "promise",
+          "settings": {
+            "title": "Intentional Luxury",
+            "text": "Luxury as restraint. Nothing added for appearance."
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "Thoughtfully Scientific",
+            "text": "Evidence first, and published when we can."
+          }
+        },
+        {
+          "type": "promise",
+          "settings": {
+            "title": "Nature without Compromise",
+            "text": "Botanical actives held to clinical standards."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

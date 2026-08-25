@@ -1,0 +1,72 @@
+{%- comment -%}
+  About story + philosophy — About.dc.html two-column band
+{%- endcomment -%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[120px] items-start" data-reveal-stagger>
+      <div>
+        {%- if section.settings.story_heading != blank -%}
+          <h2 class="font-display font-normal text-[32px] md:text-[42px] leading-[1.14] text-ink m-0 max-w-[22ch]">
+            {{ section.settings.story_heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.story_body != blank -%}
+          <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-[52ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+            {{ section.settings.story_body }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="md:pt-[90px]">
+        <div class="border-t border-ink pt-[26px]">
+          {%- if section.settings.philosophy_heading != blank -%}
+            <h2 class="font-display font-normal text-[28px] md:text-[32px] text-ink m-0">
+              {{ section.settings.philosophy_heading }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.philosophy_body != blank -%}
+            <div class="mt-[26px] font-body text-[14px] leading-[1.95] text-secondary max-w-[46ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+              {{ section.settings.philosophy_body }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "About story",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    {
+      "type": "text",
+      "id": "story_heading",
+      "label": "Story heading",
+      "default": "Where Science, Nature, and Devotion Become One"
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Story body",
+      "default": "<p>Dévoué de Nature is a Canadian luxury skincare brand founded by a collective of physicians who believe skincare should be a considered, thoughtful, and deliberate ritual.</p><p>We create formulations that combine advanced dermatological science with high performance botanical ingredients, crafted with precision in Canada and designed to support healthy, resilient skin at every stage of life.</p><p>Every product is created to feel luxurious, perform meaningfully, and bring confidence to your daily ritual.</p>"
+    },
+    {
+      "type": "text",
+      "id": "philosophy_heading",
+      "label": "Philosophy heading",
+      "default": "Our Philosophy"
+    },
+    {
+      "type": "richtext",
+      "id": "philosophy_body",
+      "label": "Philosophy body",
+      "default": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>"
+    }
+  ],
+  "presets": [{ "name": "About story" }]
+}
+{% endschema %}

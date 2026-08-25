@@ -1,73 +1,233 @@
 {
   "sections": {
-    "main": {
-      "type": "dc-page",
+    "hero": {
+      "type": "dc-about-hero",
+      "settings": {
+        "hide_section": false,
+        "eyebrow": "About",
+        "heading": "Dévoué de Nature",
+        "tagline": "Redefining skincare — with purpose, with you.",
+        "show_placeholder": true,
+        "placeholder_label": "hero — the collection on gold"
+      }
+    },
+    "story": {
+      "type": "dc-about-story",
+      "settings": {
+        "hide_section": false,
+        "story_heading": "Where Science, Nature, and Devotion Become One",
+        "story_body": "<p>Dévoué de Nature is a Canadian luxury skincare brand founded by a collective of physicians who believe skincare should be a considered, thoughtful, and deliberate ritual.</p><p>We create formulations that combine advanced dermatological science with high performance botanical ingredients, crafted with precision in Canada and designed to support healthy, resilient skin at every stage of life.</p><p>Every product is created to feel luxurious, perform meaningfully, and bring confidence to your daily ritual.</p>",
+        "philosophy_heading": "Our Philosophy",
+        "philosophy_body": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>"
+      }
+    },
+    "science": {
+      "type": "dc-about-science",
       "blocks": {
-        "nav-1": {
-          "type": "nav_anchor",
+        "card-1": {
+          "type": "card",
           "settings": {
-            "label": "The idea",
-            "anchor": "the-idea"
+            "number": "01",
+            "title": "High Performance Actives",
+            "text": "Concentrations chosen for the result, not the label."
           }
         },
-        "nav-2": {
-          "type": "nav_anchor",
+        "card-2": {
+          "type": "card",
           "settings": {
-            "label": "The materials",
-            "anchor": "the-materials"
+            "number": "02",
+            "title": "Gentle on Skin",
+            "text": "Tested for tolerance before it is tested for effect."
           }
         },
-        "nav-3": {
-          "type": "nav_anchor",
+        "card-3": {
+          "type": "card",
           "settings": {
-            "label": "The atelier",
-            "anchor": "the-atelier"
-          }
-        },
-        "nav-4": {
-          "type": "nav_anchor",
-          "settings": {
-            "label": "The people",
-            "anchor": "the-people"
-          }
-        },
-        "fact-1": {
-          "type": "stat_fact",
-          "settings": {
-            "number": "2011",
-            "label": "Founded, rue Chapon"
-          }
-        },
-        "fact-2": {
-          "type": "stat_fact",
-          "settings": {
-            "number": "19",
-            "label": "Ingredients, average"
-          }
-        },
-        "fact-3": {
-          "type": "stat_fact",
-          "settings": {
-            "number": "11 s",
-            "label": "Between fillings"
+            "number": "03",
+            "title": "Balanced Compositions",
+            "text": "Nothing carried in the formula that does not earn its place."
           }
         }
       },
-      "block_order": ["nav-1", "nav-2", "nav-3", "nav-4", "fact-1", "fact-2", "fact-3"],
+      "block_order": ["card-1", "card-2", "card-3"],
       "settings": {
-        "eyebrow": "The house",
-        "heading": "The maison",
-        "intro": "One prose column at sixty-eight characters, an optional full-bleed image, and a facts list.",
-        "show_image_placeholder": true,
-        "image_placeholder": "the atelier in grasse — full bleed",
-        "lead_quote": "The house was founded on a single idea: a fragrance should be finished, not decorated.",
-        "facts_heading": "In short",
-        "cta_heading": "Visit the refill bar",
-        "cta_text": "Bring any bottle with an undamaged collar. Refills are charged at sixty percent.",
-        "cta_button_label": "Book a visit",
-        "cta_button_url": "/pages/contact"
+        "hide_section": false,
+        "heading": "Science-Led, Nature-Inspired",
+        "intro": "Our formulations are developed using evidence-based research, modern cosmetic chemistry, and clinically informed active selection. We prioritize:",
+        "closing": "Each formula is developed and tested in Canada to ensure safety, stability, and real performance — because results should be as real as the promise."
+      }
+    },
+    "integrity": {
+      "type": "dc-about-integrity",
+      "blocks": {
+        "pillar-1": {
+          "type": "pillar",
+          "settings": {
+            "mark": "diamond",
+            "title": "Clinically tested",
+            "text": "Every formula assessed under dermatological supervision."
+          }
+        },
+        "pillar-2": {
+          "type": "pillar",
+          "settings": {
+            "mark": "circle",
+            "title": "Cruelty-free",
+            "text": "No animal testing at any stage, in any market."
+          }
+        },
+        "pillar-3": {
+          "type": "pillar",
+          "settings": {
+            "mark": "diamond",
+            "title": "Thoughtfully sourced",
+            "text": "Traceable botanicals, named suppliers, disclosed origins."
+          }
+        },
+        "pillar-4": {
+          "type": "pillar",
+          "settings": {
+            "mark": "circle",
+            "title": "Sustainable packaging",
+            "text": "Glass, aluminium and refills wherever the formula allows."
+          }
+        }
+      },
+      "block_order": ["pillar-1", "pillar-2", "pillar-3", "pillar-4"],
+      "settings": {
+        "hide_section": false,
+        "heading": "Our Commitment to Quality & Integrity",
+        "intro": "We are devoted to the care in skincare you can trust by prioritizing:",
+        "closing": "Transparency matters to us. We believe you deserve to know not only what is in your skincare, but why it was chosen. Our products are proudly made in Canada under strict quality and safety standards."
+      }
+    },
+    "purpose": {
+      "type": "dc-about-purpose",
+      "settings": {
+        "hide_section": false,
+        "heading": "A Brand with Purpose",
+        "body": "<p>Dévoué de Nature was created to bridge a gap — where luxury meets responsibility, and science meets sensitivity.</p><p>We understand that skin is personal, seasonal, and ever-changing. Our mission is to support skin at every stage with products that feel comforting, refined, and empowering — whether your goal is hydration, rejuvenation, or maintaining healthy, resilient skin. This is skincare designed to evolve with you.</p>",
+        "placeholder_label": "editorial — botanical, in mist"
+      }
+    },
+    "recognition": {
+      "type": "dc-about-recognition",
+      "settings": {
+        "hide_section": false,
+        "heading": "Recognition & Excellence",
+        "body": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence continues to grow — bringing our vision of devoted skincare to a wider audience.</p>",
+        "placeholder_label": "recognition — award and press",
+        "show_pagination_dots": true
+      }
+    },
+    "promise": {
+      "type": "dc-about-promise",
+      "blocks": {
+        "promise-1": {
+          "type": "promise",
+          "settings": {
+            "title": "Intentional Luxury",
+            "text": "Luxury as restraint. Nothing added for appearance."
+          }
+        },
+        "promise-2": {
+          "type": "promise",
+          "settings": {
+            "title": "Thoughtfully Scientific",
+            "text": "Evidence first, and published when we can."
+          }
+        },
+        "promise-3": {
+          "type": "promise",
+          "settings": {
+            "title": "Nature without Compromise",
+            "text": "Botanical actives held to clinical standards."
+          }
+        }
+      },
+      "block_order": ["promise-1", "promise-2", "promise-3"],
+      "settings": {
+        "hide_section": false,
+        "heading": "Our Promise to You",
+        "intro": "We promise to ensure that is:",
+        "quote": "Dévoué de Nature is an invitation — to slow down, to care deeply, and to experience skincare as a moment of devotion."
+      }
+    },
+    "team": {
+      "type": "dc-about-team",
+      "blocks": {
+        "member-1": {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Mehrdad Suleiman, MD",
+            "role": "Founder and formulator",
+            "location": "Toronto"
+          }
+        },
+        "member-2": {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Tahsin Hussain, MD",
+            "role": "Clinical research",
+            "location": "Toronto"
+          }
+        },
+        "member-3": {
+          "type": "member",
+          "settings": {
+            "name": "Leanne Bahrami Miller",
+            "role": "Brand and experience",
+            "location": "Los Angeles"
+          }
+        },
+        "member-4": {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Nour Bakoun, MD, MSc",
+            "role": "Dermatological advisory",
+            "location": "Montréal"
+          }
+        }
+      },
+      "block_order": ["member-1", "member-2", "member-3", "member-4"],
+      "settings": {
+        "hide_section": false,
+        "heading": "Our Team",
+        "body": "<p>Dévoué de Nature was founded by a collective of physicians, advertising, and science specialists who shared a vision to elevate skincare through knowledge, integrity, and care.</p><p>What began as a desire to treat sensitive and aging skin safely soon became an approach we live, prove, and refine. Every formula is a small beginning and an end, born of a question we could not ignore: why does skincare have to compromise?</p><p>Each formula is crafted with precision in Canada, carefully tested for safety and performance, and created to feel and perform.</p>"
+      }
+    },
+    "founders_note": {
+      "type": "dc-about-founders-note",
+      "settings": {
+        "hide_section": false,
+        "heading": "A Note From the Founders",
+        "body": "<p>Dévoué de Nature began with a simple, personal question.</p><p>As physicians, we saw the problem from two sides: patients who wanted results without irritation, and formulas that promised both and delivered neither. The difficult part was not the science, it was the honesty — and we kept coming back to it.</p><p>During a long and difficult journey of many formulations, we were asked to name the mission, and we settled on devotion — where care and research meet science, and where the honest part of skincare is the ability to say what we made, why it was made, and what it will not do.</p><p>Many products were rejected. We do not hesitate to write it, and we publish it, because we identify honestly. We refuse to launch anything we would not use ourselves.</p><p>Dévoué de Nature is a brand born of medical expertise, advanced formulation science, and the elegance of luxury skincare — thoughtfully developed and crafted in Canada.</p><p>Our greatest care is your skin, closer to itself, one moment at a time.</p>",
+        "signature": "— Dévoué de Nature, Founding Council"
+      }
+    },
+    "cta": {
+      "type": "dc-about-cta",
+      "settings": {
+        "hide_section": false,
+        "heading": "Discover your ritual.",
+        "text": "Begin with the formula your skin is asking for.",
+        "primary_label": "Shop the collection",
+        "primary_url": "shopify://collections/all",
+        "secondary_label": "Speak to us",
+        "secondary_url": "shopify://pages/contact"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "hero",
+    "story",
+    "science",
+    "integrity",
+    "purpose",
+    "recognition",
+    "promise",
+    "team",
+    "founders_note",
+    "cta"
+  ]
 }

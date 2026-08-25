@@ -1,0 +1,122 @@
+{%- comment -%}
+  About team — copy + member cards grid
+{%- endcomment -%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_1.15fr] gap-10 md:gap-[70px] xl:gap-[100px] items-start">
+      <div data-reveal-stagger>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="font-display font-normal text-[32px] md:text-[42px] text-ink m-0">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.body != blank -%}
+          <div class="mt-[30px] font-body text-[14px] leading-[1.95] text-secondary max-w-[46ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+            {{ section.settings.body }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6" data-reveal-stagger>
+          {%- for block in section.blocks -%}
+            <article class="border border-border px-[26px] py-[30px]" {{ block.shopify_attributes }}>
+              <div class="relative aspect-square overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 800
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'absolute inset-0 w-full h-full object-cover',
+                      alt: block.settings.name,
+                      widths: '400, 600, 800'
+                  }}
+                {%- else -%}
+                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted">portrait</span>
+                {%- endif -%}
+              </div>
+              {%- if block.settings.name != blank -%}
+                <p class="mt-[22px] font-display text-[20px] leading-[1.3] text-ink m-0">{{ block.settings.name }}</p>
+              {%- endif -%}
+              {%- if block.settings.role != blank -%}
+                <p class="mt-[10px] font-body text-[11px] tracking-[0.16em] uppercase text-secondary m-0">{{ block.settings.role }}</p>
+              {%- endif -%}
+              {%- if block.settings.location != blank -%}
+                <p class="mt-2 font-mono text-[10px] tracking-[0.12em] text-muted m-0">{{ block.settings.location }}</p>
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "About team",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Team" },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Dévoué de Nature was founded by a collective of physicians, advertising, and science specialists who shared a vision to elevate skincare through knowledge, integrity, and care.</p><p>What began as a desire to treat sensitive and aging skin safely soon became an approach we live, prove, and refine. Every formula is a small beginning and an end, born of a question we could not ignore: why does skincare have to compromise?</p><p>Each formula is crafted with precision in Canada, carefully tested for safety and performance, and created to feel and perform.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "member",
+      "name": "Team member",
+      "limit": 8,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Portrait" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Mehrdad Suleiman, MD" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Founder and formulator" },
+        { "type": "text", "id": "location", "label": "Location", "default": "Toronto" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About team",
+      "blocks": [
+        {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Mehrdad Suleiman, MD",
+            "role": "Founder and formulator",
+            "location": "Toronto"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Tahsin Hussain, MD",
+            "role": "Clinical research",
+            "location": "Toronto"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Leanne Bahrami Miller",
+            "role": "Brand and experience",
+            "location": "Los Angeles"
+          }
+        },
+        {
+          "type": "member",
+          "settings": {
+            "name": "Dr. Nour Bakoun, MD, MSc",
+            "role": "Dermatological advisory",
+            "location": "Montréal"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

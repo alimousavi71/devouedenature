@@ -1,0 +1,54 @@
+{%- comment -%}
+  About founders note — bordered letter
+{%- endcomment -%}
+
+{%- unless section.settings.hide_section -%}
+  <section class="max-w-[1200px] mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]" data-reveal>
+    <div class="border border-gold px-6 py-12 md:px-[70px] md:py-[80px]">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="font-display font-normal text-[28px] md:text-[34px] text-secondary m-0">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-[68ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+          {{ section.settings.body }}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.signature != blank -%}
+        <p class="mt-10 pt-[26px] border-t border-border font-body text-[11px] tracking-[0.2em] uppercase text-muted m-0">
+          {{ section.settings.signature }}
+        </p>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "About founders note",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "A Note From the Founders"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Dévoué de Nature began with a simple, personal question.</p><p>As physicians, we saw the problem from two sides: patients who wanted results without irritation, and formulas that promised both and delivered neither. The difficult part was not the science, it was the honesty — and we kept coming back to it.</p><p>During a long and difficult journey of many formulations, we were asked to name the mission, and we settled on devotion — where care and research meet science, and where the honest part of skincare is the ability to say what we made, why it was made, and what it will not do.</p><p>Many products were rejected. We do not hesitate to write it, and we publish it, because we identify honestly. We refuse to launch anything we would not use ourselves.</p><p>Dévoué de Nature is a brand born of medical expertise, advanced formulation science, and the elegance of luxury skincare — thoughtfully developed and crafted in Canada.</p><p>Our greatest care is your skin, closer to itself, one moment at a time.</p>"
+    },
+    {
+      "type": "text",
+      "id": "signature",
+      "label": "Signature",
+      "default": "— Dévoué de Nature, Founding Council"
+    }
+  ],
+  "presets": [{ "name": "About founders note" }]
+}
+{% endschema %}
