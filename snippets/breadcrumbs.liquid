@@ -2,7 +2,7 @@
   Breadcrumbs — redesign-aligned trail. Shown when settings.show_breadcrumbs.
 {%- endcomment -%}
 
-{%- unless template.name == 'index' or template.name == 'list-collections' or template.name == 'cart' or template.name == 'search' or template.name == '404' or template.suffix == 'contact' or template.name == 'collection' -%}
+{%- unless template.name == 'index' or template.name == 'list-collections' or template.name == 'cart' or template.name == 'search' or template.name == '404' or template.suffix == 'contact' or template.name == 'collection' or template.name == 'product' -%}
   <nav
     class="max-w-page mx-auto px-5 md:px-10 pt-6 font-mono text-caption uppercase text-muted"
     aria-label="{{ 'general.breadcrumbs.home' | t | default: 'Breadcrumb' }}"
@@ -14,25 +14,12 @@
         </a>
       </li>
 
-      {%- if template.name == 'product' -%}
-        {%- if collection -%}
-          <li aria-hidden="true">/</li>
-          <li>
-            <a href="{{ collection.url }}" class="hover:text-ink transition-colors duration-fast ease-fast">{{ collection.title }}</a>
-          </li>
-        {%- elsif product.collections.first -%}
-          <li aria-hidden="true">/</li>
-          <li>
-            <a href="{{ product.collections.first.url }}" class="hover:text-ink transition-colors duration-fast ease-fast">{{ product.collections.first.title }}</a>
-          </li>
-        {%- endif -%}
-        <li aria-hidden="true">/</li>
-        <li class="text-ink" aria-current="page">{{ product.title }}</li>
+      {%- comment -%}
+        Product + collection trails live in their own sections
+        (dc-product / dc-collection-banner) to match redesign.
+      {%- endcomment -%}
 
-      {%- elsif template.name == 'collection' -%}
-        {%- comment -%} Collection breadcrumb is rendered by dc-collection-banner when enabled. {%- endcomment -%}
-
-      {%- elsif template.name == 'article' -%}
+      {%- if template.name == 'article' -%}
         <li aria-hidden="true">/</li>
         <li>
           <a href="{{ blog.url }}" class="hover:text-ink transition-colors duration-fast ease-fast">{{ blog.title }}</a>

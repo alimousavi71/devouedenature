@@ -155,6 +155,7 @@
       "in_stock": "In stock",
       "product": "products",
       "quantity": {
+        "label": "Quantity",
         "decrease": "Decrease quantity for {{ product }}",
         "increase": "Increase quantity for {{ product }}",
         "input_label": "Quantity for {{ product }}"

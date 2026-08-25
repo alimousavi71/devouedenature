@@ -182,7 +182,11 @@
     }
   }
 
-  /* Lineup / discover cards — GSAP hover; CSS fallback for scale */
+  /* Lineup / discover cards — GSAP hover; CSS only before JS binds */
+  .dc-lineup-card,
+  .dc-discover-card {
+    will-change: transform;
+  }
   .dc-lineup-card__img,
   .dc-discover-card__img {
     transform-origin: center center;
@@ -195,9 +199,10 @@
     will-change: transform;
   }
   @media (hover: hover) and (pointer: fine) {
-    .dc-lineup-card:hover,
-    .dc-discover-card:hover {
-      opacity: 0.97;
+    .dc-lineup-card:not([data-dc-card-motion]):hover .dc-lineup-card__img,
+    .dc-discover-card:not([data-dc-card-motion]):hover .dc-discover-card__img {
+      transform: scale(1.06);
+      transition: transform theme('transitionDuration.slow') theme('transitionTimingFunction.luxury');
     }
   }
 
@@ -266,6 +271,16 @@
 
   .dc-accordion--product[data-dc-accordion-motion][open] .dc-accordion__icon {
     transform: none;
+  }
+
+  /* Product buy column — tighten RTE paragraph rhythm */
+  .dc-product-buy__desc p,
+  .dc-product-buy__desc .p2 {
+    margin: 0;
+  }
+  .dc-product-buy__desc p + p,
+  .dc-product-buy__desc .p2 + .p2 {
+    margin-top: 10px;
   }
 
   .dc-product-card__note {
@@ -546,7 +561,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
+    padding: 16px 0;
     border: 0;
     background: none;
     cursor: pointer;

@@ -28,10 +28,10 @@ export function initProductEntrance(root = document) {
   })
 
   if (gallery) {
-    gsap.set(gallery, { opacity: 0, x: -RISE_GALLERY, scale: 0.96 })
+    gsap.set(gallery, { opacity: 0, y: RISE_GALLERY, scale: 0.96 })
     tl.to(
       gallery,
-      { opacity: 1, x: 0, scale: 1, duration: DURATION.cinematic, ease: EASE.reveal },
+      { opacity: 1, y: 0, scale: 1, duration: DURATION.cinematic, ease: EASE.reveal },
       0.08,
     )
   }

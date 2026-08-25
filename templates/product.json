@@ -63,7 +63,6 @@
         "sold_out_message": "Sold out",
         "add_to_bag_label": "Add to the bag",
         "added_to_bag_label": "Added to your bag",
-        "save_label": "Add to your list",
         "refillable_badge": "auto",
         "refillable_label": "Refillable"
       }
@@ -131,11 +130,38 @@
     "ritual": {
       "type": "dc-how-to-apply",
       "blocks": {
-        "step_1": { "type": "step", "settings": { "title": "Savon Vermeille", "link_label": "View product" } },
-        "step_2": { "type": "step", "settings": { "title": "Huile de Corps", "link_label": "View product" } },
-        "step_3": { "type": "step", "settings": { "title": "Nuit Vermeille — Eau de parfum", "link_label": "View product" } },
-        "step_4": { "type": "step", "settings": { "title": "Crème de Peau", "link_label": "View product" } },
-        "step_5": { "type": "step", "settings": { "title": "Brume pour Cheveux", "link_label": "View product" } }
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Savon Vermeille",
+            "link_label": "View product"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "Huile de Corps",
+            "link_label": "View product"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "Nuit Vermeille — Eau de parfum",
+            "link_label": "View product"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": { "title": "Crème de Peau", "link_label": "View product" }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "title": "Brume pour Cheveux",
+            "link_label": "View product"
+          }
+        }
       },
       "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
       "settings": {

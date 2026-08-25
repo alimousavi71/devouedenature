@@ -1,4 +1,5 @@
 import { initReveal } from '../motion/reveal.js'
+import { initMicro } from '../motion/micro.js'
 
 class ProductRecommendations extends HTMLElement {
   connectedCallback() {
@@ -15,6 +16,7 @@ class ProductRecommendations extends HTMLElement {
           if (source?.innerHTML.trim()) {
             this.innerHTML = source.innerHTML
             initReveal(this)
+            initMicro(this)
           }
         })
         .catch(() => {})

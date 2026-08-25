@@ -26,7 +26,6 @@
   assign in_stock_message = section.settings.in_stock_message
   assign sold_out_message = section.settings.sold_out_message
   assign add_to_bag_label = section.settings.add_to_bag_label
-  assign save_label = section.settings.save_label
   assign refillable_label = section.settings.refillable_label
   assign add_to_bag_disabled = false
   if product.selected_or_first_available_variant.available == false
@@ -66,12 +65,12 @@
 
     <div class="md:sticky md:top-[120px] self-start pt-2" data-dc-product-buy>
       {%- if category_label != blank -%}
-        <p class="font-body text-[10px] tracking-[0.26em] uppercase text-muted" data-dc-product-item>{{ category_label }}</p>
+        <p class="font-body text-[10px] tracking-[0.26em] uppercase text-muted m-0" data-dc-product-item>{{ category_label }}</p>
       {%- endif -%}
 
       <h1 class="font-display font-normal text-h1 text-ink mt-[14px] mb-0" data-dc-product-item>{{ product.title }}</h1>
 
-      <div class="mt-[18px] font-body text-price text-ink" data-dc-price data-dc-product-item>
+      <div class="mt-[18px] font-body text-price text-ink leading-none" data-dc-price data-dc-product-item>
         <span data-dc-price-value>{{ product.selected_or_first_available_variant.price | money }}</span>
         {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
           <span data-dc-compare-price class="text-muted line-through ml-3">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
@@ -82,21 +81,23 @@
       </div>
 
       {%- if product.description != blank -%}
-        <div class="mt-[26px] font-body text-[14px] leading-[1.85] text-secondary max-w-[42ch] text-pretty [&_p]:m-0" data-dc-product-item>
+        <div class="dc-product-buy__desc mt-[22px] font-body text-[14px] leading-[1.75] text-secondary max-w-[42ch] text-pretty" data-dc-product-item>
           {{ product.description }}
         </div>
       {%- endif -%}
 
-      <div data-dc-product-item>
-        {% render 'dc-variant-selector', product: product %}
-      </div>
+      {%- unless product.has_only_default_variant -%}
+        <div data-dc-product-item>
+          {% render 'dc-variant-selector', product: product %}
+        </div>
+      {%- endunless -%}
 
-      <div class="mt-[30px] flex flex-wrap items-center gap-7" data-dc-product-item>
+      <div class="mt-[28px] flex flex-wrap items-end gap-x-[28px] gap-y-[18px]" data-dc-product-item>
         <div>
-          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[14px]">{{ 'products.product.quantity.label' | t | default: 'Quantity' }}</p>
+          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[12px] m-0">{{ 'products.product.quantity.label' | t | default: 'Quantity' }}</p>
           {% render 'dc-qty-stepper', name: 'quantity', value: 1, id: 'dc-product-qty' %}
         </div>
-        <div class="pt-6 font-body text-[11px] tracking-[0.1em] text-secondary flex items-center gap-2" data-dc-stock>
+        <div class="pb-[12px] font-body text-[11px] tracking-[0.1em] text-secondary flex items-center gap-2" data-dc-stock>
           <span class="w-[5px] h-[5px] rounded-pill shrink-0" data-dc-stock-dot style="background:{% if product.selected_or_first_available_variant.available %}#6E7F5B{% else %}#C4B69F{% endif %}"></span>
           <span data-dc-stock-label>
             {%- if product.selected_or_first_available_variant.available -%}
@@ -110,7 +111,7 @@
 
       <form
         data-dc-product-form
-        class="mt-[38px]"
+        class="mt-[30px]"
         data-dc-product-item
         data-dc-add-label="{{ add_to_bag_label | escape }}"
         data-dc-added-label="{{ section.settings.added_to_bag_label | escape }}"
@@ -129,21 +130,14 @@
         %}
       </form>
 
-      <div class="mt-[18px] flex justify-between items-center" data-dc-product-item>
-        <button
-          type="button"
-          data-dc-toggle-saved
-          class="border-0 bg-transparent p-0 pb-[3px] cursor-pointer font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal"
-        >
-          {{ save_label }}
-        </button>
-        {%- if show_refillable -%}
+      {%- if show_refillable -%}
+        <div class="mt-[16px] flex justify-end" data-dc-product-item>
           <span class="font-body text-[10px] tracking-[0.16em] uppercase text-muted">{{ refillable_label }}</span>
-        {%- endif -%}
-      </div>
+        </div>
+      {%- endif -%}
 
       {%- if accordion_blocks.size > 0 -%}
-        <div class="dc-product-accordions mt-[52px] border-t border-border" data-dc-product-item>
+        <div class="dc-product-accordions mt-[40px] border-t border-border" data-dc-product-item>
           {%- for block in accordion_blocks -%}
             {%- liquid
               assign body = block.settings.description
@@ -210,12 +204,6 @@
       "id": "added_to_bag_label",
       "label": "Added to bag button",
       "default": "Added to your bag"
-    },
-    {
-      "type": "text",
-      "id": "save_label",
-      "label": "Save link label",
-      "default": "Add to your list"
     },
     {
       "type": "select",
