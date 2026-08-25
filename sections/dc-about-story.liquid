@@ -4,22 +4,24 @@
 
 {%- unless section.settings.hide_section -%}
   <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[120px] items-start" data-reveal-stagger>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[120px] items-start">
       <div>
-        {%- if section.settings.story_heading != blank -%}
-          <h2 class="font-display font-normal text-[32px] md:text-[42px] leading-[1.14] text-ink m-0 max-w-[22ch]">
-            {{ section.settings.story_heading }}
-          </h2>
-        {%- endif -%}
-        {%- if section.settings.story_body != blank -%}
-          <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-[52ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
-            {{ section.settings.story_body }}
-          </div>
-        {%- endif -%}
+        <div data-reveal>
+          {%- if section.settings.story_heading != blank -%}
+            <h2 class="font-display font-normal text-[32px] md:text-[42px] leading-[1.14] text-ink m-0 max-w-[22ch]">
+              {{ section.settings.story_heading }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.story_body != blank -%}
+            <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-[52ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+              {{ section.settings.story_body }}
+            </div>
+          {%- endif -%}
+        </div>
       </div>
 
       <div class="md:pt-[90px]">
-        <div class="border-t border-ink pt-[26px]">
+        <div class="border-t border-ink pt-[26px]" data-reveal data-reveal-float>
           {%- if section.settings.philosophy_heading != blank -%}
             <h2 class="font-display font-normal text-[28px] md:text-[32px] text-ink m-0">
               {{ section.settings.philosophy_heading }}

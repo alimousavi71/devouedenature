@@ -30,6 +30,7 @@ export function initMicro(root = document) {
   if (isFinePointer()) {
     initProductCardHover(root)
     initSimpleCardHover(root)
+    initLiftHover(root)
     initEditorialImageHover(root)
   }
 }
@@ -150,14 +151,20 @@ function initProductCardHover(root) {
   })
 }
 
-/** Lineup / discover cards — lift + image scale (product-card language) */
+/** Lineup / discover / about cards — lift + image scale (product-card language) */
 function initSimpleCardHover(root) {
   root.querySelectorAll('[data-dc-card-hover]:not([data-dc-card-motion])').forEach((card) => {
     card.dataset.dcCardMotion = '1'
 
-    const media = card.querySelector('.dc-lineup-card__media, .dc-discover-card__media')
-    const meta = card.querySelector('.dc-lineup-card__meta, .dc-discover-card__meta')
-    const img = card.querySelector('.dc-lineup-card__img, .dc-discover-card__img')
+    const media = card.querySelector(
+      '.dc-lineup-card__media, .dc-discover-card__media, .dc-about-member__media',
+    )
+    const meta = card.querySelector(
+      '.dc-lineup-card__meta, .dc-discover-card__meta, .dc-about-member__meta',
+    )
+    const img = card.querySelector(
+      '.dc-lineup-card__img, .dc-discover-card__img, .dc-about-member__img',
+    )
     if (!media) return
 
     gsap.set(img || media, { transformOrigin: '50% 50%', force3D: true })
@@ -185,6 +192,19 @@ function initSimpleCardHover(root) {
       if (meta) {
         gsap.to(meta, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
       }
+    })
+  })
+}
+
+/** Soft lift for text cards / pillars without media */
+function initLiftHover(root) {
+  root.querySelectorAll('[data-dc-lift-hover]:not([data-dc-lift-bound])').forEach((el) => {
+    el.dataset.dcLiftBound = '1'
+    el.addEventListener('mouseenter', () => {
+      gsap.to(el, { y: LIFT.cardSub, duration: DURATION.slow, ease: EASE.luxury, overwrite: 'auto' })
+    })
+    el.addEventListener('mouseleave', () => {
+      gsap.to(el, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
     })
   })
 }

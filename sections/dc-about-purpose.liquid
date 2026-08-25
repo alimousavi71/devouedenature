@@ -1,24 +1,31 @@
 {%- comment -%}
-  About purpose — text + image split
+  About purpose — text + image split with mask reveal + editorial drift
 {%- endcomment -%}
 
 {%- unless section.settings.hide_section -%}
   <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start" data-reveal-stagger>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start">
       <div>
-        {%- if section.settings.heading != blank -%}
-          <h2 class="font-display font-normal text-[32px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
-            {{ section.settings.heading }}
-          </h2>
-        {%- endif -%}
-        {%- if section.settings.body != blank -%}
-          <div class="mt-[30px] font-body text-[14px] leading-[1.95] text-secondary max-w-[48ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
-            {{ section.settings.body }}
-          </div>
-        {%- endif -%}
+        <div data-reveal>
+          {%- if section.settings.heading != blank -%}
+            <h2 class="font-display font-normal text-[32px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
+              {{ section.settings.heading }}
+            </h2>
+          {%- endif -%}
+          {%- if section.settings.body != blank -%}
+            <div class="mt-[30px] font-body text-[14px] leading-[1.95] text-secondary max-w-[48ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+              {{ section.settings.body }}
+            </div>
+          {%- endif -%}
+        </div>
       </div>
 
-      <div class="relative aspect-[4/5] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]" data-dc-editorial-img>
+      <div
+        class="relative aspect-[4/5] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]"
+        data-reveal
+        data-reveal-mask
+        data-dc-editorial-img
+      >
         {%- if section.settings.image != blank -%}
           {{
             section.settings.image

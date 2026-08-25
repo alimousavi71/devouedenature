@@ -70,7 +70,7 @@
         endcapture
         assign account_url = account_url | strip
         assign search_label = 'general.search.title' | t | default: 'Search'
-        assign account_label = 'customer.account.title' | t | default: 'Account'
+        assign account_label = 'general.account' | t | default: 'Account'
         assign saved_label = 'general.saved' | t | default: 'Saved'
       -%}
       {% render 'dc-nav-link', url: routes.search_url, label: search_label, class: 'hidden md:inline-flex' %}

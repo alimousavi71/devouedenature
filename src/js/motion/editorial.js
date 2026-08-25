@@ -91,7 +91,7 @@ function initCampaignScenes(root) {
     }
 
     const staggerCopy = Array.from(copyBlocks).filter(
-      (el) => el !== inner && !el.closest('[data-reveal]'),
+      (el) => el !== inner && !el.closest('[data-reveal], [data-reveal-stagger]'),
     )
     if (staggerCopy.length > 1) {
       scrollStaggerGroup({

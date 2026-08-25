@@ -160,6 +160,7 @@ function initHero(root) {
   hero.setAttribute('data-hero-played', '1')
 
   const media = hero.querySelector('[data-dc-hero-media]')
+  const eyebrow = hero.querySelector('[data-dc-hero-eyebrow]')
   const title = hero.querySelector('[data-dc-hero-title]')
   const copy = hero.querySelector('[data-dc-hero-copy]')
   const cta = hero.querySelector('[data-dc-hero-cta]')
@@ -172,6 +173,12 @@ function initHero(root) {
     gsap.set(mediaTarget, { scale: 1.1, opacity: 0.75 })
     tl.to(mediaTarget, { scale: 1, opacity: 1, duration: DURATION.cinematic, ease: EASE.reveal }, cursor)
     cursor += STAGGER.hero
+  }
+
+  if (eyebrow) {
+    gsap.set(eyebrow, { opacity: 0, y: 14 })
+    tl.to(eyebrow, { opacity: 1, y: 0, duration: DURATION.slow, ease: EASE.reveal }, cursor)
+    cursor += STAGGER.tight
   }
 
   if (title) {

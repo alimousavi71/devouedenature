@@ -19,7 +19,7 @@
         data-reveal-stagger
       >
         {%- for block in section.blocks -%}
-          <div class="text-center px-[10px]" {{ block.shopify_attributes }}>
+          <div class="text-center px-[10px]" data-dc-lift-hover {{ block.shopify_attributes }}>
             {%- if block.settings.mark == 'circle' -%}
               <div class="w-[18px] h-[18px] mx-auto border border-ink rounded-pill" aria-hidden="true"></div>
             {%- else -%}
