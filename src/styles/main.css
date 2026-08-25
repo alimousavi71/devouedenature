@@ -507,11 +507,29 @@
     height: 0;
   }
 
-  [data-dc-hero] {
+  /* Homepage hero only — About and other heroes set their own height */
+  [data-dc-hero]:not([data-dc-about-hero]) {
     min-height: 100vh;
     min-height: 100svh;
     height: 100vh;
     height: 100svh;
+  }
+
+  [data-dc-about-hero] {
+    min-height: 0;
+    height: 480px;
+  }
+
+  @media (min-width: 768px) {
+    [data-dc-about-hero] {
+      height: 560px;
+    }
+  }
+
+  @media (min-width: 1560px) {
+    [data-dc-about-hero] {
+      height: 640px;
+    }
   }
 
   .shopify-section-group-header-group,

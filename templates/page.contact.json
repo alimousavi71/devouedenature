@@ -65,44 +65,6 @@
         "map_placeholder": "map — rue de sévigné, paris"
       }
     },
-    "boutiques": {
-      "type": "dc-contact-boutiques",
-      "blocks": {
-        "boutique-1": {
-          "type": "boutique",
-          "settings": {
-            "city": "Paris",
-            "address": "14 rue de Sévigné, 75004",
-            "hours": "Tue — Sat, 11h — 19h",
-            "image_slot_label": "boutique — interior"
-          }
-        },
-        "boutique-2": {
-          "type": "boutique",
-          "settings": {
-            "city": "Milan",
-            "address": "Via Gesù 6, 20121",
-            "hours": "Mon — Sat, 10h — 19h",
-            "image_slot_label": "boutique — vitrine"
-          }
-        },
-        "boutique-3": {
-          "type": "boutique",
-          "settings": {
-            "city": "Kyoto",
-            "address": "284 Nakanocho, Nakagyo-ku",
-            "hours": "Wed — Sun, 12h — 18h",
-            "image_slot_label": "boutique — counter"
-          }
-        }
-      },
-      "block_order": ["boutique-1", "boutique-2", "boutique-3"],
-      "settings": {
-        "eyebrow": "Boutiques",
-        "heading": "Three addresses",
-        "link_label": "Book an appointment"
-      }
-    },
     "faq": {
       "type": "dc-contact-faq",
       "blocks": {
@@ -149,5 +111,5 @@
       }
     }
   },
-  "order": ["hero", "form", "boutiques", "faq"]
+  "order": ["hero", "form", "faq"]
 }
