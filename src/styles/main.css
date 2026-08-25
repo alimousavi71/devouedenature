@@ -53,17 +53,34 @@
   /* Header nav — roll hover (redesign/Overlays.dc.html) */
   .dc-nav-link {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     overflow: hidden;
+    /* Equal vertical padding keeps text optically centered in the sticky bar
+       while leaving room for the gold underline / dot below. */
+    padding-top: 7px;
     padding-bottom: 7px;
     color: theme('colors.ink');
     text-decoration: none;
+    line-height: 1;
   }
   .dc-nav-link__roll {
     display: block;
     position: relative;
     overflow: hidden;
     height: 1.15em;
+  }
+
+  .dc-header__bar {
+    align-items: center;
+  }
+
+  .dc-header__bar .dc-header-logo {
+    align-self: center;
+  }
+
+  .dc-header__bar > nav {
+    align-self: center;
   }
   .dc-nav-link__text {
     display: block;
@@ -162,6 +179,25 @@
     .dc-product-card:hover .dc-product-card__img--secondary {
       opacity: 1;
       transform: scale(1.03);
+    }
+  }
+
+  /* Lineup / discover cards — GSAP hover; CSS fallback for scale */
+  .dc-lineup-card__img,
+  .dc-discover-card__img {
+    transform-origin: center center;
+    will-change: transform;
+  }
+  .dc-lineup-card__media,
+  .dc-discover-card__media,
+  .dc-lineup-card__meta,
+  .dc-discover-card__meta {
+    will-change: transform;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .dc-lineup-card:hover,
+    .dc-discover-card:hover {
+      opacity: 0.97;
     }
   }
 

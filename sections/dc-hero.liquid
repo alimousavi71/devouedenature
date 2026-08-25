@@ -1,6 +1,6 @@
 {%- comment -%}
   Homepage hero — redesign/Home.dc.html + original media-slideshow video.
-  Text colours use design tokens: heading = ink, CTA = bg surface on ink text.
+  Heading is light (bg) over media; CTA uses inverse surface button.
 {%- endcomment -%}
 {%- liquid
   assign use_video = false
@@ -72,7 +72,7 @@
   <div class="relative z-[1] w-full max-w-page mx-auto px-5 md:px-10 pb-10 md:pb-[70px]">
     {%- if section.settings.heading != blank -%}
       <h1
-        class="font-display font-normal text-h2 md:text-page-title leading-[1.1] max-w-[16ch] text-ink"
+        class="font-display font-normal text-h2 md:text-page-title leading-[1.1] max-w-[16ch] text-bg"
         data-dc-hero-title
       >
         {{ section.settings.heading }}

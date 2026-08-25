@@ -19,7 +19,7 @@
     data-dc-header
     {% if section.settings.transparent_on_index and template.name == 'index' %}data-dc-header-transparent{% endif %}
   >
-  <div class="mx-auto max-w-page px-5 md:px-10 h-[64px] md:h-[78px] grid grid-cols-[auto_1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-4">
+  <div class="dc-header__bar mx-auto max-w-page px-5 md:px-10 h-[64px] md:h-[78px] grid grid-cols-[auto_1fr_auto] md:grid-cols-[1fr_auto_1fr] items-center gap-4">
 
     <button
       type="button"
@@ -32,9 +32,9 @@
       {% render 'icon', name: 'hamburger' %}
     </button>
 
-    <nav class="hidden md:flex gap-[30px]" aria-label="{{ 'general.navigation' | t | default: 'Primary' }}">
+    <nav class="hidden md:flex items-center gap-[30px]" aria-label="{{ 'general.navigation' | t | default: 'Primary' }}">
       {%- for link in section.settings.menu.links -%}
-        <div class="relative" data-dc-nav-item>
+        <div class="relative flex items-center" data-dc-nav-item>
           {%- capture nav_link_attrs -%}
             {%- if link.links.size > 0 -%}
               aria-haspopup="true" aria-expanded="false" aria-controls="DcMegaMenu-{{ forloop.index }}" data-dc-mega-trigger

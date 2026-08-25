@@ -29,6 +29,7 @@ export function initMicro(root = document) {
 
   if (isFinePointer()) {
     initProductCardHover(root)
+    initSimpleCardHover(root)
     initEditorialImageHover(root)
   }
 }
@@ -145,6 +146,39 @@ function initProductCardHover(root) {
       if (meta) gsap.to(meta, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
       if (note) gsap.to(note, { y: 0, duration: DURATION.normal, ease: EASE.reveal, overwrite: 'auto' })
       if (save) gsap.to(save, { y: 0, duration: DURATION.normal, ease: EASE.reveal, overwrite: 'auto' })
+    })
+  })
+}
+
+/** Lineup / discover cards — same lift + image scale language as product cards */
+function initSimpleCardHover(root) {
+  root.querySelectorAll('[data-dc-card-hover]:not([data-dc-card-motion])').forEach((card) => {
+    card.dataset.dcCardMotion = '1'
+
+    const media = card.querySelector('.dc-lineup-card__media, .dc-discover-card__media')
+    const meta = card.querySelector('.dc-lineup-card__meta, .dc-discover-card__meta')
+    const img = card.querySelector('.dc-lineup-card__img, .dc-discover-card__img')
+    if (!media) return
+
+    card.addEventListener('mouseenter', () => {
+      const tl = gsap.timeline({ defaults: { ease: EASE.luxury, overwrite: 'auto' } })
+      tl.to(media, { y: LIFT.cardMedia, duration: DURATION.slow }, 0)
+      if (img) {
+        tl.to(img, { scale: 1.05, duration: DURATION.slow, ease: EASE.luxury }, 0)
+      }
+      if (meta) {
+        tl.to(meta, { y: LIFT.cardMeta, duration: DURATION.slow }, STAGGER.micro)
+      }
+    })
+
+    card.addEventListener('mouseleave', () => {
+      gsap.to(media, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
+      if (img) {
+        gsap.to(img, { scale: 1, duration: DURATION.editorial, ease: EASE.reveal, overwrite: 'auto' })
+      }
+      if (meta) {
+        gsap.to(meta, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
+      }
     })
   })
 }

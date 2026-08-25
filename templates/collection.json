@@ -5,9 +5,7 @@
       "settings": {
         "show_breadcrumb": true,
         "breadcrumb_parent": "Fragrance",
-        "eyebrow": "The collection",
-        "show_description": true,
-        "intro_fallback": "Nine compositions, each aged in glass before filling. Every bottle is refillable and numbered on the underside of the collar."
+        "eyebrow": "The collection"
       }
     },
     "product-grid": {

@@ -11,16 +11,17 @@
 -%}
 <a
   href="{{ card_product.url }}"
-  class="block hover:opacity-[0.94] transition-opacity duration-normal ease-normal"
+  class="dc-lineup-card group block"
+  data-dc-card-hover
 >
-  <div class="relative aspect-[4/5] bg-ink flex items-center justify-center overflow-hidden">
+  <div class="dc-lineup-card__media relative aspect-[4/5] bg-ink flex items-center justify-center overflow-hidden">
     {%- if card_product.featured_image -%}
       {{
         card_product.featured_image
         | image_url: width: 800
         | image_tag:
           loading: 'lazy',
-          class: 'absolute inset-0 w-full h-full object-cover',
+          class: 'dc-lineup-card__img absolute inset-0 w-full h-full object-cover',
           alt: card_product.title,
           widths: '400, 600, 800',
           sizes: '(min-width: 768px) 20vw, 50vw'
@@ -32,12 +33,14 @@
     {%- endif -%}
 
     {%- if family_label != blank -%}
-      <span class="absolute top-[14px] left-[14px] z-[1] font-body text-[8px] leading-none tracking-[0.24em] uppercase text-gold">
+      <span class="dc-lineup-card__badge absolute top-[14px] left-[14px] z-[1] font-body text-[8px] leading-none tracking-[0.24em] uppercase text-gold">
         {{ family_label }}
       </span>
     {%- endif -%}
   </div>
 
-  <div class="mt-[16px] font-body text-[12px] tracking-[0.1em] text-ink">{{ card_product.title }}</div>
-  <div class="mt-[6px] font-body text-[12px] text-secondary">{{ card_product.price | money }}</div>
+  <div class="dc-lineup-card__meta mt-[16px]">
+    <div class="font-body text-[12px] tracking-[0.1em] text-ink">{{ card_product.title }}</div>
+    <div class="mt-[6px] font-body text-[12px] text-secondary">{{ card_product.price | money }}</div>
+  </div>
 </a>

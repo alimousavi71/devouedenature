@@ -1,6 +1,6 @@
 {%- comment -%}
   Dark care CTA — redesign/Home.dc.html "We are here for you" block.
-  Fallbacks match Home.dc.html when settings are empty.
+  Optional background image; falls back to ink when empty.
 {%- endcomment -%}
 {%- liquid
   assign heading = section.settings.heading
@@ -22,11 +22,29 @@
   if button_url == blank
     assign button_url = 'https://wa.link/sgbrwa'
   endif
+
+  assign bg_image = section.settings.background_image
 -%}
 
 <section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 pb-16 md:pb-[120px]">
-  <div class="relative bg-ink px-6 md:px-[60px] py-12 md:py-[90px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-[60px] items-center">
-    <div>
+  <div class="relative overflow-hidden bg-ink px-6 md:px-[60px] py-12 md:py-[90px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-[60px] items-center">
+    {%- if bg_image != blank -%}
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {{
+          bg_image
+          | image_url: width: 2400
+          | image_tag:
+            loading: 'lazy',
+            class: 'absolute inset-0 w-full h-full object-cover',
+            alt: '',
+            widths: '800, 1400, 2400',
+            sizes: '100vw'
+        }}
+        <div class="absolute inset-0 bg-ink/55"></div>
+      </div>
+    {%- endif -%}
+
+    <div class="relative z-[1]">
       <h2 class="font-display font-normal text-[36px] leading-none text-bg m-0">
         {{ heading }}
       </h2>
@@ -37,7 +55,7 @@
 
     <a
       href="{{ button_url }}"
-      class="inline-flex items-center justify-center h-[54px] px-10 border border-gold bg-transparent text-bg font-body text-[11px] tracking-[0.24em] uppercase whitespace-nowrap transition-colors duration-normal ease-normal hover:bg-gold hover:text-ink shrink-0"
+      class="relative z-[1] inline-flex items-center justify-center h-[54px] px-10 border border-gold bg-transparent text-bg font-body text-[11px] tracking-[0.24em] uppercase whitespace-nowrap transition-colors duration-normal ease-normal hover:bg-gold hover:text-ink shrink-0"
     >
       {{ button_label }}
     </a>
@@ -48,6 +66,12 @@
 {
   "name": "Care banner",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Optional. When empty, the solid ink background is used."
+    },
     { "type": "text", "id": "heading", "label": "Heading", "default": "We are here for you" },
     {
       "type": "richtext",
