@@ -74,6 +74,7 @@
       <h1
         class="font-display font-normal text-h2 md:text-page-title leading-[1.1] max-w-[16ch] text-bg"
         data-dc-hero-title
+        style="letter-spacing: {{ section.settings.letter_spacing | divided_by: 1000.0 }}em"
       >
         {{ section.settings.heading }}
       </h1>
@@ -142,10 +143,20 @@
       "content": "Content"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "heading",
       "label": "Heading",
       "default": "Gold in the glass, not on the label"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing",
+      "min": -50,
+      "max": 300,
+      "step": 5,
+      "unit": "x",
+      "default": 5
     },
     {
       "type": "text",
