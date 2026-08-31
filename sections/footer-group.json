@@ -5,13 +5,14 @@
     "footer": {
       "type": "dc-footer",
       "blocks": {
-        "subscribe": {
-          "type": "subscribe",
+        "brand": {
+          "type": "brand",
           "settings": {
-            "eyebrow": "Correspondence",
-            "heading": "Four letters a year, no more",
-            "placeholder": "Email address",
-            "button_label": "Send"
+            "text": "<p>Redefining skincare — with purpose, with you.</p>",
+            "show_newsletter": true,
+            "newsletter_heading": "Correspondence",
+            "newsletter_placeholder": "Email address",
+            "newsletter_button_label": "Send"
           }
         },
         "link-list-1": {
@@ -34,22 +35,21 @@
             "append_contact": false
           }
         },
-        "link-list-3": {
-          "type": "link_list",
+        "contact": {
+          "type": "contact",
           "settings": {
-            "heading": "Follow",
-            "menu": "",
-            "fallback_links": "Journal|/blogs/news\nNewsletter|#DcFooterNewsletter-email",
-            "use_social_fallback": true,
-            "append_contact": false
+            "heading": "Contact Us",
+            "address": "150 King Street West, Suite 215, Toronto, ON M5H 1J9",
+            "phone": "+1 (647) 556-6199",
+            "email": "info@devouedenature.com"
           }
         }
       },
       "block_order": [
-        "subscribe",
+        "brand",
         "link-list-1",
         "link-list-2",
-        "link-list-3"
+        "contact"
       ],
       "settings": {
         "location": "Toronto",
@@ -57,6 +57,8 @@
         "contact_phone": "+1 (647) 556-6199",
         "payment_enable": true,
         "payment_label": "We accept",
+        "enable_country_selector": true,
+        "currency_label": "Currency",
         "show_policy": true,
         "legal_fallback": "Legal · Privacy · Cookies"
       }

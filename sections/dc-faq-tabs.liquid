@@ -4,6 +4,23 @@
 {%- endcomment -%}
 
 {%- liquid
+  assign show_faq_page = false
+  if template.suffix == 'faqs' or template.suffix == 'faq'
+    assign show_faq_page = true
+  elsif page.handle == 'faqs'
+    assign show_faq_page = true
+  endif
+-%}
+
+{%- unless show_faq_page -%}
+  {%- if request.design_mode -%}
+    <div class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 py-10 font-body text-body text-secondary text-center">
+      FAQ page section — shown on the FAQs page or faqs/faq templates.
+    </div>
+  {%- endif -%}
+{%- else -%}
+
+{%- liquid
   assign groups_ordered = ''
 
   for block in section.blocks
@@ -53,125 +70,106 @@
 
   <div class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-8 md:pt-[80px] pb-[64px] md:pb-[90px] xl:pb-[130px]" data-reveal>
     {%- if group_list.size > 0 -%}
-      <div
-        class="grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-0 md:gap-[90px] items-start"
-        data-dc-faq-tabs
-      >
-        <aside class="hidden md:block md:sticky md:top-[120px] border-t border-ink pt-5">
-          <div class="font-mono text-caption uppercase text-muted">
-            {{ 'sections.faq.groups' | t | default: 'Groups' }}
-          </div>
-          <div
-            class="mt-5 flex flex-col"
-            role="tablist"
-            aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
-          >
-            {%- for g in group_list -%}
-              {%- if g != blank -%}
-                {%- assign tab_id = g | handle -%}
-                <button
-                  type="button"
-                  role="tab"
-                  id="faq-tab-{{ section.id }}-{{ tab_id }}"
-                  class="dc-faq-tab dc-faq-tab--sidebar font-body text-nav uppercase tracking-[0.16em] py-3 text-secondary text-left transition-colors duration-fast ease-fast{% if forloop.first %} is-active{% endif %}"
-                  data-dc-faq-tab="{{ tab_id }}"
-                  aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
-                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                >
-                  {{ g }}
-                </button>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-          {%- if section.settings.contact_url != blank -%}
-            <a
-              href="{{ section.settings.contact_url }}"
-              class="inline-block mt-7 font-mono text-caption uppercase border-b border-ink pb-1 text-ink hover:text-secondary transition-colors duration-fast ease-fast"
+      <div data-dc-faq-tabs>
+        <div class="md:hidden -mx-[20px] pb-2" data-dc-faq-tabs-swiper>
+          <div class="swiper dc-faq-tabs-swiper">
+            <div
+              class="swiper-wrapper px-[20px]"
+              role="tablist"
+              aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
             >
-              {{ section.settings.contact_label | default: 'Still stuck? Write to us' }}
-            </a>
-          {%- endif -%}
-        </aside>
+              {%- for g in group_list -%}
+                {%- if g != blank -%}
+                  {%- assign tab_id = g | handle -%}
+                  <div class="swiper-slide dc-faq-tabs-swiper__slide">
+                    <button
+                      type="button"
+                      role="tab"
+                      id="faq-tab-mobile-{{ section.id }}-{{ tab_id }}"
+                      class="dc-faq-tab font-body text-nav uppercase tracking-[0.16em] transition-colors duration-normal ease-normal{% if forloop.first %} is-active{% endif %}"
+                      data-dc-faq-tab="{{ tab_id }}"
+                      aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
+                      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                    >
+                      {{ g }}
+                    </button>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
 
-        <div class="min-w-0">
-          <div class="md:hidden -mx-[20px] border-b border-border pb-px mb-0" data-dc-faq-tabs-swiper>
-            <div class="swiper dc-faq-tabs-swiper">
-              <div
-                class="swiper-wrapper px-[20px]"
-                role="tablist"
-                aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
+        <div
+          class="dc-faq-tabs__nav hidden md:flex flex-wrap justify-center gap-2"
+          role="tablist"
+          aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
+        >
+          {%- for g in group_list -%}
+            {%- if g != blank -%}
+              {%- assign tab_id = g | handle -%}
+              <button
+                type="button"
+                role="tab"
+                id="faq-tab-{{ section.id }}-{{ tab_id }}"
+                class="dc-faq-tab font-body text-nav uppercase tracking-[0.16em] transition-colors duration-normal ease-normal{% if forloop.first %} is-active{% endif %}"
+                data-dc-faq-tab="{{ tab_id }}"
+                aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
+                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
               >
-                {%- for g in group_list -%}
-                  {%- if g != blank -%}
-                    {%- assign tab_id = g | handle -%}
-                    <div class="swiper-slide dc-faq-tabs-swiper__slide">
-                      <button
-                        type="button"
-                        role="tab"
-                        id="faq-tab-mobile-{{ section.id }}-{{ tab_id }}"
-                        class="dc-faq-tab dc-faq-tab--mobile font-body text-nav uppercase tracking-[0.16em] px-4 py-3 text-secondary transition-colors duration-normal ease-normal{% if forloop.first %} is-active{% endif %}"
-                        data-dc-faq-tab="{{ tab_id }}"
-                        aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
-                        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
-                      >
-                        {{ g }}
-                      </button>
-                    </div>
+                {{ g }}
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- for g in group_list -%}
+          {%- if g != blank -%}
+            {%- assign tab_id = g | handle -%}
+            <div
+              id="faq-panel-{{ section.id }}-{{ tab_id }}"
+              role="tabpanel"
+              class="dc-faq-panel mt-8 md:mt-[50px]{% if forloop.first %} is-active{% endif %}"
+              data-dc-faq-panel="{{ tab_id }}"
+              aria-labelledby="faq-tab-{{ section.id }}-{{ tab_id }}"
+              {% unless forloop.first %}hidden{% endunless %}
+            >
+              <div>
+                {%- for block in section.blocks -%}
+                  {%- if block.type == 'question' -%}
+                    {%- liquid
+                      if block.settings.group_name != blank
+                        assign question_tab = block.settings.group_name
+                      else
+                        assign question_tab = block.settings.tab | default: 'General'
+                      endif
+                    -%}
+                    {%- if question_tab == g and block.settings.question != blank -%}
+                      <div {{ block.shopify_attributes }}>
+                        {% render 'dc-accordion',
+                          heading: block.settings.question,
+                          body: block.settings.answer,
+                          class: 'dc-accordion--faq'
+                        %}
+                      </div>
+                    {%- endif -%}
                   {%- endif -%}
                 {%- endfor -%}
               </div>
             </div>
-          </div>
-
-          {%- for g in group_list -%}
-            {%- if g != blank -%}
-              {%- assign tab_id = g | handle -%}
-              <div
-                id="faq-panel-{{ section.id }}-{{ tab_id }}"
-                role="tabpanel"
-                class="dc-faq-panel{% if forloop.first %} is-active{% endif %}"
-                data-dc-faq-panel="{{ tab_id }}"
-                aria-labelledby="faq-tab-{{ section.id }}-{{ tab_id }}"
-                {% unless forloop.first %}hidden{% endunless %}
-              >
-                <h2 class="hidden md:block font-display text-h3 mb-6 m-0">{{ g }}</h2>
-                <div class="border-t border-ink">
-                  {%- for block in section.blocks -%}
-                    {%- if block.type == 'question' -%}
-                      {%- liquid
-                        if block.settings.group_name != blank
-                          assign question_tab = block.settings.group_name
-                        else
-                          assign question_tab = block.settings.tab | default: 'General'
-                        endif
-                      -%}
-                      {%- if question_tab == g and block.settings.question != blank -%}
-                        <div {{ block.shopify_attributes }}>
-                          {% render 'dc-accordion',
-                            heading: block.settings.question,
-                            body: block.settings.answer,
-                            class: 'dc-accordion--faq'
-                          %}
-                        </div>
-                      {%- endif -%}
-                    {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-
-          {%- if section.settings.contact_url != blank -%}
-            <p class="mt-10 md:hidden">
-              <a
-                href="{{ section.settings.contact_url }}"
-                class="inline-block font-mono text-caption uppercase border-b border-ink pb-1 text-ink hover:text-secondary transition-colors duration-fast ease-fast"
-              >
-                {{ section.settings.contact_label | default: 'Still stuck? Write to us' }}
-              </a>
-            </p>
           {%- endif -%}
-        </div>
+        {%- endfor -%}
+
+        {%- if section.settings.contact_url != blank -%}
+          <p class="mt-10 md:mt-[50px] text-center">
+            <a
+              href="{{ section.settings.contact_url }}"
+              class="inline-block font-mono text-caption uppercase border-b border-ink pb-1 text-ink hover:text-secondary transition-colors duration-fast ease-fast"
+            >
+              {{ section.settings.contact_label | default: 'Still stuck? Write to us' }}
+            </a>
+          </p>
+        {%- endif -%}
       </div>
     {%- else -%}
       <p class="font-body text-body text-secondary text-center py-10">
@@ -180,6 +178,7 @@
     {%- endif -%}
   </div>
 </div>
+{%- endunless -%}
 
 {% schema %}
 {

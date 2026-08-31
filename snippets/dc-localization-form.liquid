@@ -1,0 +1,65 @@
+{%- comment -%}
+  Country / currency selector — Shopify localization form with disclosure dropdown.
+  Params:
+    id      - {String} unique id prefix (required)
+    label   - {String} optional visible label
+{%- endcomment -%}
+{%- liquid
+  assign form_id = id | default: 'DcLocalization'
+  assign list_id = form_id | append: 'List'
+  assign label_id = form_id | append: 'Label'
+  assign current_country = localization.country
+  assign current_currency = current_country.currency
+-%}
+
+<div class="dc-localization no-js-hidden flex items-center gap-3" data-dc-localization>
+  {%- if label != blank -%}
+    <span class="dc-localization__label font-body text-[10px] tracking-[0.18em] uppercase opacity-70 shrink-0" id="{{ label_id }}">
+      {{ label }}
+    </span>
+  {%- endif -%}
+
+  {%- form 'localization', id: form_id, class: 'dc-localization__form' -%}
+    <div class="dc-disclosure relative">
+      <button
+        type="button"
+        class="dc-disclosure__button dc-localization__button inline-flex items-center gap-2 border-0 bg-transparent p-0 font-body text-[10px] tracking-[0.18em] uppercase text-[#EFE7DA] opacity-80 hover:opacity-100 transition-opacity duration-normal ease-normal cursor-pointer"
+        aria-expanded="false"
+        aria-controls="{{ list_id }}"
+        {% if label != blank %}aria-describedby="{{ label_id }}"{% endif %}
+        data-dc-disclosure-button
+      >
+        <span class="dc-localization__value">
+          {{ current_currency.iso_code }}
+          {{ current_currency.symbol }}
+        </span>
+        {% render 'icon', name: 'caret' %}
+      </button>
+
+      <ul
+        id="{{ list_id }}"
+        role="list"
+        class="dc-disclosure__list absolute left-0 bottom-[calc(100%+8px)] z-[20] min-w-[220px] max-h-[280px] overflow-y-auto m-0 p-2 list-none bg-ink border border-[rgba(255,250,240,0.16)] shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+        hidden
+        data-dc-disclosure-panel
+      >
+        {%- for country in localization.available_countries -%}
+          <li class="dc-disclosure__item">
+            <a
+              href="#"
+              class="dc-disclosure__link block px-3 py-2 font-body text-[12px] tracking-[0.06em] text-[#EFE7DA] opacity-80 hover:opacity-100 no-underline transition-opacity duration-fast ease-fast{% if country.iso_code == current_country.iso_code %} dc-disclosure__link--active opacity-100{% endif %}"
+              data-dc-country-option
+              data-value="{{ country.iso_code }}"
+              {% if country.iso_code == current_country.iso_code %}aria-current="true"{% endif %}
+            >
+              {{ country.name }}, {{ country.currency.iso_code }}
+              {{ country.currency.symbol }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <input type="hidden" name="country_code" value="{{ current_country.iso_code }}">
+    </div>
+  {%- endform -%}
+</div>

@@ -23,6 +23,122 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
 
+          {%- when 'brand' -%}
+            <div class="col-span-2 md:col-span-4 lg:col-span-1 min-w-0" {{ block.shopify_attributes }}>
+              {%- if block.settings.logo != blank -%}
+                <a href="{{ routes.root_url }}" class="inline-block opacity-90 hover:opacity-100 transition-opacity duration-normal ease-normal">
+                  {{
+                    block.settings.logo
+                    | image_url: width: 300
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'h-auto w-[120px] max-w-full',
+                      alt: shop.name,
+                      widths: '120, 240'
+                  }}
+                </a>
+              {%- else -%}
+                <a href="{{ routes.root_url }}" class="font-display text-[22px] leading-[1.2] text-[#EFE7DA] no-underline hover:opacity-80 transition-opacity duration-normal ease-normal">
+                  {{ shop.name }}
+                </a>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <div class="mt-4 font-body text-[13px] leading-[1.75] max-w-[40ch] m-0 opacity-[0.82]">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.show_newsletter -%}
+                {%- liquid
+                  assign nl_placeholder = block.settings.newsletter_placeholder | default: 'Email address'
+                  assign nl_send_label = block.settings.newsletter_button_label | default: 'Send'
+                  assign nl_form_id = 'DcFooterNewsletter-' | append: block.id
+                -%}
+                <div class="mt-6 max-w-[380px]">
+                  {%- if block.settings.newsletter_heading != blank -%}
+                    <p class="font-body text-[10px] tracking-[0.24em] uppercase m-0" style="color: {{ footer_muted }};">
+                      {{ block.settings.newsletter_heading }}
+                    </p>
+                  {%- endif -%}
+
+                  {%- form 'customer', id: nl_form_id, class: 'mt-3' -%}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <div class="flex items-stretch border-b" style="border-color: {{ footer_input_border }};">
+                      <label class="sr-only" for="{{ nl_form_id }}-email">{{ 'newsletter.label' | t | default: 'Email' }}</label>
+                      <input
+                        id="{{ nl_form_id }}-email"
+                        type="email"
+                        name="contact[email]"
+                        value="{{ form.email }}"
+                        placeholder="{{ nl_placeholder }}"
+                        class="flex-1 min-w-0 h-[46px] border-0 bg-transparent font-body text-[13px] tracking-[0.06em] outline-none placeholder:text-[#EFE7DA] placeholder:opacity-50"
+                        style="color: #EFE7DA;"
+                        autocorrect="off"
+                        autocapitalize="off"
+                        autocomplete="email"
+                        required
+                      >
+                      <button
+                        type="submit"
+                        class="shrink-0 border-0 bg-transparent font-body text-[10px] tracking-[0.22em] uppercase cursor-pointer px-1 hover:opacity-60 transition-opacity duration-normal ease-normal"
+                        style="color: #EFE7DA;"
+                      >
+                        {{ nl_send_label }}
+                      </button>
+                    </div>
+
+                    {%- if form.posted_successfully? -%}
+                      <p class="mt-3 font-body text-[10px] tracking-[0.18em] uppercase opacity-70 m-0" role="status">
+                        {{ 'newsletter.success' | t | default: 'Thank you for subscribing.' }}
+                      </p>
+                    {%- elsif form.errors -%}
+                      <p class="mt-3 font-body text-[10px] tracking-[0.18em] uppercase text-error m-0" role="alert">
+                        {{ form.errors.messages['email'] | default: 'Please enter a valid email.' }}
+                      </p>
+                    {%- endif -%}
+                  {%- endform -%}
+                </div>
+              {%- endif -%}
+            </div>
+
+          {%- when 'contact' -%}
+            {%- liquid
+              assign contact_heading = block.settings.heading | default: 'Contact Us'
+              assign contact_address = block.settings.address
+              assign contact_email = block.settings.email | default: section.settings.contact_email | default: 'info@devouedenature.com'
+              assign contact_phone = block.settings.phone | default: section.settings.contact_phone | default: '+1 (647) 556-6199'
+              assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', '' | replace: '‑', ''
+            -%}
+            <div class="col-span-2 md:col-span-2 lg:col-span-1 min-w-0" {{ block.shopify_attributes }}>
+              {%- if contact_heading != blank -%}
+                <p class="font-body text-[10px] tracking-[0.24em] uppercase m-0" style="color: {{ footer_muted }};">
+                  {{ contact_heading }}
+                </p>
+              {%- endif -%}
+
+              <div class="mt-4 flex flex-col gap-[14px] font-body text-[12px] leading-[1.75] tracking-[0.06em] opacity-[0.82]">
+                {%- if contact_address != blank -%}
+                  <div>
+                    <p class="m-0">Address:</p>
+                    <p class="m-0 mt-1">{{ contact_address | newline_to_br }}</p>
+                  </div>
+                {%- endif -%}
+                {%- if contact_phone != blank -%}
+                  <p class="m-0">
+                    Tel :
+                    <a href="tel:{{ phone_href }}" class="dc-footer-link inline">{{ contact_phone }}</a>
+                  </p>
+                {%- endif -%}
+                {%- if contact_email != blank -%}
+                  <p class="m-0">
+                    Email:
+                    <a href="mailto:{{ contact_email }}" class="dc-footer-link inline">{{ contact_email }}</a>
+                  </p>
+                {%- endif -%}
+              </div>
+            </div>
+
           {%- when 'subscribe' -%}
             {%- liquid
               assign eyebrow = block.settings.eyebrow | default: 'Correspondence'
@@ -159,8 +275,21 @@
       {%- endfor -%}
     </div>
 
-    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-2 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60">
-        <span class="shrink-0">{{ shop.name }} — {{ location }}</span>
+    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60">
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 shrink-0">
+          <span>{{ shop.name }} — {{ location }}</span>
+
+          {%- if section.settings.enable_country_selector -%}
+            {%- if localization.available_countries.size > 1 -%}
+              {% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label | default: 'Currency' %}
+            {%- else -%}
+              <span class="opacity-80">
+                {{ localization.country.currency.iso_code }}
+                {{ localization.country.currency.symbol }}
+              </span>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
 
         {%- if section.settings.payment_enable and shop.enabled_payment_types.size > 0 -%}
           <ul class="hidden md:flex flex-wrap items-center gap-1 list-none p-0 m-0 md:mx-auto" role="list" aria-label="{{ section.settings.payment_label | default: 'We accept' }}">
@@ -236,6 +365,22 @@
     },
     {
       "type": "header",
+      "content": "Country / currency"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Show country and currency selector",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "currency_label",
+      "label": "Currency label",
+      "default": "Currency"
+    },
+    {
+      "type": "header",
       "content": "Payment icons"
     },
     {
@@ -268,6 +413,83 @@
     }
   ],
   "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text below logo",
+          "default": "<p>Redefining skincare — with purpose, with you.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Newsletter"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_newsletter",
+          "label": "Show newsletter signup",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "newsletter_heading",
+          "label": "Newsletter heading",
+          "default": "Correspondence"
+        },
+        {
+          "type": "text",
+          "id": "newsletter_placeholder",
+          "label": "Email placeholder",
+          "default": "Email address"
+        },
+        {
+          "type": "text",
+          "id": "newsletter_button_label",
+          "label": "Submit label",
+          "default": "Send"
+        }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Contact Us"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "label": "Address",
+          "default": "150 King Street West, Suite 215, Toronto, ON M5H 1J9"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Phone",
+          "default": "+1 (647) 556-6199"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Email",
+          "default": "info@devouedenature.com"
+        }
+      ]
+    },
     {
       "type": "subscribe",
       "name": "Newsletter",
@@ -338,10 +560,10 @@
   ],
   "default": {
     "blocks": [
-      { "type": "subscribe" },
+      { "type": "brand" },
       { "type": "link_list" },
       { "type": "link_list" },
-      { "type": "link_list" }
+      { "type": "contact" }
     ]
   }
 }

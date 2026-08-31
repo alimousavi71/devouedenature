@@ -15,7 +15,22 @@
   assign fact_blocks = section.blocks | where: 'type', 'stat_fact'
 -%}
 
-{%- unless section.settings.hide_section -%}
+{%- liquid
+  if page.handle == 'faqs'
+    assign hide_generic_page = true
+  else
+    assign hide_generic_page = false
+  endif
+-%}
+
+{%- if hide_generic_page -%}
+  {%- if request.design_mode -%}
+    <div class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 py-10 font-body text-body text-secondary text-center">
+      Generic page section — hidden on the FAQs page.
+    </div>
+  {%- endif -%}
+{%- else -%}
+  {%- unless section.settings.hide_section -%}
   <article class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]">
     {%- unless section.settings.hide_hero -%}
       <header
@@ -126,7 +141,8 @@
       {%- endif -%}
     {%- endunless -%}
   </article>
-{%- endunless -%}
+  {%- endunless -%}
+{%- endif -%}
 
 {% schema %}
 {
