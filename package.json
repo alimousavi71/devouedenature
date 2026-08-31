@@ -13,7 +13,9 @@
     "shopify": "shopify",
     "theme:dev": "shopify theme dev",
     "theme:push": "shopify theme push",
+    "theme:push:code": "npm run build && shopify theme push --only assets --only sections --only snippets --only layout --only locales --only config/settings_schema.json",
     "theme:pull": "shopify theme pull",
+    "theme:pull:content": "shopify theme pull --only config/settings_data.json --only sections/footer-group.json --only sections/header-group.json --only sections/overlay-group.json --only templates",
     "theme:check": "shopify theme check",
     "theme:info": "shopify theme info"
   },

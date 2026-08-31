@@ -11,3 +11,11 @@ postcss.config.cjs
 src/
 scripts/
 *.md
+
+# Theme Editor content — edited in Shopify Admin, not overwritten on push.
+# Run `npm run theme:pull:content` before committing merchant changes locally.
+config/settings_data.json
+sections/footer-group.json
+sections/header-group.json
+sections/overlay-group.json
+templates/*.json

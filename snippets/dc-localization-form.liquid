@@ -39,9 +39,10 @@
       <ul
         id="{{ list_id }}"
         role="list"
-        class="dc-disclosure__list absolute left-0 bottom-[calc(100%+8px)] z-[20] min-w-[220px] max-h-[280px] overflow-y-auto m-0 p-2 list-none bg-ink border border-[rgba(255,250,240,0.16)] shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+        class="dc-disclosure__list"
         hidden
         data-dc-disclosure-panel
+        data-lenis-prevent
       >
         {%- for country in localization.available_countries -%}
           <li class="dc-disclosure__item">

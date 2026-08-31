@@ -14,8 +14,8 @@
   assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
 -%}
 
-<footer class="bg-ink text-[#EFE7DA]">
-  <div class="max-w-page mx-auto px-5 md:px-10 pt-12 md:pt-16 lg:pt-[70px] pb-4 md:pb-5">
+<footer class="bg-ink text-[#EFE7DA] overflow-visible">
+  <div class="max-w-page mx-auto px-5 md:px-10 pt-12 md:pt-16 lg:pt-[70px] pb-4 md:pb-5 overflow-visible">
     <div
       class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.15fr_repeat(3,minmax(0,1fr))] gap-x-6 gap-y-10 md:gap-x-8 lg:gap-x-12 pb-10 md:pb-12 border-b"
       style="border-color: {{ footer_border }};"
@@ -275,7 +275,7 @@
       {%- endfor -%}
     </div>
 
-    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60">
+    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60 overflow-visible relative z-[2]">
         <div class="flex flex-wrap items-center gap-x-5 gap-y-2 shrink-0">
           <span>{{ shop.name }} — {{ location }}</span>
 

@@ -1,6 +1,8 @@
 /**
  * Footer country / currency disclosure — snippets/dc-localization-form.liquid
  */
+import { stopSmoothScroll, startSmoothScroll } from '../motion/smooth-scroll.js'
+
 export function initLocalizationForms(root = document) {
   root.querySelectorAll('[data-dc-localization]:not([data-dc-localization-bound])').forEach((wrapper) => {
     wrapper.dataset.dcLocalizationBound = '1'
@@ -15,11 +17,13 @@ export function initLocalizationForms(root = document) {
     const close = () => {
       button.setAttribute('aria-expanded', 'false')
       panel.hidden = true
+      startSmoothScroll()
     }
 
     const open = () => {
       button.setAttribute('aria-expanded', 'true')
       panel.hidden = false
+      stopSmoothScroll()
     }
 
     button.addEventListener('click', (event) => {
@@ -28,6 +32,22 @@ export function initLocalizationForms(root = document) {
       if (expanded) close()
       else open()
     })
+
+    panel.addEventListener(
+      'wheel',
+      (event) => {
+        event.stopPropagation()
+      },
+      { passive: true }
+    )
+
+    panel.addEventListener(
+      'touchmove',
+      (event) => {
+        event.stopPropagation()
+      },
+      { passive: true }
+    )
 
     wrapper.querySelectorAll('[data-dc-country-option]').forEach((link) => {
       link.addEventListener('click', (event) => {
