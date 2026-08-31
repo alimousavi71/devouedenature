@@ -21,27 +21,12 @@
           {%- for block in section.blocks -%}
             <article
               class="dc-about-member border border-border px-[26px] py-[30px]"
-              data-dc-card-hover
+              data-dc-lift-hover
               {{ block.shopify_attributes }}
             >
-              <div class="dc-about-member__media relative aspect-square overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
-                {%- if block.settings.image != blank -%}
-                  {{
-                    block.settings.image
-                    | image_url: width: 800
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'dc-about-member__img absolute inset-0 w-full h-full object-cover',
-                      alt: block.settings.name,
-                      widths: '400, 600, 800'
-                  }}
-                {%- else -%}
-                  <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted">portrait</span>
-                {%- endif -%}
-              </div>
               <div class="dc-about-member__meta">
                 {%- if block.settings.name != blank -%}
-                  <p class="mt-[22px] font-display text-[20px] leading-[1.3] text-ink m-0">{{ block.settings.name }}</p>
+                  <p class="font-display text-[20px] leading-[1.3] text-ink m-0">{{ block.settings.name }}</p>
                 {%- endif -%}
                 {%- if block.settings.role != blank -%}
                   <p class="mt-[10px] font-body text-[11px] tracking-[0.16em] uppercase text-secondary m-0">{{ block.settings.role }}</p>
@@ -78,7 +63,6 @@
       "name": "Team member",
       "limit": 8,
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Portrait" },
         { "type": "text", "id": "name", "label": "Name", "default": "Dr. Mehrdad Suleiman, MD" },
         { "type": "text", "id": "role", "label": "Role", "default": "Founder and formulator" },
         { "type": "text", "id": "location", "label": "Location", "default": "Toronto" }
