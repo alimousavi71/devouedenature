@@ -112,12 +112,6 @@
     },
     "recognition": {
       "type": "dc-about-recognition",
-      "blocks": {
-        "slide-1": { "type": "slide", "settings": {} },
-        "slide-2": { "type": "slide", "settings": {} },
-        "slide-3": { "type": "slide", "settings": {} }
-      },
-      "block_order": ["slide-1", "slide-2", "slide-3"],
       "settings": {
         "hide_section": false,
         "heading": "Recognition & Excellence",

@@ -3,12 +3,12 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign slide_blocks = section.blocks | where: 'type', 'slide'
-  assign has_slides = false
-  for block in slide_blocks
-    if block.settings.image != blank
-      assign has_slides = true
-      break
+  assign slide_count = 0
+  for i in (1..6)
+    assign image_key = 'image_' | append: i
+    assign slide_image = section.settings[image_key]
+    if slide_image != blank
+      assign slide_count = slide_count | plus: 1
     endif
   endfor
 -%}
@@ -29,19 +29,25 @@
           data-reveal
           data-reveal-mask
         >
-          {%- if has_slides -%}
+          {%- if slide_count > 0 -%}
             <div class="swiper dc-recognition-swiper absolute inset-0 h-full w-full">
               <div class="swiper-wrapper">
-                {%- for block in slide_blocks -%}
-                  {%- if block.settings.image != blank -%}
-                    <div class="swiper-slide relative h-full" {{ block.shopify_attributes }}>
+                {%- for i in (1..6) -%}
+                  {%- liquid
+                    assign image_key = 'image_' | append: i
+                    assign slide_image = section.settings[image_key]
+                    assign alt_key = 'image_' | append: i | append: '_alt'
+                    assign slide_alt = section.settings[alt_key]
+                  -%}
+                  {%- if slide_image != blank -%}
+                    <div class="swiper-slide relative h-full">
                       {{
-                        block.settings.image
+                        slide_image
                         | image_url: width: 1400
                         | image_tag:
                           loading: 'lazy',
                           class: 'absolute inset-0 w-full h-full object-cover',
-                          alt: block.settings.alt | default: section.settings.heading,
+                          alt: slide_alt | default: section.settings.heading,
                           widths: '700, 1000, 1400'
                       }}
                     </div>
@@ -49,16 +55,6 @@
                 {%- endfor -%}
               </div>
             </div>
-          {%- elsif section.settings.image != blank -%}
-            {{
-              section.settings.image
-              | image_url: width: 1400
-              | image_tag:
-                loading: 'lazy',
-                class: 'absolute inset-0 w-full h-full object-cover',
-                alt: section.settings.heading,
-                widths: '700, 1000, 1400'
-            }}
           {%- else -%}
             <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
               {{ section.settings.placeholder_label | default: 'recognition — award and press' }}
@@ -79,7 +75,7 @@
               {{ section.settings.body }}
             </div>
           {%- endif -%}
-          {%- if section.settings.show_pagination and has_slides -%}
+          {%- if section.settings.show_pagination and slide_count > 1 -%}
             <div
               class="dc-recognition-pagination swiper-pagination mt-10 flex gap-[10px] items-center !relative !w-auto"
               data-dc-recognition-pagination
@@ -110,19 +106,31 @@
       "label": "Body",
       "default": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation, but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence on city billboards marks our growing global footprint, bringing our vision of elevated skincare to a wider audience.</p>"
     },
-    { "type": "header", "content": "Gallery" },
+    { "type": "header", "content": "Gallery images" },
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Fallback image",
-      "info": "Used when no slide blocks are added."
+      "type": "paragraph",
+      "content": "Upload up to 6 images. Each filled slot becomes one slide in the carousel (left side)."
     },
+    { "type": "image_picker", "id": "image_1", "label": "Gallery image 1" },
+    { "type": "text", "id": "image_1_alt", "label": "Gallery image 1 — alt text" },
+    { "type": "image_picker", "id": "image_2", "label": "Gallery image 2" },
+    { "type": "text", "id": "image_2_alt", "label": "Gallery image 2 — alt text" },
+    { "type": "image_picker", "id": "image_3", "label": "Gallery image 3" },
+    { "type": "text", "id": "image_3_alt", "label": "Gallery image 3 — alt text" },
+    { "type": "image_picker", "id": "image_4", "label": "Gallery image 4" },
+    { "type": "text", "id": "image_4_alt", "label": "Gallery image 4 — alt text" },
+    { "type": "image_picker", "id": "image_5", "label": "Gallery image 5" },
+    { "type": "text", "id": "image_5_alt", "label": "Gallery image 5 — alt text" },
+    { "type": "image_picker", "id": "image_6", "label": "Gallery image 6" },
+    { "type": "text", "id": "image_6_alt", "label": "Gallery image 6 — alt text" },
     {
       "type": "text",
       "id": "placeholder_label",
       "label": "Placeholder label",
-      "default": "recognition — award and press"
+      "default": "recognition — award and press",
+      "info": "Shown when no gallery images are uploaded."
     },
+    { "type": "header", "content": "Carousel" },
     {
       "type": "checkbox",
       "id": "show_pagination",
@@ -162,30 +170,6 @@
       ]
     }
   ],
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Slide",
-      "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        {
-          "type": "text",
-          "id": "alt",
-          "label": "Alt text",
-          "info": "Optional. Defaults to section heading."
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "About recognition",
-      "blocks": [
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" }
-      ]
-    }
-  ]
+  "presets": [{ "name": "About recognition" }]
 }
 {% endschema %}
