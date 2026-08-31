@@ -1,18 +1,55 @@
 {%- comment -%}
-  About recognition — image + text split (image left) with mask + editorial drift
+  About recognition — Swiper gallery (left) + text (right)
 {%- endcomment -%}
 
+{%- liquid
+  assign slide_blocks = section.blocks | where: 'type', 'slide'
+  assign has_slides = false
+  for block in slide_blocks
+    if block.settings.image != blank
+      assign has_slides = true
+      break
+    endif
+  endfor
+-%}
+
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]">
+  <section
+    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]"
+    data-dc-recognition-carousel
+    data-autoplay="{{ section.settings.autoplay }}"
+    data-delay="{{ section.settings.autoplay_delay | default: 5000 }}"
+    data-loop="{{ section.settings.loop }}"
+    data-effect="{{ section.settings.transition_effect | default: 'fade' }}"
+  >
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start">
-      <div class="order-2 md:order-1">
+      <div class="order-2 md:order-1 min-w-0 self-start">
         <div
           class="relative aspect-[4/3] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]"
           data-reveal
           data-reveal-mask
-          data-dc-editorial-img
         >
-          {%- if section.settings.image != blank -%}
+          {%- if has_slides -%}
+            <div class="swiper dc-recognition-swiper absolute inset-0 h-full w-full">
+              <div class="swiper-wrapper">
+                {%- for block in slide_blocks -%}
+                  {%- if block.settings.image != blank -%}
+                    <div class="swiper-slide relative h-full" {{ block.shopify_attributes }}>
+                      {{
+                        block.settings.image
+                        | image_url: width: 1400
+                        | image_tag:
+                          loading: 'lazy',
+                          class: 'absolute inset-0 w-full h-full object-cover',
+                          alt: block.settings.alt | default: section.settings.heading,
+                          widths: '700, 1000, 1400'
+                      }}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- elsif section.settings.image != blank -%}
             {{
               section.settings.image
               | image_url: width: 1400
@@ -30,8 +67,8 @@
         </div>
       </div>
 
-      <div class="order-1 md:order-2">
-        <div class="border-t border-ink pt-[26px]" data-reveal data-reveal-float>
+      <div class="order-1 md:order-2 min-w-0 self-start">
+        <div class="border-t border-ink pt-[26px]" data-reveal>
           {%- if section.settings.heading != blank -%}
             <h2 class="font-display font-normal text-[32px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
               {{ section.settings.heading }}
@@ -42,14 +79,12 @@
               {{ section.settings.body }}
             </div>
           {%- endif -%}
-          {%- if section.settings.show_pagination_dots -%}
-            <div class="mt-10 flex gap-[10px] items-center" aria-hidden="true">
-              <span class="w-[22px] h-[6px] rounded-pill bg-ink"></span>
-              <span class="w-[6px] h-[6px] rounded-pill bg-border"></span>
-              <span class="w-[6px] h-[6px] rounded-pill bg-border"></span>
-              <span class="w-[6px] h-[6px] rounded-pill bg-border"></span>
-              <span class="w-[6px] h-[6px] rounded-pill bg-border"></span>
-            </div>
+          {%- if section.settings.show_pagination and has_slides -%}
+            <div
+              class="dc-recognition-pagination swiper-pagination mt-10 flex gap-[10px] items-center !relative !w-auto"
+              data-dc-recognition-pagination
+              aria-label="Gallery navigation"
+            ></div>
           {%- endif -%}
         </div>
       </div>
@@ -73,9 +108,15 @@
       "type": "richtext",
       "id": "body",
       "label": "Body",
-      "default": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence continues to grow — bringing our vision of devoted skincare to a wider audience.</p>"
+      "default": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation, but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence on city billboards marks our growing global footprint, bringing our vision of elevated skincare to a wider audience.</p>"
     },
-    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "header", "content": "Gallery" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback image",
+      "info": "Used when no slide blocks are added."
+    },
     {
       "type": "text",
       "id": "placeholder_label",
@@ -84,11 +125,67 @@
     },
     {
       "type": "checkbox",
-      "id": "show_pagination_dots",
-      "label": "Show decorative dots",
+      "id": "show_pagination",
+      "label": "Show gallery dots",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 3000,
+      "max": 9000,
+      "step": 500,
+      "default": 5000,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop slides",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "transition_effect",
+      "label": "Transition",
+      "default": "fade",
+      "options": [
+        { "value": "fade", "label": "Fade" },
+        { "value": "slide", "label": "Slide" }
+      ]
     }
   ],
-  "presets": [{ "name": "About recognition" }]
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt text",
+          "info": "Optional. Defaults to section heading."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About recognition",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
 }
 {% endschema %}

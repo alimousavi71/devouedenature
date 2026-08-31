@@ -112,12 +112,22 @@
     },
     "recognition": {
       "type": "dc-about-recognition",
+      "blocks": {
+        "slide-1": { "type": "slide", "settings": {} },
+        "slide-2": { "type": "slide", "settings": {} },
+        "slide-3": { "type": "slide", "settings": {} }
+      },
+      "block_order": ["slide-1", "slide-2", "slide-3"],
       "settings": {
         "hide_section": false,
         "heading": "Recognition & Excellence",
-        "body": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence continues to grow — bringing our vision of devoted skincare to a wider audience.</p>",
+        "body": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation, but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence on city billboards marks our growing global footprint, bringing our vision of elevated skincare to a wider audience.</p>",
         "placeholder_label": "recognition — award and press",
-        "show_pagination_dots": true
+        "show_pagination": true,
+        "autoplay": true,
+        "autoplay_delay": 5000,
+        "loop": true,
+        "transition_effect": "fade"
       }
     },
     "promise": {
