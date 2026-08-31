@@ -1,11 +1,11 @@
 {%- comment -%}
-  About story + philosophy — About.dc.html two-column band
+  About story + philosophy — alternating text/image rows, top-aligned
 {%- endcomment -%}
 
 {%- unless section.settings.hide_section -%}
   <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[120px] items-start">
-      <div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start">
+      <div class="min-w-0 self-start">
         <div data-reveal>
           {%- if section.settings.story_heading != blank -%}
             <h2 class="font-display font-normal text-[32px] md:text-[42px] leading-[1.14] text-ink m-0 max-w-[22ch]">
@@ -20,10 +20,62 @@
         </div>
       </div>
 
-      <div class="md:pt-[90px]">
-        <div class="border-t border-ink pt-[26px]" data-reveal data-reveal-float>
+      <div class="min-w-0 self-start">
+        <div
+          class="relative aspect-[4/5] w-full overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]"
+          data-reveal
+          data-reveal-mask
+          data-dc-editorial-img
+        >
+          {%- if section.settings.story_image != blank -%}
+            {{
+              section.settings.story_image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                class: 'absolute inset-0 w-full h-full object-cover',
+                alt: section.settings.story_heading,
+                widths: '600, 900, 1200'
+            }}
+          {%- else -%}
+            <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
+              {{ section.settings.story_placeholder_label | default: 'story — brand editorial' }}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start mt-[64px] md:mt-[90px] xl:mt-[120px]">
+      <div class="min-w-0 self-start order-2 md:order-1">
+        <div
+          class="relative aspect-[4/5] w-full overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]"
+          data-reveal
+          data-reveal-mask
+          data-dc-editorial-img
+        >
+          {%- if section.settings.philosophy_image != blank -%}
+            {{
+              section.settings.philosophy_image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                class: 'absolute inset-0 w-full h-full object-cover',
+                alt: section.settings.philosophy_heading,
+                widths: '600, 900, 1200'
+            }}
+          {%- else -%}
+            <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
+              {{ section.settings.philosophy_placeholder_label | default: 'philosophy — formulation detail' }}
+            </span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="min-w-0 self-start order-1 md:order-2">
+        <div data-reveal>
           {%- if section.settings.philosophy_heading != blank -%}
-            <h2 class="font-display font-normal text-[28px] md:text-[32px] text-ink m-0">
+            <h2 class="font-display font-normal text-[28px] md:text-[32px] leading-[1.14] text-ink m-0 max-w-[22ch]">
               {{ section.settings.philosophy_heading }}
             </h2>
           {%- endif -%}
@@ -44,6 +96,7 @@
   "tag": "section",
   "settings": [
     { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "header", "content": "Story" },
     {
       "type": "text",
       "id": "story_heading",
@@ -56,6 +109,14 @@
       "label": "Story body",
       "default": "<p>Dévoué de Nature is a Canadian luxury skincare brand founded by a collective of physicians who believe skincare should be a considered, thoughtful, and deliberate ritual.</p><p>We create formulations that combine advanced dermatological science with high performance botanical ingredients, crafted with precision in Canada and designed to support healthy, resilient skin at every stage of life.</p><p>Every product is created to feel luxurious, perform meaningfully, and bring confidence to your daily ritual.</p>"
     },
+    { "type": "image_picker", "id": "story_image", "label": "Story image" },
+    {
+      "type": "text",
+      "id": "story_placeholder_label",
+      "label": "Story placeholder label",
+      "default": "story — brand editorial"
+    },
+    { "type": "header", "content": "Philosophy" },
     {
       "type": "text",
       "id": "philosophy_heading",
@@ -67,6 +128,13 @@
       "id": "philosophy_body",
       "label": "Philosophy body",
       "default": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>"
+    },
+    { "type": "image_picker", "id": "philosophy_image", "label": "Philosophy image" },
+    {
+      "type": "text",
+      "id": "philosophy_placeholder_label",
+      "label": "Philosophy placeholder label",
+      "default": "philosophy — formulation detail"
     }
   ],
   "presets": [{ "name": "About story" }]
