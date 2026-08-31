@@ -1,6 +1,19 @@
 {%- comment -%}
-  About purpose — text + image split with mask reveal + editorial drift
+  About purpose — text + image or video split with mask reveal + editorial drift
 {%- endcomment -%}
+
+{%- liquid
+  assign use_video = false
+  if section.settings.media_type == 'video'
+    if section.settings.video != blank or section.settings.video_url != blank
+      assign use_video = true
+    endif
+  endif
+
+  assign autoplay = section.settings.autoplay_video
+  assign loop = section.settings.loop_video
+  assign muted = section.settings.muted_video
+-%}
 
 {%- unless section.settings.hide_section -%}
   <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]">
@@ -26,21 +39,55 @@
         data-reveal-mask
         data-dc-editorial-img
       >
-        {%- if section.settings.image != blank -%}
-          {{
-            section.settings.image
-            | image_url: width: 1200
-            | image_tag:
-              loading: 'lazy',
-              class: 'absolute inset-0 w-full h-full object-cover',
-              alt: section.settings.heading,
-              widths: '600, 900, 1200'
-          }}
-        {%- else -%}
-          <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
-            {{ section.settings.placeholder_label | default: 'editorial — botanical, in mist' }}
-          </span>
-        {%- endif -%}
+        <div class="absolute inset-0" data-dc-editorial-media>
+          {%- if use_video -%}
+            {%- if section.settings.video != blank -%}
+              {{
+                section.settings.video
+                | video_tag:
+                  image_size: '1200x',
+                  autoplay: autoplay,
+                  loop: loop,
+                  muted: muted,
+                  playsinline: true,
+                  controls: section.settings.show_video_controls,
+                  class: 'dc-editorial__video'
+              }}
+            {%- elsif section.settings.video_url != blank -%}
+              {%- if section.settings.video_url.type == 'youtube' -%}
+                <iframe
+                  src="https://www.youtube.com/embed/{{ section.settings.video_url.id }}?enablejsapi=1&autoplay={% if autoplay %}1{% else %}0{% endif %}{% if muted %}&mute=1{% endif %}&controls={% if section.settings.show_video_controls %}1{% else %}0{% endif %}{% if loop %}&playlist={{ section.settings.video_url.id }}&loop=1{% endif %}&rel=0"
+                  class="dc-editorial__video dc-editorial__embed pointer-events-none"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  title="{{ section.settings.heading | escape }}"
+                ></iframe>
+              {%- elsif section.settings.video_url.type == 'vimeo' -%}
+                <iframe
+                  src="https://player.vimeo.com/video/{{ section.settings.video_url.id }}?autoplay={% if autoplay %}1&autopause=0{% else %}0{% endif %}{% if muted %}&muted=1{% endif %}&controls={% if section.settings.show_video_controls %}1{% else %}0{% endif %}{% if loop %}&loop=1{% endif %}"
+                  class="dc-editorial__video dc-editorial__embed pointer-events-none"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen
+                  title="{{ section.settings.heading | escape }}"
+                ></iframe>
+              {%- endif -%}
+            {%- endif -%}
+          {%- elsif section.settings.image != blank -%}
+            {{
+              section.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                loading: 'lazy',
+                class: 'dc-editorial__video',
+                alt: section.settings.heading,
+                widths: '600, 900, 1200'
+            }}
+          {%- else -%}
+            <span class="absolute inset-0 flex items-center justify-center font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
+              {{ section.settings.placeholder_label | default: 'editorial — botanical, in mist' }}
+            </span>
+          {%- endif -%}
+        </div>
       </div>
     </div>
   </section>
@@ -64,7 +111,59 @@
       "label": "Body",
       "default": "<p>Dévoué de Nature was created to bridge a gap — where luxury meets responsibility, and science meets sensitivity.</p><p>We understand that skin is personal, seasonal, and ever-changing. Our mission is to support skin at every stage with products that feel comforting, refined, and empowering — whether your goal is hydration, rejuvenation, or maintaining healthy, resilient skin. This is skincare designed to evolve with you.</p>"
     },
-    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "header", "content": "Media" },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "Media type",
+      "default": "image",
+      "options": [
+        { "value": "image", "label": "Image" },
+        { "value": "video", "label": "Video" }
+      ]
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Shopify video",
+      "info": "Used when media type is Video."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "YouTube or Vimeo URL",
+      "accept": ["youtube", "vimeo"]
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image / video poster",
+      "info": "Shown for Image media type, or as fallback when no video is set."
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_video",
+      "label": "Autoplay video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "muted_video",
+      "label": "Mute video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop_video",
+      "label": "Loop video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "Show video controls",
+      "default": false
+    },
     {
       "type": "text",
       "id": "placeholder_label",

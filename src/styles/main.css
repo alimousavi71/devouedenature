@@ -551,6 +551,26 @@
     width: 100%;
   }
 
+  [data-dc-editorial-media] video,
+  [data-dc-editorial-media] img,
+  [data-dc-editorial-media] .dc-editorial__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  [data-dc-editorial-media] .dc-editorial__embed {
+    top: 50%;
+    left: 50%;
+    width: max(100%, 222.222%);
+    height: max(100%, 56.25%);
+    transform: translate(-50%, -50%);
+    border: 0;
+  }
+
   .dc-hero__embed {
     position: absolute;
     top: 50%;

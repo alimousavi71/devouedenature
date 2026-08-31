@@ -20,11 +20,11 @@
       >
         {%- for block in section.blocks -%}
           <div class="text-center px-[10px]" data-dc-lift-hover {{ block.shopify_attributes }}>
-            {%- if block.settings.mark == 'circle' -%}
-              <div class="w-[18px] h-[18px] mx-auto border border-ink rounded-pill" aria-hidden="true"></div>
-            {%- else -%}
-              <div class="w-[18px] h-[18px] mx-auto border border-ink rotate-45" aria-hidden="true"></div>
-            {%- endif -%}
+            {% render 'dc-claim-mark',
+              icon: block.settings.icon,
+              icon_svg: block.settings.icon_svg,
+              mark: block.settings.mark
+            %}
             {%- if block.settings.title != blank -%}
               <p class="mt-6 font-body text-[11px] tracking-[0.2em] uppercase text-ink m-0">{{ block.settings.title }}</p>
             {%- endif -%}
@@ -76,13 +76,25 @@
       "limit": 8,
       "settings": [
         {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (SVG or image)"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom SVG markup",
+          "info": "Optional. Overrides uploaded icon. Paste inline SVG."
+        },
+        {
           "type": "select",
           "id": "mark",
-          "label": "Mark",
+          "label": "Preset icon (fallback)",
           "default": "diamond",
           "options": [
             { "value": "diamond", "label": "Diamond" },
-            { "value": "circle", "label": "Circle" }
+            { "value": "circle", "label": "Circle" },
+            { "value": "square", "label": "Square" }
           ]
         },
         { "type": "text", "id": "title", "label": "Title", "default": "Clinically tested" },
