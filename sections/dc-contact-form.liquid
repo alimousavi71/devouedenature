@@ -1,6 +1,6 @@
 {%- comment -%}
   Contact form + sidebar — redesign/Contact.dc.html main grid.
-  Real Shopify data: {% form 'contact' %}, info blocks, map image.
+  Real Shopify data: {% form 'contact' %}, info blocks.
 {%- endcomment -%}
 
 {%- liquid
@@ -8,7 +8,6 @@
   assign subject_list = subjects_raw | split: ','
   assign consent_label = section.settings.consent_label | default: 'Send me the quarterly letter'
   assign send_label = section.settings.send_button_label | default: 'Send the message'
-  assign map_placeholder = section.settings.map_placeholder | default: 'map — rue de sévigné, paris'
   assign first_name_label = 'templates.contact.form.first_name' | t | default: 'First name'
   assign last_name_label = 'templates.contact.form.last_name' | t | default: 'Family name'
   assign email_label = 'templates.contact.form.email' | t | default: 'Email address'
@@ -118,7 +117,7 @@
       {%- endform -%}
     </div>
 
-    {%- if info_blocks.size > 0 or section.settings.map_image != blank or section.settings.show_map_placeholder -%}
+    {%- if info_blocks.size > 0 -%}
       <aside class="border-t border-ink pt-[26px] lg:sticky lg:top-[120px] self-start" data-reveal>
         {%- for block in info_blocks -%}
           {%- liquid
@@ -140,16 +139,6 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
-
-        {%- if section.settings.map_image != blank -%}
-          <div class="relative aspect-[4/3] mt-[34px] overflow-hidden">
-            {{ section.settings.map_image | image_url: width: 840 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', widths: '420, 630, 840' }}
-          </div>
-        {%- elsif section.settings.show_map_placeholder -%}
-          <div class="relative aspect-[4/3] mt-[34px] bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] flex items-center justify-center">
-            <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">{{ map_placeholder }}</span>
-          </div>
-        {%- endif -%}
       </aside>
     {%- endif -%}
   </section>
@@ -177,11 +166,7 @@
       "id": "send_button_label",
       "label": "Send button label",
       "default": "Send the message"
-    },
-    { "type": "header", "content": "Map" },
-    { "type": "image_picker", "id": "map_image", "label": "Map image", "info": "Recommended 840 × 630 px (4:3)." },
-    { "type": "checkbox", "id": "show_map_placeholder", "label": "Show map placeholder when no image", "default": true },
-    { "type": "text", "id": "map_placeholder", "label": "Map placeholder label", "default": "map — rue de sévigné, paris" }
+    }
   ],
   "blocks": [
     {

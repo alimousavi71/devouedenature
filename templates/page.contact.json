@@ -60,9 +60,7 @@
       "settings": {
         "subjects": "An order, A return, Refills, Engraving, Press, Something else",
         "consent_label": "Send me the quarterly letter",
-        "send_button_label": "Send the message",
-        "show_map_placeholder": true,
-        "map_placeholder": "map — rue de sévigné, paris"
+        "send_button_label": "Send the message"
       }
     },
     "faq": {
