@@ -1,0 +1,275 @@
+{%- comment -%}
+  FAQ page — tab blocks + question blocks. Theme editor: add Tab blocks first, then Questions.
+  templates/page.faqs.json · templates/page.faq.json
+{%- endcomment -%}
+
+{%- liquid
+  assign groups_ordered = ''
+
+  for block in section.blocks
+    if block.type == 'tab' and block.settings.title != blank
+      assign g = block.settings.title
+      assign g_token = g | append: '|||'
+      unless groups_ordered contains g_token
+        assign groups_ordered = groups_ordered | append: g_token
+      endunless
+    endif
+  endfor
+
+  if groups_ordered == blank
+    for block in section.blocks
+      if block.type == 'question'
+        if block.settings.group_name != blank
+          assign g = block.settings.group_name
+        else
+          assign g = block.settings.tab | default: 'General'
+        endif
+        assign g_token = g | append: '|||'
+        unless groups_ordered contains g_token
+          assign groups_ordered = groups_ordered | append: g_token
+        endunless
+      endif
+    endfor
+  endif
+
+  assign group_list = groups_ordered | split: '|||'
+-%}
+
+<div class="dc-faq-page">
+  <header
+    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-10 md:pt-[70px] grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-[100px] md:items-end"
+    data-reveal
+  >
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="font-mono text-caption uppercase text-muted m-0">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="font-display text-h1 mt-2 md:mt-[18px] m-0">{{ section.settings.heading | default: 'Common questions' }}</h1>
+    </div>
+    {%- if section.settings.intro != blank -%}
+      <p class="font-body text-body text-secondary max-w-[52ch] m-0 text-pretty">{{ section.settings.intro }}</p>
+    {%- endif -%}
+  </header>
+
+  <div class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-8 md:pt-[80px] pb-[64px] md:pb-[90px] xl:pb-[130px]" data-reveal>
+    {%- if group_list.size > 0 -%}
+      <div
+        class="grid grid-cols-1 md:grid-cols-[280px_minmax(0,1fr)] gap-0 md:gap-[90px] items-start"
+        data-dc-faq-tabs
+      >
+        <aside class="hidden md:block md:sticky md:top-[120px] border-t border-ink pt-5">
+          <div class="font-mono text-caption uppercase text-muted">
+            {{ 'sections.faq.groups' | t | default: 'Groups' }}
+          </div>
+          <div
+            class="mt-5 flex flex-col"
+            role="tablist"
+            aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
+          >
+            {%- for g in group_list -%}
+              {%- if g != blank -%}
+                {%- assign tab_id = g | handle -%}
+                <button
+                  type="button"
+                  role="tab"
+                  id="faq-tab-{{ section.id }}-{{ tab_id }}"
+                  class="dc-faq-tab dc-faq-tab--sidebar font-body text-nav uppercase tracking-[0.16em] py-3 text-secondary text-left transition-colors duration-fast ease-fast{% if forloop.first %} is-active{% endif %}"
+                  data-dc-faq-tab="{{ tab_id }}"
+                  aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                >
+                  {{ g }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- if section.settings.contact_url != blank -%}
+            <a
+              href="{{ section.settings.contact_url }}"
+              class="inline-block mt-7 font-mono text-caption uppercase border-b border-ink pb-1 text-ink hover:text-secondary transition-colors duration-fast ease-fast"
+            >
+              {{ section.settings.contact_label | default: 'Still stuck? Write to us' }}
+            </a>
+          {%- endif -%}
+        </aside>
+
+        <div class="min-w-0">
+          <div class="md:hidden -mx-[20px] border-b border-border pb-px mb-0" data-dc-faq-tabs-swiper>
+            <div class="swiper dc-faq-tabs-swiper">
+              <div
+                class="swiper-wrapper px-[20px]"
+                role="tablist"
+                aria-label="{{ section.settings.heading | default: 'FAQ' | escape }}"
+              >
+                {%- for g in group_list -%}
+                  {%- if g != blank -%}
+                    {%- assign tab_id = g | handle -%}
+                    <div class="swiper-slide dc-faq-tabs-swiper__slide">
+                      <button
+                        type="button"
+                        role="tab"
+                        id="faq-tab-mobile-{{ section.id }}-{{ tab_id }}"
+                        class="dc-faq-tab dc-faq-tab--mobile font-body text-nav uppercase tracking-[0.16em] px-4 py-3 text-secondary transition-colors duration-normal ease-normal{% if forloop.first %} is-active{% endif %}"
+                        data-dc-faq-tab="{{ tab_id }}"
+                        aria-controls="faq-panel-{{ section.id }}-{{ tab_id }}"
+                        aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                      >
+                        {{ g }}
+                      </button>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+
+          {%- for g in group_list -%}
+            {%- if g != blank -%}
+              {%- assign tab_id = g | handle -%}
+              <div
+                id="faq-panel-{{ section.id }}-{{ tab_id }}"
+                role="tabpanel"
+                class="dc-faq-panel{% if forloop.first %} is-active{% endif %}"
+                data-dc-faq-panel="{{ tab_id }}"
+                aria-labelledby="faq-tab-{{ section.id }}-{{ tab_id }}"
+                {% unless forloop.first %}hidden{% endunless %}
+              >
+                <h2 class="hidden md:block font-display text-h3 mb-6 m-0">{{ g }}</h2>
+                <div class="border-t border-ink">
+                  {%- for block in section.blocks -%}
+                    {%- if block.type == 'question' -%}
+                      {%- liquid
+                        if block.settings.group_name != blank
+                          assign question_tab = block.settings.group_name
+                        else
+                          assign question_tab = block.settings.tab | default: 'General'
+                        endif
+                      -%}
+                      {%- if question_tab == g and block.settings.question != blank -%}
+                        <div {{ block.shopify_attributes }}>
+                          {% render 'dc-accordion',
+                            heading: block.settings.question,
+                            body: block.settings.answer,
+                            class: 'dc-accordion--faq'
+                          %}
+                        </div>
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if section.settings.contact_url != blank -%}
+            <p class="mt-10 md:hidden">
+              <a
+                href="{{ section.settings.contact_url }}"
+                class="inline-block font-mono text-caption uppercase border-b border-ink pb-1 text-ink hover:text-secondary transition-colors duration-fast ease-fast"
+              >
+                {{ section.settings.contact_label | default: 'Still stuck? Write to us' }}
+              </a>
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
+      <p class="font-body text-body text-secondary text-center py-10">
+        {{ 'sections.faq.empty' | t | default: 'Add Tab blocks, then Question blocks in the theme editor.' }}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ page",
+  "tag": "section",
+  "class": "section-faq-page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Add Tab blocks to create tabs, then Question blocks and assign each question to a tab."
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQ" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Common questions" },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "Answers about shipping, returns, and the L’Or Celeste ritual."
+    },
+    { "type": "url", "id": "contact_url", "label": "Contact link URL" },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact link label",
+      "default": "Still stuck? Write to us"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab title",
+          "default": "Shipping",
+          "info": "Shown in the tab navigation. Match this exactly in each Question block."
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "select",
+          "id": "tab",
+          "label": "Tab",
+          "default": "Shipping",
+          "options": [
+            { "value": "Shipping", "label": "Shipping" },
+            { "value": "Returns & Exchanges", "label": "Returns & Exchanges" },
+            { "value": "Cancellations & Changes", "label": "Cancellations & Changes" },
+            { "value": "Product", "label": "Product" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "group_name",
+          "label": "Custom tab (optional)",
+          "info": "Only if your tab is not in the list above. Must match a Tab block title."
+        },
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ page",
+      "blocks": [
+        { "type": "tab", "settings": { "title": "Shipping" } },
+        { "type": "tab", "settings": { "title": "Returns & Exchanges" } },
+        { "type": "tab", "settings": { "title": "Cancellations & Changes" } },
+        { "type": "tab", "settings": { "title": "Product" } },
+        {
+          "type": "question",
+          "settings": {
+            "tab": "Shipping",
+            "question": "Where do you currently deliver?",
+            "answer": "<p>We currently ship across Canada and the United States.</p>"
+          }
+        }
+      ]
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

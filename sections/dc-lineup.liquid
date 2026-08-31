@@ -47,9 +47,20 @@
       "name": "Claim",
       "settings": [
         {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (SVG or image)"
+        },
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "Custom SVG markup",
+          "info": "Optional. Overrides uploaded icon. Paste inline SVG."
+        },
+        {
           "type": "select",
           "id": "mark",
-          "label": "Mark",
+          "label": "Preset icon (fallback)",
           "default": "circle",
           "options": [
             { "value": "circle", "label": "Circle" },

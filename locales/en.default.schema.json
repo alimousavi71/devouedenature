@@ -1,1 +1,24 @@
-{}
+{
+  "sections": {
+    "header": {
+      "settings": {
+        "header-group": {
+          "label": "Header"
+        }
+      }
+    },
+    "footer": {
+      "settings": {
+        "footer-group": {
+          "label": "Footer"
+        }
+      }
+    },
+    "overlay-group": {
+      "name": "Overlays"
+    },
+    "main-addresses": {
+      "name": "Addresses"
+    }
+  }
+}

@@ -1,16 +1,44 @@
 {%- comment -%}
-  Geometric claim mark — matches redesign/Home.dc.html claims row.
+  Claim icon — dynamic SVG / image with geometric preset fallback.
   Params:
-    mark  - {String} 'circle' | 'diamond' | 'square' (default 'circle')
+    icon      - {Image} uploaded icon (SVG or PNG)
+    icon_svg  - {String} inline SVG markup (optional)
+    mark      - {String} 'circle' | 'diamond' | 'square' (fallback preset)
 {%- endcomment -%}
 {%- liquid
   assign mark = mark | default: 'circle'
-  assign shape_classes = 'block w-[16px] h-[16px] mx-auto border border-ink'
-  case mark
-    when 'circle'
-      assign shape_classes = shape_classes | append: ' rounded-pill'
-    when 'diamond'
-      assign shape_classes = shape_classes | append: ' rotate-45'
-  endcase
 -%}
-<span class="{{ shape_classes }}" aria-hidden="true"></span>
+
+{%- if icon_svg != blank -%}
+  <div class="dc-claim-mark dc-claim-mark--custom" aria-hidden="true">
+    {{ icon_svg }}
+  </div>
+{%- elsif icon != blank -%}
+  {{
+    icon
+    | image_url: width: 96
+    | image_tag:
+      width: 24,
+      height: 24,
+      class: 'dc-claim-mark dc-claim-mark--image',
+      loading: 'lazy',
+      alt: ''
+  }}
+{%- else -%}
+  <span class="dc-claim-mark dc-claim-mark--preset" aria-hidden="true">
+    {%- case mark -%}
+      {%- when 'diamond' -%}
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2.5" y="2.5" width="11" height="11" stroke="currentColor" transform="rotate(45 8 8)"/>
+        </svg>
+      {%- when 'square' -%}
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="12" height="12" stroke="currentColor"/>
+        </svg>
+      {%- else -%}
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="7" stroke="currentColor"/>
+        </svg>
+    {%- endcase -%}
+  </span>
+{%- endif -%}

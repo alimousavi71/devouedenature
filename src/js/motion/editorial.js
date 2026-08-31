@@ -139,9 +139,9 @@ export function splitTitleWords(titleEl) {
   titleEl.innerHTML = words
     .map(
       (word) =>
-        `<span class="dc-split-word inline-block overflow-hidden align-top"><span data-dc-split-word class="inline-block">${word}</span></span>`,
+        `<span class="dc-split-word"><span data-dc-split-word>${word}</span></span>`,
     )
-    .join('<span class="inline-block w-[0.28em]" aria-hidden="true"></span>')
+    .join('')
   return titleEl.querySelectorAll('[data-dc-split-word]')
 }
 

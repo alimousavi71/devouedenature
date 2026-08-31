@@ -161,6 +161,9 @@
         "increase": "Increase quantity for {{ product }}",
         "input_label": "Quantity for {{ product }}"
       },
+      "media": {
+        "zoom": "Zoom"
+      },
       "save": "Save",
       "save_for_later": "Save for later",
       "sold_out": "Coming Soon",

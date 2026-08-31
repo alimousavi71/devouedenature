@@ -22,7 +22,11 @@
         endif
       -%}
       <div class="text-center" {{ block.shopify_attributes }}>
-        {% render 'dc-claim-mark', mark: mark %}
+        {% render 'dc-claim-mark',
+          mark: mark,
+          icon: block.settings.icon,
+          icon_svg: block.settings.icon_svg
+        %}
         {%- if block.settings.label != blank -%}
           <div class="mt-[18px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary">
             {{ block.settings.label }}

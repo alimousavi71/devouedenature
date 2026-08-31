@@ -10,7 +10,7 @@ import {
   killTriggers,
   cappedStagger,
 } from './tokens.js'
-import { initEditorial, splitTitleWords, animateTitleWords } from './editorial.js'
+import { initEditorial } from './editorial.js'
 import { groupSiblingReveals, createScrollReveal, timelineStagger } from './stagger.js'
 import { initProductEntrance } from './product.js'
 
@@ -182,15 +182,9 @@ function initHero(root) {
   }
 
   if (title) {
-    const words = splitTitleWords(title)
-    if (words.length > 1) {
-      animateTitleWords(words, tl, cursor)
-      cursor += Math.min(words.length * STAGGER.hero, 0.42)
-    } else {
-      gsap.set(title, { opacity: 0, y: 36 })
-      tl.to(title, { opacity: 1, y: 0, duration: DURATION.editorial, ease: EASE.luxury }, cursor)
-      cursor += STAGGER.section
-    }
+    gsap.set(title, { opacity: 0, y: 36 })
+    tl.to(title, { opacity: 1, y: 0, duration: DURATION.editorial, ease: EASE.luxury }, cursor)
+    cursor += STAGGER.section
   }
 
   const copyTargets = [copy, cta].filter(Boolean)

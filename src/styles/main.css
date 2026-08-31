@@ -207,7 +207,80 @@
   }
 
   .dc-split-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
     padding-bottom: 0.06em;
+    margin-inline-end: 0.32em;
+  }
+
+  .dc-split-word:last-child {
+    margin-inline-end: 0;
+  }
+
+  .dc-split-word > [data-dc-split-word] {
+    display: inline-block;
+  }
+
+  .dc-claim-mark {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-inline: auto;
+    color: theme('colors.ink');
+  }
+
+  .dc-claim-mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dc-claim-mark--image {
+    object-fit: contain;
+  }
+
+  .dc-claim-mark--custom svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin-inline: auto;
+  }
+
+  .dc-faq-tab.is-active {
+    color: theme('colors.ink');
+    box-shadow: inset 0 -2px 0 theme('colors.ink');
+  }
+
+  .dc-faq-tab:hover {
+    color: theme('colors.ink');
+  }
+
+  .dc-faq-tab--sidebar {
+    border: 0;
+    background: none;
+    border-bottom: 1px solid theme('colors.divider');
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .dc-faq-tab--sidebar.is-active {
+    box-shadow: none;
+  }
+
+  .dc-faq-tab--mobile {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .dc-faq-tabs-swiper {
+    overflow: visible;
+  }
+
+  .dc-faq-tabs-swiper__slide {
+    width: auto;
   }
 
   .dc-accordion[data-dc-accordion-motion] .dc-accordion__icon {
