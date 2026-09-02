@@ -19,3 +19,5 @@ sections/footer-group.json
 sections/header-group.json
 sections/overlay-group.json
 templates/*.json
+!templates/index.json
+!templates/product.json
