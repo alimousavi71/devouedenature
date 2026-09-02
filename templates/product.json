@@ -135,32 +135,30 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "title": "Savon Vermeille",
             "link_label": "View product"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "title": "Huile de Corps",
             "link_label": "View product"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "title": "Nuit Vermeille — Eau de parfum",
             "link_label": "View product"
           }
         },
         "step_4": {
           "type": "step",
-          "settings": { "title": "Crème de Peau", "link_label": "View product" }
+          "settings": {
+            "link_label": "View product"
+          }
         },
         "step_5": {
           "type": "step",
           "settings": {
-            "title": "Brume pour Cheveux",
             "link_label": "View product"
           }
         }
@@ -168,9 +166,8 @@
       "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
       "settings": {
         "hide_section": false,
-        "eyebrow": "The layering",
-        "heading": "Your fragrance ritual",
-        "description": "<p>Five steps, worn in order. Each is composed to sit under the next, so the trail lasts the evening rather than the hour.</p>",
+        "heading": "Your skincare ritual",
+        "description": "<p>Discover the power of a complete ritual — crafted to cleanse, treat, and illuminate for maximum efficacy.</p>",
         "step_link_label": "View product"
       }
     }
