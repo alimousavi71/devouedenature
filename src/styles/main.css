@@ -246,6 +246,11 @@
     height: 100%;
   }
 
+  .dc-claim-mark--preset svg {
+    stroke-linejoin: miter;
+    stroke-miterlimit: 8;
+  }
+
   .dc-claim-mark--image {
     object-fit: contain;
   }
@@ -272,10 +277,14 @@
 
   .dc-maple-leaf--inline {
     display: inline-block;
-    width: 1.05em;
-    height: 1.05em;
-    margin-inline-start: 0.2em;
-    vertical-align: -0.12em;
+    width: 1.15em;
+    height: 1.15em;
+    margin-inline-start: 0.25em;
+    vertical-align: -0.14em;
+  }
+
+  .dc-brand-values__intro {
+    text-wrap: pretty;
   }
 
   .dc-faq-tab {
