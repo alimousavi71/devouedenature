@@ -3,15 +3,15 @@
 {%- endcomment -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-[1200px] mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]">
-    <div class="border border-gold px-6 py-12 md:px-[70px] md:py-[80px]" data-reveal data-reveal-float>
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip">
+    <div class="w-full min-w-0 max-w-full border border-gold px-5 py-10 sm:px-6 sm:py-12 md:px-[70px] md:py-[80px] box-border overflow-hidden" data-reveal>
       {%- if section.settings.heading != blank -%}
-        <h2 class="font-display font-normal text-[28px] md:text-[34px] text-secondary m-0">
+        <h2 class="font-display font-normal text-[28px] md:text-[34px] text-secondary m-0 break-words">
           {{ section.settings.heading }}
         </h2>
       {%- endif -%}
       {%- if section.settings.body != blank -%}
-        <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-[68ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+        <div class="mt-[34px] font-body text-[14px] leading-[1.95] text-secondary max-w-none break-words [overflow-wrap:anywhere] [&_p]:m-0 [&_p+_p]:mt-[22px]">
           {{ section.settings.body }}
         </div>
       {%- endif -%}

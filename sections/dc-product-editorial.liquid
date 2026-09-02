@@ -1,12 +1,17 @@
 {%- comment -%}
-  Editorial two-column band — redesign/Product.dc.html
-  Theme editor: section settings. Product admin: custom.editorial_lead, custom.editorial_body
+  Editorial story band — redesign/Product.dc.html
+  Theme editor: section settings. Product admin: custom.editorial_lead, custom.editorial_body, custom.editorial_image
 {%- endcomment -%}
 
 {%- liquid
   assign lead = section.settings.lead
   if product.metafields.custom.editorial_lead != blank
     assign lead = product.metafields.custom.editorial_lead.value | default: product.metafields.custom.editorial_lead
+  endif
+
+  assign story_image = section.settings.image
+  if product.metafields.custom.editorial_image != blank
+    assign story_image = product.metafields.custom.editorial_image.value | default: product.metafields.custom.editorial_image
   endif
 
   assign use_metafield_body = false
@@ -16,19 +21,42 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  {%- if lead != blank or section.settings.body != blank or use_metafield_body -%}
-    <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px]">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[100px] items-start" data-reveal-stagger>
+  {%- if lead != blank or section.settings.body != blank or use_metafield_body or story_image != blank -%}
+    <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px] overflow-x-clip">
+      <div class="min-w-0" data-reveal-stagger>
         {%- if lead != blank -%}
-          <p class="m-0 font-display font-normal text-[27px] leading-[1.5] text-pretty text-ink">{{ lead }}</p>
+          <p class="m-0 font-display font-normal text-[24px] md:text-[27px] leading-[1.5] text-pretty text-ink max-w-[42ch]">
+            {{ lead }}
+          </p>
         {%- endif -%}
+
         {%- if use_metafield_body or section.settings.body != blank -%}
-          <div class="font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] text-pretty [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
+          <div class="mt-[34px] md:mt-[40px] font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] text-pretty break-words [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
             {%- if use_metafield_body -%}
               {{ product.metafields.custom.editorial_body | metafield_tag }}
             {%- else -%}
               {{ section.settings.body }}
             {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if story_image != blank -%}
+          <div class="mt-[40px] md:mt-[46px] relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
+            {{
+              story_image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                class: 'absolute inset-0 w-full h-full object-cover',
+                alt: lead | default: product.title,
+                widths: '800, 1200, 1600'
+            }}
+          </div>
+        {%- elsif section.settings.show_image_placeholder -%}
+          <div class="mt-[40px] md:mt-[46px] relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] flex items-center justify-center">
+            <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
+              {{ section.settings.image_placeholder | default: 'product story — editorial image' }}
+            </span>
           </div>
         {%- endif -%}
       </div>
@@ -38,7 +66,7 @@
 
 {% schema %}
 {
-  "name": "Product editorial",
+  "name": "Product story",
   "settings": [
     {
       "type": "checkbox",
@@ -56,11 +84,30 @@
     {
       "type": "richtext",
       "id": "body",
-      "label": "Body (two columns)",
+      "label": "Body",
       "default": "<p>Rose is harvested at dawn over eleven days in May, then distilled the same afternoon so the material never sits. The absolute that results is heavier than most, with a jam-like sweetness we correct with bitter orange peel pressed in Calabria.</p><p>Benzoin from Laos carries the base. It takes eight weeks in glass before the composition settles into itself, and a further two before it is filled. Each bottle is numbered on the underside of the collar.</p>",
       "info": "Per-product override: metafield custom.editorial_body (rich text)"
+    },
+    { "type": "header", "content": "Story image" },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Per-product override: metafield custom.editorial_image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image_placeholder",
+      "label": "Show image placeholder when no image",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "image_placeholder",
+      "label": "Image placeholder label",
+      "default": "product story — editorial image"
     }
   ],
-  "presets": [{ "name": "Product editorial" }]
+  "presets": [{ "name": "Product story" }]
 }
 {% endschema %}

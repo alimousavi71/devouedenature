@@ -37,12 +37,46 @@
         "products_to_show": 5
       }
     },
-    "dc-announcement": {
-      "type": "dc-announcement",
+    "dc-brand-values": {
+      "type": "dc-brand-values",
+      "blocks": {
+        "value-1": {
+          "type": "value",
+          "settings": {
+            "mark": "circle",
+            "title": "Made in Canada",
+            "text": "Formulated and filled with precision in Canada."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "mark": "diamond",
+            "title": "Physician formulated",
+            "text": "Developed by a collective of physicians and scientists."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "mark": "square",
+            "title": "Clinically tested",
+            "text": "Assessed for safety, tolerance, and performance."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
+            "mark": "circle",
+            "title": "Cruelty-free",
+            "text": "No animal testing at any stage, in any market."
+          }
+        }
+      },
+      "block_order": ["value-1", "value-2", "value-3", "value-4"],
       "settings": {
-        "date": "8 May 2026",
-        "heading": "Official launch",
-        "text": "Launching in North America and Europe. Get ready to meet your best skin."
+        "hide_section": false,
+        "heading": "Thoughtfully made in Canada"
       }
     },
     "dc-campaign": {
@@ -126,7 +160,7 @@
   "order": [
     "dc-hero",
     "dc-lineup",
-    "dc-announcement",
+    "dc-brand-values",
     "dc-campaign",
     "dc-faq",
     "dc-care-banner",

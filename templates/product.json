@@ -72,7 +72,9 @@
       "settings": {
         "hide_section": false,
         "lead": "The house was founded on a single idea: a fragrance should be finished, not decorated. Nuit Vermeille is the seventh composition to carry the name.",
-        "body": "<p>Rose is harvested at dawn over eleven days in May, then distilled the same afternoon so the material never sits. The absolute that results is heavier than most, with a jam-like sweetness we correct with bitter orange peel pressed in Calabria.</p><p>Benzoin from Laos carries the base. It takes eight weeks in glass before the composition settles into itself, and a further two before it is filled. Each bottle is numbered on the underside of the collar.</p>"
+        "body": "<p>Rose is harvested at dawn over eleven days in May, then distilled the same afternoon so the material never sits. The absolute that results is heavier than most, with a jam-like sweetness we correct with bitter orange peel pressed in Calabria.</p><p>Benzoin from Laos carries the base. It takes eight weeks in glass before the composition settles into itself, and a further two before it is filled. Each bottle is numbered on the underside of the collar.</p>",
+        "show_image_placeholder": true,
+        "image_placeholder": "product story — editorial image"
       }
     },
     "campaign": {
@@ -180,7 +182,7 @@
     "composition",
     "perfumer",
     "formats",
-    "recommendations",
-    "ritual"
+    "ritual",
+    "recommendations"
   ]
 }
