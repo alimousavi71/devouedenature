@@ -96,7 +96,7 @@
           "type": "value",
           "settings": {
             "icon_svg": "",
-            "mark": "circle",
+            "mark": "maple_leaf",
             "title": "Made in Canada",
             "text": "Formulated and filled with precision in Canada."
           }
@@ -137,7 +137,9 @@
       ],
       "settings": {
         "hide_section": false,
-        "heading": "Thoughtfully made in Canada"
+        "heading": "Thoughtfully made in Canada",
+        "intro": "Proudly developed and made in Canada, our formulas bring together thoughtful ingredient selection, scientific expertise, and rigorous attention to quality. Every detail is considered with purpose, creating skincare designed to deliver both a sensorial experience and meaningful results.",
+        "show_intro_maple_leaf": true
       }
     },
     "dc-campaign": {

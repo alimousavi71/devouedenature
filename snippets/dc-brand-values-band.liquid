@@ -19,6 +19,15 @@
       </h2>
     {%- endif -%}
 
+    {%- if section.settings.intro != blank -%}
+      <p class="dc-prose mt-6 md:mt-8 mx-auto max-w-[62ch] text-center font-body text-[14px] md:text-[15px] leading-[1.95] text-secondary m-0" data-reveal>
+        {{ section.settings.intro | escape }}
+        {%- if section.settings.show_intro_maple_leaf -%}
+          {% render 'dc-maple-leaf', inline: true %}
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
     {%- if value_blocks.size > 0 -%}
       <div
         class="mt-[46px] md:mt-[70px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] py-[40px] md:py-[50px] border-y border-border"
@@ -46,7 +55,7 @@
         data-reveal-stagger
       >
         <div class="text-center px-[10px]" data-dc-lift-hover>
-          {% render 'dc-claim-mark', mark: 'circle' %}
+          {% render 'dc-claim-mark', mark: 'maple_leaf' %}
           <p class="mt-6 font-body text-[11px] tracking-[0.2em] uppercase text-ink m-0">Made in Canada</p>
           <p class="mt-3 mx-auto font-body text-[12px] leading-[1.8] text-secondary max-w-[26ch] m-0">Formulated and filled with precision in Canada.</p>
         </div>

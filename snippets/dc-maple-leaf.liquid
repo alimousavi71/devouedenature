@@ -1,0 +1,24 @@
+{%- comment -%}
+  Maple leaf icon — inline or block.
+  Params:
+    class - optional extra classes
+    inline  - {Boolean} inline decorative mark after copy
+{%- endcomment -%}
+
+{%- liquid
+  assign leaf_class = 'dc-maple-leaf'
+  if inline
+    assign leaf_class = leaf_class | append: ' dc-maple-leaf--inline'
+  endif
+  if class != blank
+    assign leaf_class = leaf_class | append: ' ' | append: class
+  endif
+-%}
+
+<span class="{{ leaf_class }}" aria-hidden="true">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2.5C12 2.5 9.25 5.75 8.25 9.25C7.5 10.75 7.75 12.75 9.25 13.75C9.75 11.75 10.75 10.75 12 10.75C13.25 10.75 14.25 11.75 14.75 13.75C16.25 12.75 16.5 10.75 15.75 9.25C14.75 5.75 12 2.5 12 2.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M12 10.75V20.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M9.5 16.5L12 18.5L14.5 16.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</span>

@@ -31,7 +31,7 @@
         {%- endif -%}
 
         {%- if use_metafield_body or section.settings.body != blank -%}
-          <div class="mt-[34px] md:mt-[40px] font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] text-pretty break-words [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
+          <div class="dc-prose mt-[34px] md:mt-[40px] font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
             {%- if use_metafield_body -%}
               {{ product.metafields.custom.editorial_body | metafield_tag }}
             {%- else -%}

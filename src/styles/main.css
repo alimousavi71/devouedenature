@@ -11,6 +11,16 @@
   .dc-btn {
     will-change: transform;
   }
+
+  /* Readable body copy — avoid mid-word splits like "e / fective" */
+  .dc-prose,
+  .dc-prose :where(p, li, blockquote) {
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    text-wrap: pretty;
+  }
   .dc-btn__label,
   .sweep-cta__label {
     display: inline-block;
@@ -245,6 +255,27 @@
     width: 24px;
     height: 24px;
     margin-inline: auto;
+  }
+
+  .dc-maple-leaf {
+    display: block;
+    width: 24px;
+    height: 24px;
+    color: theme('colors.ink');
+  }
+
+  .dc-maple-leaf svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .dc-maple-leaf--inline {
+    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
+    margin-inline-start: 0.2em;
+    vertical-align: -0.12em;
   }
 
   .dc-faq-tab {
