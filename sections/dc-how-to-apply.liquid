@@ -1,11 +1,15 @@
 {%- comment -%}
-  Fragrance ritual — redesign/Product.dc.html
-  Theme editor: header settings + step blocks (title, image, product link).
-  Product admin (optional): custom.step_1 … step_5, custom.step_N_url
+  Product ritual — bottom of product page.
+  Per product: custom.step_1 … step_5 (title/text), custom.step_N_url (optional).
+  Theme editor blocks supply image / product link / fallback title when metafield is empty.
 {%- endcomment -%}
 
 {%- liquid
   assign step_blocks = section.blocks | where: 'type', 'step'
+  assign has_step_metafields = false
+  if product.metafields.custom.step_1 != blank or product.metafields.custom.step_2 != blank or product.metafields.custom.step_3 != blank or product.metafields.custom.step_4 != blank or product.metafields.custom.step_5 != blank
+    assign has_step_metafields = true
+  endif
 -%}
 
 {%- unless section.settings.hide_section -%}
@@ -27,41 +31,58 @@
         <ol class="mt-[70px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[40px] items-start list-none p-0 m-0" data-reveal-stagger>
           {%- for block in step_blocks -%}
             {%- liquid
-              assign step_url = block.settings.link_url
-              if block.settings.product != blank
+              assign step_index = forloop.index
+              assign key = 'step_' | append: step_index
+              assign url_key = 'step_' | append: step_index | append: '_url'
+              assign step_title = product.metafields.custom[key].value | default: product.metafields.custom[key] | strip
+              if step_title == blank
+                assign step_title = block.settings.title
+              endif
+
+              assign step_url = product.metafields.custom[url_key].value | default: product.metafields.custom[url_key]
+              if step_url == blank
+                assign step_url = block.settings.link_url
+              endif
+              if step_url == blank and block.settings.product != blank
                 assign step_url = block.settings.product.url
               endif
+
+              assign link_label = block.settings.link_label | default: section.settings.step_link_label
             -%}
-            <li class="min-w-0 text-center relative" {{ block.shopify_attributes }}>
-              <p class="font-body text-[13px] tracking-[0.1em] text-secondary m-0">{{ forloop.index }}.</p>
-              <div class="mt-[22px] relative aspect-square bg-ink overflow-hidden flex items-center justify-center">
-                {%- if block.settings.image != blank -%}
-                  {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: block.settings.title }}
-                {%- else -%}
-                  <span class="font-mono text-[9px] tracking-[0.14em] uppercase text-gold">Step {{ forloop.index }}</span>
+            {%- if step_title != blank or block.settings.image != blank -%}
+              <li class="min-w-0 text-center relative" {{ block.shopify_attributes }}>
+                <p class="font-body text-[13px] tracking-[0.1em] text-secondary m-0">{{ step_index }}.</p>
+                <div class="mt-[22px] relative aspect-square bg-ink overflow-hidden flex items-center justify-center">
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: step_title }}
+                  {%- else -%}
+                    <span class="font-mono text-[9px] tracking-[0.14em] uppercase text-gold">Step {{ step_index }}</span>
+                  {%- endif -%}
+                  {%- unless forloop.last -%}
+                    <span class="hidden lg:block absolute top-1/2 -right-5 translate-x-1/2 -translate-y-1/2 text-[16px] leading-none text-secondary pointer-events-none" aria-hidden="true">+</span>
+                  {%- endunless -%}
+                </div>
+                {%- if step_title != blank -%}
+                  <p class="mt-[26px] font-body text-[12px] tracking-[0.14em] uppercase leading-[1.6] min-h-[3.2em] text-ink m-0 whitespace-pre-line">{{ step_title | escape }}</p>
                 {%- endif -%}
-                {%- unless forloop.last -%}
-                  <span class="hidden lg:block absolute top-1/2 -right-5 translate-x-1/2 -translate-y-1/2 text-[16px] leading-none text-secondary pointer-events-none" aria-hidden="true">+</span>
-                {%- endunless -%}
-              </div>
-              {%- if block.settings.title != blank -%}
-                <p class="mt-[26px] font-body text-[12px] tracking-[0.14em] uppercase leading-[1.6] min-h-[3.2em] text-ink m-0">{{ block.settings.title }}</p>
-              {%- endif -%}
-              {%- if step_url != blank and block.settings.link_label != blank -%}
-                <a href="{{ step_url }}" class="inline-block mt-[10px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal">
-                  {{ block.settings.link_label }}
-                </a>
-              {%- endif -%}
-            </li>
+                {%- if step_url != blank and link_label != blank -%}
+                  <a href="{{ step_url }}" class="inline-block mt-[10px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal">
+                    {{ link_label }}
+                  </a>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
           {%- endfor -%}
         </ol>
-      {%- else -%}
+      {%- elsif has_step_metafields -%}
         <ol class="mt-[70px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[40px] items-start list-none p-0 m-0" data-reveal-stagger>
           {%- for i in (1..5) -%}
-            {%- assign key = 'step_' | append: i -%}
-            {%- assign url_key = 'step_' | append: i | append: '_url' -%}
-            {%- assign step_val = product.metafields.custom[key].value -%}
-            {%- assign step_url = product.metafields.custom[url_key].value | default: product.metafields.custom[url_key] -%}
+            {%- liquid
+              assign key = 'step_' | append: i
+              assign url_key = 'step_' | append: i | append: '_url'
+              assign step_val = product.metafields.custom[key].value | default: product.metafields.custom[key] | strip
+              assign step_url = product.metafields.custom[url_key].value | default: product.metafields.custom[url_key]
+            -%}
             {%- if step_val != blank -%}
               <li class="min-w-0 text-center relative">
                 <p class="font-body text-[13px] tracking-[0.1em] text-secondary m-0">{{ i }}.</p>
@@ -71,7 +92,7 @@
                     <span class="hidden lg:block absolute top-1/2 -right-5 translate-x-1/2 -translate-y-1/2 text-[16px] leading-none text-secondary pointer-events-none" aria-hidden="true">+</span>
                   {%- endunless -%}
                 </div>
-                <p class="mt-[26px] font-body text-[12px] tracking-[0.14em] uppercase leading-[1.6] min-h-[3.2em] text-ink m-0">{{ step_val }}</p>
+                <p class="mt-[26px] font-body text-[12px] tracking-[0.14em] uppercase leading-[1.6] min-h-[3.2em] text-ink m-0 whitespace-pre-line">{{ step_val | escape }}</p>
                 {%- if step_url != blank -%}
                   <a href="{{ step_url }}" class="inline-block mt-[10px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal">
                     {{ section.settings.step_link_label }}
@@ -102,8 +123,9 @@
     {
       "type": "text",
       "id": "step_link_label",
-      "label": "Step link label (metafield fallback)",
-      "default": "View product"
+      "label": "Step link label",
+      "default": "View product",
+      "info": "Used with metafield custom.step_N_url or block link"
     }
   ],
   "blocks": [
@@ -112,10 +134,16 @@
       "name": "Ritual step",
       "limit": 5,
       "settings": [
-        { "type": "text", "id": "title", "label": "Step name", "default": "Step product" },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step name (fallback)",
+          "default": "Step product",
+          "info": "Overridden per product by metafield custom.step_1 … step_5"
+        },
         { "type": "image_picker", "id": "image", "label": "Packshot image", "info": "Recommended: 800 × 800 px (1:1 square). Center-cropped on dark background." },
         { "type": "product", "id": "product", "label": "Linked product" },
-        { "type": "url", "id": "link_url", "label": "Or custom link URL" },
+        { "type": "url", "id": "link_url", "label": "Or custom link URL", "info": "Overridden per product by metafield custom.step_N_url when set" },
         { "type": "text", "id": "link_label", "label": "Link label", "default": "View product" }
       ]
     }
