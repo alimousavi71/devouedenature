@@ -277,10 +277,11 @@
 
   .dc-maple-leaf--inline {
     display: inline-block;
-    width: 1.15em;
-    height: 1.15em;
-    margin-inline-start: 0.25em;
-    vertical-align: -0.14em;
+    width: 0.78em;
+    height: 0.78em;
+    margin-inline-start: 0.2em;
+    vertical-align: -0.06em;
+    color: inherit;
   }
 
   .dc-brand-values__intro {
