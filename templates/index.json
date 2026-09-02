@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "dc-hero": {
@@ -11,6 +20,7 @@
         "muted_video": true,
         "loop_video": true,
         "heading": "Gold in the glass, not on the label",
+        "letter_spacing": 5,
         "button_label": "Shop the collection",
         "button_url": "shopify://collections/all"
       }
@@ -18,15 +28,56 @@
     "dc-lineup": {
       "type": "dc-lineup",
       "blocks": {
-        "claim-1": { "type": "claim", "settings": { "mark": "circle", "label": "Grasse distillation" } },
-        "claim-2": { "type": "claim", "settings": { "mark": "diamond", "label": "Nineteen ingredients" } },
-        "claim-3": { "type": "claim", "settings": { "mark": "square", "label": "Refillable in glass" } },
-        "claim-4": { "type": "claim", "settings": { "mark": "circle", "label": "Filled by hand" } },
-        "claim-5": { "type": "claim", "settings": { "mark": "diamond", "label": "Numbered collar" } }
+        "claim-1": {
+          "type": "claim",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M19.5 13.5C19.5 6.75 12 1.5 12 1.5C12 1.5 4.5 6.75 4.5 13.5C4.5 15.4891 5.29018 17.3968 6.6967 18.8033C8.10322 20.2098 10.0109 21 12 21C13.9891 21 15.8968 20.2098 17.3033 18.8033C18.7098 17.3968 19.5 15.4891 19.5 13.5Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M12.7594 17.9249C13.6761 17.7695 14.5219 17.3334 15.1802 16.6768C15.8384 16.0203 16.2767 15.1755 16.4344 14.2593\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "mark": "circle",
+            "label": "Exosome Technology"
+          }
+        },
+        "claim-2": {
+          "type": "claim",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M16 7L6.99372 16.7233C6.65201 17.0922 6.09799 17.0922 5.75628 16.7233L2 12.668M11.9941 16.7233L21.0004 7\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>",
+            "mark": "diamond",
+            "label": "Certified Pure Gold"
+          }
+        },
+        "claim-3": {
+          "type": "claim",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M15 9L3.75 20.25\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M6.00003 17.9999C1.50003 10.4999 7.50003 2.99994 20.25 3.74994C21 16.4999 13.5 22.4999 6.00003 17.9999Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "mark": "square",
+            "label": "Natural Ingredient"
+          }
+        },
+        "claim-4": {
+          "type": "claim",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M5.10938 18.8906C4.24688 18.0281 4.81875 16.2187 4.37813 15.1594C3.9375 14.1 2.25 13.1719 2.25 12C2.25 10.8281 3.91875 9.9375 4.37813 8.84063C4.8375 7.74375 4.24688 5.97187 5.10938 5.10938C5.97187 4.24688 7.78125 4.81875 8.84063 4.37813C9.9 3.9375 10.8281 2.25 12 2.25C13.1719 2.25 14.0625 3.91875 15.1594 4.37813C16.2562 4.8375 18.0281 4.24688 18.8906 5.10938C19.7531 5.97187 19.1813 7.78125 19.6219 8.84063C20.0625 9.9 21.75 10.8281 21.75 12C21.75 13.1719 20.0813 14.0625 19.6219 15.1594C19.1625 16.2562 19.7531 18.0281 18.8906 18.8906C18.0281 19.7531 16.2187 19.1813 15.1594 19.6219C14.1 20.0625 13.1719 21.75 12 21.75C10.8281 21.75 9.9375 20.0813 8.84063 19.6219C7.74375 19.1625 5.97187 19.7531 5.10938 18.8906Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M16.125 9.75L10.6219 15L7.875 12.375\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "mark": "circle",
+            "label": "Dermatologist Tested"
+          }
+        },
+        "claim-5": {
+          "type": "claim",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M12.6881 2.70927L14.8659 7.89927C14.9186 8.02522 15.0047 8.1344 15.1149 8.21502C15.2251 8.29564 15.3552 8.34465 15.4912 8.35677L21.0656 8.83864C21.2135 8.85053 21.3546 8.90602 21.4709 8.9981C21.5873 9.09018 21.6737 9.21471 21.7193 9.35592C21.7648 9.49713 21.7675 9.64869 21.7269 9.79141C21.6863 9.93413 21.6043 10.0616 21.4912 10.1577L17.2622 13.8468C17.1594 13.9371 17.083 14.0535 17.041 14.1837C16.9991 14.314 16.9932 14.4531 17.024 14.5865L18.2915 20.0746C18.325 20.2179 18.3156 20.3679 18.2644 20.506C18.2133 20.644 18.1226 20.7639 18.0038 20.8508C17.8849 20.9376 17.7432 20.9876 17.5961 20.9944C17.4491 21.0013 17.3033 20.9647 17.1769 20.8893L12.3862 17.983C12.2698 17.9122 12.1362 17.8748 12 17.8748C11.8637 17.8748 11.7301 17.9122 11.6137 17.983L6.82311 20.8893C6.69671 20.9647 6.5509 21.0013 6.40386 20.9944C6.25681 20.9876 6.11504 20.9376 5.99619 20.8508C5.87735 20.7639 5.78669 20.644 5.73552 20.506C5.68435 20.3679 5.67492 20.2179 5.70842 20.0746L6.97592 14.5865C7.00673 14.4531 7.00086 14.314 6.95893 14.1837C6.917 14.0535 6.84059 13.9371 6.73779 13.8468L2.50873 10.1577C2.39567 10.0616 2.31365 9.93413 2.27306 9.79141C2.23246 9.64869 2.23512 9.49713 2.28068 9.35592C2.32625 9.21471 2.41268 9.09018 2.52904 8.9981C2.64539 8.90602 2.78645 8.85053 2.93436 8.83864L8.50873 8.35677C8.64473 8.34465 8.77485 8.29564 8.88504 8.21502C8.99524 8.1344 9.08133 8.02522 9.13404 7.89927L11.3119 2.70927C11.37 2.57508 11.4662 2.46084 11.5884 2.38058C11.7107 2.30033 11.8537 2.25757 12 2.25757C12.1462 2.25757 12.2893 2.30033 12.4115 2.38058C12.5338 2.46084 12.6299 2.57508 12.6881 2.70927Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "mark": "diamond",
+            "label": "Award Winning Design"
+          }
+        }
       },
-      "block_order": ["claim-1", "claim-2", "claim-3", "claim-4", "claim-5"],
+      "block_order": [
+        "claim-1",
+        "claim-2",
+        "claim-3",
+        "claim-4",
+        "claim-5"
+      ],
       "settings": {
-        "heading": "The Vermeille lineup",
+        "heading": "L’Or Celeste Lineup",
         "product_list": [
           "cleanser",
           "essence",
@@ -34,6 +85,7 @@
           "day-cream",
           "night-cream"
         ],
+        "collection": "",
         "products_to_show": 5
       }
     },
@@ -43,6 +95,7 @@
         "value-1": {
           "type": "value",
           "settings": {
+            "icon_svg": "",
             "mark": "circle",
             "title": "Made in Canada",
             "text": "Formulated and filled with precision in Canada."
@@ -51,6 +104,7 @@
         "value-2": {
           "type": "value",
           "settings": {
+            "icon_svg": "",
             "mark": "diamond",
             "title": "Physician formulated",
             "text": "Developed by a collective of physicians and scientists."
@@ -59,6 +113,7 @@
         "value-3": {
           "type": "value",
           "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M15 9L3.75 20.25\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M6.00003 17.9999C1.50003 10.4999 7.50003 2.99994 20.25 3.74994C21 16.4999 13.5 22.4999 6.00003 17.9999Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
             "mark": "square",
             "title": "Clinically tested",
             "text": "Assessed for safety, tolerance, and performance."
@@ -67,13 +122,19 @@
         "value-4": {
           "type": "value",
           "settings": {
+            "icon_svg": "",
             "mark": "circle",
             "title": "Cruelty-free",
             "text": "No animal testing at any stage, in any market."
           }
         }
       },
-      "block_order": ["value-1", "value-2", "value-3", "value-4"],
+      "block_order": [
+        "value-1",
+        "value-2",
+        "value-3",
+        "value-4"
+      ],
       "settings": {
         "hide_section": false,
         "heading": "Thoughtfully made in Canada"
@@ -121,7 +182,12 @@
           }
         }
       },
-      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "block_order": [
+        "faq-1",
+        "faq-2",
+        "faq-3",
+        "faq-4"
+      ],
       "settings": {
         "heading": "Frequently Asked Questions",
         "button_label": "Read FAQs",
@@ -140,13 +206,49 @@
     "dc-instagram": {
       "type": "dc-instagram",
       "blocks": {
-        "ig-1": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9048.png" } },
-        "ig-2": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9047.png" } },
-        "ig-3": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9051.png" } },
-        "ig-4": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9050.png" } },
-        "ig-5": { "type": "image", "settings": { "image": "shopify://shop_images/IMG_9052.png" } }
+        "ig-1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_9048.png",
+            "label": ""
+          }
+        },
+        "ig-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_9047.png",
+            "label": ""
+          }
+        },
+        "ig-3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_9051.png",
+            "label": ""
+          }
+        },
+        "ig-4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_9050.png",
+            "label": ""
+          }
+        },
+        "ig-5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/IMG_9052.png",
+            "label": ""
+          }
+        }
       },
-      "block_order": ["ig-1", "ig-2", "ig-3", "ig-4", "ig-5"],
+      "block_order": [
+        "ig-1",
+        "ig-2",
+        "ig-3",
+        "ig-4",
+        "ig-5"
+      ],
       "settings": {
         "eyebrow": "Follow for the latest",
         "heading": "Latest on Instagram",

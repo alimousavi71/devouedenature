@@ -640,6 +640,12 @@
     height: 100svh;
   }
 
+  [data-dc-hero-title],
+  .dc-hero__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
   [data-dc-about-hero] {
     min-height: 0;
     height: 480px;

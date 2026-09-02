@@ -72,9 +72,8 @@
   <div class="relative z-[1] w-full max-w-page mx-auto px-5 md:px-10 pb-10 md:pb-[70px]">
     {%- if section.settings.heading != blank -%}
       <h1
-        class="font-display font-normal text-h2 md:text-page-title leading-[1.1] max-w-[16ch] text-bg"
+        class="dc-hero__title font-display font-normal text-[40px] md:text-page-title leading-[1.1] tracking-[0.005em] max-w-[16ch] text-bg"
         data-dc-hero-title
-        style="letter-spacing: {{ section.settings.letter_spacing | divided_by: 1000.0 }}em"
       >
         {{ section.settings.heading }}
       </h1>
@@ -147,16 +146,6 @@
       "id": "heading",
       "label": "Heading",
       "default": "Gold in the glass, not on the label"
-    },
-    {
-      "type": "range",
-      "id": "letter_spacing",
-      "label": "Letter spacing",
-      "min": -50,
-      "max": 300,
-      "step": 5,
-      "unit": "x",
-      "default": 5
     },
     {
       "type": "text",
