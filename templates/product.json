@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -81,7 +90,6 @@
       "type": "dc-product-campaign",
       "settings": {
         "hide_section": false,
-        "image": "",
         "eyebrow": "The campaign",
         "heading": ""
       }
@@ -92,9 +100,7 @@
         "hide_section": false,
         "eyebrow": "The composition",
         "heading": "Rose at dawn, resin at night",
-        "body": "<p>Three materials, no filler. The formula lists nineteen ingredients where a comparable perfume lists sixty.</p>",
-        "image_1": "",
-        "image_2": ""
+        "body": "<p>Three materials, no filler. The formula lists nineteen ingredients where a comparable perfume lists sixty.</p>"
       }
     },
     "perfumer": {
@@ -103,7 +109,6 @@
         "hide_section": false,
         "eyebrow": "In her words",
         "heading": "A word from the perfumer",
-        "image": "",
         "quote": "I wanted the rose to arrive late. For the first ten minutes you smell only citrus and skin, and then it opens.",
         "attribution": "Hélène Marchand — Master perfumer"
       }
@@ -112,10 +117,72 @@
       "type": "dc-product-formats",
       "settings": {
         "hide_section": false,
-        "image": "",
         "heading": "Find your format",
         "link_label": "Compare the range",
         "link_url": ""
+      }
+    },
+    "ritual": {
+      "type": "dc-how-to-apply",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "product": "serum",
+            "title": "",
+            "link_url": "",
+            "link_label": "View product"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "product": "day-cream",
+            "title": "",
+            "link_url": "",
+            "link_label": "View product"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "product": "essence",
+            "title": "",
+            "link_url": "",
+            "link_label": "View product"
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "product": "cleanser",
+            "title": "",
+            "link_url": "",
+            "link_label": "View product"
+          }
+        },
+        "step_5": {
+          "type": "step",
+          "settings": {
+            "product": "night-cream",
+            "title": "",
+            "link_url": "",
+            "link_label": "View product"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "step_5"
+      ],
+      "settings": {
+        "hide_section": false,
+        "heading": "Your skincare ritual",
+        "description": "<p>Discover the power of a complete ritual — crafted to cleanse, treat, and illuminate for maximum efficacy.</p>",
+        "step_link_label": "View product"
       }
     },
     "recommendations": {
@@ -127,48 +194,6 @@
         "source": "auto",
         "collection": "",
         "products_to_show": 3
-      }
-    },
-    "ritual": {
-      "type": "dc-how-to-apply",
-      "blocks": {
-        "step_1": {
-          "type": "step",
-          "settings": {
-            "link_label": "View product"
-          }
-        },
-        "step_2": {
-          "type": "step",
-          "settings": {
-            "link_label": "View product"
-          }
-        },
-        "step_3": {
-          "type": "step",
-          "settings": {
-            "link_label": "View product"
-          }
-        },
-        "step_4": {
-          "type": "step",
-          "settings": {
-            "link_label": "View product"
-          }
-        },
-        "step_5": {
-          "type": "step",
-          "settings": {
-            "link_label": "View product"
-          }
-        }
-      },
-      "block_order": ["step_1", "step_2", "step_3", "step_4", "step_5"],
-      "settings": {
-        "hide_section": false,
-        "heading": "Your skincare ritual",
-        "description": "<p>Discover the power of a complete ritual — crafted to cleanse, treat, and illuminate for maximum efficacy.</p>",
-        "step_link_label": "View product"
       }
     }
   },

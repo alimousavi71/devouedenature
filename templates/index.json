@@ -20,7 +20,6 @@
         "muted_video": true,
         "loop_video": true,
         "heading": "Gold in the glass, not on the label",
-        "letter_spacing": 5,
         "button_label": "Shop the collection",
         "button_url": "shopify://collections/all"
       }
