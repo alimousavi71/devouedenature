@@ -4,7 +4,7 @@
       "type": "dc-collection-banner",
       "settings": {
         "show_breadcrumb": true,
-        "breadcrumb_parent": "Fragrance",
+        "breadcrumb_parent": "Skincare",
         "eyebrow": "The collection"
       }
     },
@@ -54,9 +54,10 @@
       "type": "dc-collection-editorial",
       "settings": {
         "eyebrow": "Journal",
-        "heading": "Why we fill by hand",
-        "body": "Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp.",
-        "link_label": "Read the note"
+        "heading": "Crafted with intention",
+        "body": "Every Dévoué de Nature formula is developed with physicians and scientists, then filled with precision in Canada. We choose ingredients for performance and tolerance — so each step of your ritual feels considered, never aggressive.",
+        "link_label": "Our story",
+        "image_placeholder": "editorial — formulation lab"
       }
     }
   },

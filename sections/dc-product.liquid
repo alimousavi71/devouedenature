@@ -12,6 +12,18 @@
   assign category_label = product.type | default: product.vendor
   if section.settings.category_label != blank
     assign category_label = section.settings.category_label
+  elsif category_label == blank or category_label == 'Fragrance' or category_label == 'fragrance'
+    assign category_label = 'Skincare'
+  endif
+
+  assign breadcrumb_label = ''
+  if breadcrumb_collection != blank
+    assign breadcrumb_label = breadcrumb_collection.title
+  endif
+  if section.settings.breadcrumb_label != blank
+    assign breadcrumb_label = section.settings.breadcrumb_label
+  elsif breadcrumb_label == blank or breadcrumb_label == 'Fragrance' or breadcrumb_label == 'fragrance'
+    assign breadcrumb_label = 'Skincare'
   endif
 
   assign show_refillable = false
@@ -35,17 +47,17 @@
   assign accordion_blocks = section.blocks | where: 'type', 'dropdown_information'
 -%}
 
-{%- if section.settings.show_breadcrumbs and breadcrumb_collection -%}
+{%- if section.settings.show_breadcrumbs -%}
   <nav
     class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[22px] flex flex-wrap items-center gap-[10px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
     aria-label="{{ 'general.breadcrumb' | t | default: 'Breadcrumb' }}"
   >
-    <a href="{{ breadcrumb_collection.url }}" class="text-muted hover:text-secondary transition-colors duration-fast ease-fast">{{ breadcrumb_collection.title }}</a>
-    <span aria-hidden="true">/</span>
-    {%- if product.type != blank -%}
-      <span>{{ product.type }}</span>
-      <span aria-hidden="true">/</span>
+    {%- if breadcrumb_collection != blank -%}
+      <a href="{{ breadcrumb_collection.url }}" class="text-muted hover:text-secondary transition-colors duration-fast ease-fast">{{ breadcrumb_label }}</a>
+    {%- else -%}
+      <span>{{ breadcrumb_label }}</span>
     {%- endif -%}
+    <span aria-hidden="true">/</span>
     <span class="text-ink">{{ product.title }}</span>
   </nav>
 {%- endif -%}
@@ -177,11 +189,17 @@
     { "type": "checkbox", "id": "show_breadcrumbs", "label": "Show breadcrumbs", "default": true },
     {
       "type": "text",
+      "id": "breadcrumb_label",
+      "label": "Breadcrumb parent label",
+      "default": "Skincare",
+      "info": "Shown instead of collection title when set. Use to replace Fragrance."
+    },
+    {
+      "type": "text",
       "id": "category_label",
       "label": "Category label override",
       "info": "Leave blank to use product type or vendor"
-    },
-    {
+    },    {
       "type": "text",
       "id": "in_stock_message",
       "label": "In stock message",
@@ -245,11 +263,11 @@
     {
       "name": "DC Product",
       "blocks": [
-        { "type": "dropdown_information", "settings": { "heading": "Description" } },
+        { "type": "dropdown_information", "settings": { "heading": "Key ingredients" } },
         { "type": "dropdown_information", "settings": { "heading": "Composition" } },
-        { "type": "dropdown_information", "settings": { "heading": "The bottle" } },
-        { "type": "dropdown_information", "settings": { "heading": "Shipping" } },
-        { "type": "dropdown_information", "settings": { "heading": "Returns and care" } }
+        { "type": "dropdown_information", "settings": { "heading": "Signature details" } },
+        { "type": "dropdown_information", "settings": { "heading": "Shipping & returns" } },
+        { "type": "dropdown_information", "settings": { "heading": "How to apply" } }
       ]
     }
   ]

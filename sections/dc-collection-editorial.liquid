@@ -4,10 +4,10 @@
 
 {%- liquid
   assign eyebrow = section.settings.eyebrow | default: 'Journal'
-  assign heading = section.settings.heading | default: 'Why we fill by hand'
-  assign body = section.settings.body | default: 'Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp.'
-  assign link_label = section.settings.link_label | default: 'Read the note'
-  assign image_placeholder = section.settings.image_placeholder | default: 'editorial — the refill bar'
+  assign heading = section.settings.heading | default: 'Crafted with intention'
+  assign body = section.settings.body | default: 'Every Dévoué de Nature formula is developed with physicians and scientists, then filled with precision in Canada. We choose ingredients for performance and tolerance — so each step of your ritual feels considered, never aggressive.'
+  assign link_label = section.settings.link_label | default: 'Our story'
+  assign image_placeholder = section.settings.image_placeholder | default: 'editorial — formulation lab'
 -%}
 
 {%- unless section.settings.hide_section -%}
@@ -52,16 +52,16 @@
   "settings": [
     { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
     { "type": "image_picker", "id": "image", "label": "Image", "info": "Recommended 1000 × 1250 px (4:5)." },
-    { "type": "text", "id": "image_placeholder", "label": "Image placeholder label", "default": "editorial — the refill bar" },
+    { "type": "text", "id": "image_placeholder", "label": "Image placeholder label", "default": "editorial — formulation lab" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Why we fill by hand" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Crafted with intention" },
     {
       "type": "textarea",
       "id": "body",
       "label": "Body",
-      "default": "Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp."
+      "default": "Every Dévoué de Nature formula is developed with physicians and scientists, then filled with precision in Canada. We choose ingredients for performance and tolerance — so each step of your ritual feels considered, never aggressive."
     },
-    { "type": "text", "id": "link_label", "label": "Link label", "default": "Read the note" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Our story" },
     { "type": "url", "id": "link_url", "label": "Link" }
   ],
   "presets": [{ "name": "Collection editorial" }]

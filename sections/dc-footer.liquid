@@ -301,31 +301,45 @@
           </ul>
         {%- endif -%}
 
-        {%- if section.settings.show_policy -%}
-          <span class="flex flex-wrap items-center md:justify-end shrink-0 ml-auto md:ml-0">
-            {%- assign policy_index = 0 -%}
-            {%- for policy in shop.policies -%}
-              {%- if policy != blank and policy.body != blank -%}
-                {%- if policy_index > 0 -%}<span class="px-2" aria-hidden="true">·</span>{%- endif -%}
-                <a href="{{ policy.url }}" class="hover:opacity-100 transition-opacity duration-normal ease-normal">{{ policy.title }}</a>
-                {%- assign policy_index = policy_index | plus: 1 -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if policy_index == 0 -%}
-              {%- assign legal_fallback = section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' -%}
-              {%- assign legal_parts = legal_fallback | split: '·' -%}
-              {%- for part in legal_parts -%}
-                {%- assign part = part | strip -%}
-                {%- if part != blank -%}
-                  {%- unless forloop.first -%}<span class="px-2" aria-hidden="true">·</span>{%- endunless -%}
-                  <span>{{ part }}</span>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-2 shrink-0 ml-auto md:ml-0 md:justify-end">
+          {%- if settings.social_instagram_link != blank -%}
+            <a
+              href="{{ settings.social_instagram_link }}"
+              class="inline-flex items-center justify-center w-5 h-5 text-current hover:opacity-100 opacity-90 transition-opacity duration-normal ease-normal"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <span class="block w-[18px] h-[18px] [&_svg]:w-full [&_svg]:h-full">{% render 'icon-instagram' %}</span>
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.show_policy -%}
+            <span class="flex flex-wrap items-center">
+              {%- assign policy_index = 0 -%}
+              {%- for policy in shop.policies -%}
+                {%- if policy != blank and policy.body != blank -%}
+                  {%- if policy_index > 0 -%}<span class="px-2" aria-hidden="true">·</span>{%- endif -%}
+                  <a href="{{ policy.url }}" class="hover:opacity-100 transition-opacity duration-normal ease-normal">{{ policy.title }}</a>
+                  {%- assign policy_index = policy_index | plus: 1 -%}
                 {%- endif -%}
               {%- endfor -%}
-            {%- endif -%}
-          </span>
-        {%- else -%}
-          <span class="shrink-0 ml-auto md:ml-0 md:text-right">{{ section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' }}</span>
-        {%- endif -%}
+              {%- if policy_index == 0 -%}
+                {%- assign legal_fallback = section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' -%}
+                {%- assign legal_parts = legal_fallback | split: '·' -%}
+                {%- for part in legal_parts -%}
+                  {%- assign part = part | strip -%}
+                  {%- if part != blank -%}
+                    {%- unless forloop.first -%}<span class="px-2" aria-hidden="true">·</span>{%- endunless -%}
+                    <span>{{ part }}</span>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            </span>
+          {%- else -%}
+            <span>{{ section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' }}</span>
+          {%- endif -%}
+        </div>
     </div>
   </div>
 </footer>

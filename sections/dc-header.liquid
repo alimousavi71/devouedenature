@@ -74,8 +74,12 @@
         assign saved_label = 'general.saved' | t | default: 'Saved'
       -%}
       {% render 'dc-nav-link', url: routes.search_url, label: search_label, class: 'hidden md:inline-flex' %}
-      {% render 'dc-nav-link', url: account_url, label: account_label, class: 'hidden md:inline-flex' %}
-      {% render 'dc-nav-link', url: routes.account_url, label: saved_label, class: 'hidden md:inline-flex' %}
+      {%- if section.settings.show_account -%}
+        {% render 'dc-nav-link', url: account_url, label: account_label, class: 'hidden md:inline-flex' %}
+      {%- endif -%}
+      {%- if section.settings.show_saved -%}
+        {% render 'dc-nav-link', url: routes.account_url, label: saved_label, class: 'hidden md:inline-flex' %}
+      {%- endif -%}
       <a href="{{ routes.cart_url }}" data-dc-cart-open class="dc-nav-link inline-flex font-body text-nav uppercase text-ink">
         <span class="dc-nav-link__roll">
           <span class="dc-nav-link__text">Bag (<span data-dc-cart-count>{{ cart.item_count }}</span>)</span>
@@ -97,7 +101,9 @@
   menu: section.settings.menu,
   logo: section.settings.logo,
   logo_alt: section.settings.logo_2,
-  logo_width: section.settings.logo_width
+  logo_width: section.settings.logo_width,
+  show_account: section.settings.show_account,
+  show_saved: section.settings.show_saved
 %}
 
 {% schema %}
@@ -105,7 +111,7 @@
   "name": "DC Header",
   "settings": [
     { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true },
-    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Complimentary engraving and samples with every order" },
+    { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Complimentary shipping on orders over $250" },
     { "type": "image_picker", "id": "logo", "label": "Logo" },
     {
       "type": "image_picker",
@@ -115,6 +121,8 @@
     },
     { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 260, "step": 10, "default": 140 },
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "show_account", "label": "Show Account link", "default": false },
+    { "type": "checkbox", "id": "show_saved", "label": "Show Saved link", "default": false },
     { "type": "checkbox", "id": "transparent_on_index", "label": "Transparent on homepage", "default": false }
   ],
   "blocks": [

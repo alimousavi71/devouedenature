@@ -13,11 +13,12 @@
       "type": "dc-contact-hero",
       "settings": {
         "show_breadcrumb": true,
-        "breadcrumb_parent": "Maison",
+        "breadcrumb_parent": "Home",
+        "breadcrumb_parent_url": "/",
         "breadcrumb_current": "Contact",
         "eyebrow": "Client care",
         "heading": "Write to us",
-        "intro": "Five people answer this address. Written enquiries are replied to within one working day, in French or English."
+        "intro": "Our team answers this address. Written enquiries are replied to within one working day."
       }
     },
     "form": {
@@ -26,8 +27,8 @@
         "info-1": {
           "type": "info",
           "settings": {
-            "label": "By letter",
-            "value": "clients@maison-sevigne.com",
+            "label": "By email",
+            "value": "info@devouedenature.com",
             "note": "Replied to within one working day, Monday to Friday."
           }
         },
@@ -35,30 +36,22 @@
           "type": "info",
           "settings": {
             "label": "By telephone",
-            "value": "+33 1 42 74 08 19",
-            "note": "Weekdays, 10h — 18h Paris time."
+            "value": "+1 (647) 556-6199",
+            "note": "Weekdays, Toronto time."
           }
         },
         "info-3": {
           "type": "info",
           "settings": {
             "label": "Head office",
-            "value": "14 rue de Sévigné, 75004 Paris",
-            "note": "By appointment only. Not a retail address."
-          }
-        },
-        "info-4": {
-          "type": "info",
-          "settings": {
-            "label": "Press and partnerships",
-            "value": "presse@maison-sevigne.com",
-            "note": "Samples and imagery on request."
+            "value": "150 King Street West, Suite 215, Toronto, ON M5H 1J9",
+            "note": "By appointment only."
           }
         }
       },
-      "block_order": ["info-1", "info-2", "info-3", "info-4"],
+      "block_order": ["info-1", "info-2", "info-3"],
       "settings": {
-        "subjects": "An order, A return, Refills, Engraving, Press, Something else",
+        "subjects": "An order, A return, Press, Something else",
         "consent_label": "Send me the quarterly letter",
         "send_button_label": "Send the message"
       }

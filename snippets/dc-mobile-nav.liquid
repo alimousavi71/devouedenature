@@ -67,16 +67,20 @@
     </nav>
 
     <div class="px-5 py-5 border-t border-divider flex flex-col gap-3">
-      <a
-        href="{% render 'dc-account-link-url' %}"
-        class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary"
-        data-dc-drawer-item
-      >
-        {{ 'general.account' | t | default: 'Account' }}
-      </a>
-      <a href="{{ routes.account_url }}" class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary" data-dc-drawer-item>
-        {{ 'general.saved' | t | default: 'Saved' }}
-      </a>
+      {%- if show_account -%}
+        <a
+          href="{% render 'dc-account-link-url' %}"
+          class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary"
+          data-dc-drawer-item
+        >
+          {{ 'general.account' | t | default: 'Account' }}
+        </a>
+      {%- endif -%}
+      {%- if show_saved -%}
+        <a href="{{ routes.account_url }}" class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary" data-dc-drawer-item>
+          {{ 'general.saved' | t | default: 'Saved' }}
+        </a>
+      {%- endif -%}
       <a href="{{ pages.contact.url | default: routes.root_url }}" class="dc-link font-body text-nav uppercase tracking-[0.18em] text-secondary" data-dc-drawer-item>
         {{ 'general.client_care' | t | default: 'Client care' }}
       </a>

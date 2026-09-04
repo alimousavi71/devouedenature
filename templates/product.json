@@ -15,9 +15,9 @@
         "accordion_description": {
           "type": "dropdown_information",
           "settings": {
-            "heading": "Description",
-            "description": "<p>A nocturnal floral. Turkish rose absolute over bitter orange, closing on benzoin and a trace of vetiver. Wears close to the skin for the first hour, then widens.</p>",
-            "use_metafield": "",
+            "heading": "Key ingredients",
+            "description": "",
+            "use_metafield": "key_ingredients",
             "characteristics": false
           }
         },
@@ -33,7 +33,7 @@
         "accordion_bottle": {
           "type": "dropdown_information",
           "settings": {
-            "heading": "The bottle",
+            "heading": "Signature details",
             "description": "",
             "use_metafield": "signature_details",
             "characteristics": false
@@ -42,17 +42,17 @@
         "accordion_shipping": {
           "type": "dropdown_information",
           "settings": {
-            "heading": "Shipping",
-            "description": "<p>Complimentary on all orders. Dispatched within 48 hours from Paris, delivered in two to five working days. Signature required.</p>",
+            "heading": "Shipping & returns",
+            "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>",
             "use_metafield": "",
             "characteristics": false
           }
         },
-        "accordion_returns": {
+        "accordion_how_to": {
           "type": "dropdown_information",
           "settings": {
-            "heading": "Returns and care",
-            "description": "<p>Thirty days, unopened. Store away from light and above sixteen degrees. Fragrance settles over the first year and deepens slightly.</p>",
+            "heading": "How to apply",
+            "description": "",
             "use_metafield": "",
             "characteristics": false
           }
@@ -63,11 +63,12 @@
         "accordion_composition",
         "accordion_bottle",
         "accordion_shipping",
-        "accordion_returns"
+        "accordion_how_to"
       ],
       "settings": {
         "show_breadcrumbs": true,
-        "category_label": "",
+        "breadcrumb_label": "Skincare",
+        "category_label": "Skincare",
         "in_stock_message": "In stock — ships within 48 hours",
         "sold_out_message": "Sold out",
         "add_to_bag_label": "Add to the bag",
@@ -80,8 +81,8 @@
       "type": "dc-product-editorial",
       "settings": {
         "hide_section": false,
-        "lead": "The house was founded on a single idea: a fragrance should be finished, not decorated. Nuit Vermeille is the seventh composition to carry the name.",
-        "body": "<p>Rose is harvested at dawn over eleven days in May, then distilled the same afternoon so the material never sits. The absolute that results is heavier than most, with a jam-like sweetness we correct with bitter orange peel pressed in Calabria.</p><p>Benzoin from Laos carries the base. It takes eight weeks in glass before the composition settles into itself, and a further two before it is filled. Each bottle is numbered on the underside of the collar.</p>",
+        "lead": "Proudly developed and made in Canada — formulas that bring together thoughtful ingredient selection, scientific expertise, and rigorous attention to quality.",
+        "body": "<p>Every detail is considered with purpose: high-performance actives chosen for results, balanced compositions designed to feel refined on the skin, and a sensorial experience that supports your daily ritual.</p><p>From cleanser to cream, each product is crafted to deliver meaningful results — never aggressive, always intentional.</p>",
         "show_image_placeholder": true,
         "image_placeholder": "product story — editorial image"
       }
@@ -128,7 +129,7 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "product": "serum",
+            "product": "cleanser",
             "title": "",
             "link_url": "",
             "link_label": "View product"
@@ -137,7 +138,7 @@
         "step_2": {
           "type": "step",
           "settings": {
-            "product": "day-cream",
+            "product": "essence",
             "title": "",
             "link_url": "",
             "link_label": "View product"
@@ -146,7 +147,7 @@
         "step_3": {
           "type": "step",
           "settings": {
-            "product": "essence",
+            "product": "serum",
             "title": "",
             "link_url": "",
             "link_label": "View product"
@@ -155,7 +156,7 @@
         "step_4": {
           "type": "step",
           "settings": {
-            "product": "cleanser",
+            "product": "day-cream",
             "title": "",
             "link_url": "",
             "link_label": "View product"

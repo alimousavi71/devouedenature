@@ -6,12 +6,14 @@
       "type": "dc-header",
       "settings": {
         "show_announcement": true,
-        "announcement_text": "Complimentary engraving and samples with every order",
+        "announcement_text": "Complimentary shipping on orders over $250",
         "logo": "shopify://shop_images/Group_1410108868.svg",
         "logo_2": "shopify://shop_images/Group_22.svg",
         "logo_width": 140,
         "menu": "main-menu",
-        "transparent_on_index": true
+        "transparent_on_index": true,
+        "show_account": false,
+        "show_saved": false
       }
     }
   },

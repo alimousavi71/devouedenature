@@ -49,13 +49,19 @@
 
     <div data-reveal-stagger>
     {%- if quote != blank -%}
+      {%- liquid
+        assign quote_text = quote | strip | remove: '"' | remove: '“' | remove: '”'
+      -%}
       <blockquote class="mt-[54px] mx-auto max-w-[62ch] text-center font-display font-normal text-[26px] leading-[1.6] text-pretty text-ink m-0">
-        “{{ quote | strip | remove: '"' }}”
+        “{{ quote_text }}”
       </blockquote>
     {%- endif -%}
 
     {%- if attribution != blank -%}
-      <p class="text-center mt-[26px] font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ attribution }}</p>
+      {%- liquid
+        assign attribution_text = attribution | strip | remove: '"' | remove: '“' | remove: '”'
+      -%}
+      <p class="text-center mt-[26px] font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ attribution_text }}</p>
     {%- endif -%}
     </div>
   </section>

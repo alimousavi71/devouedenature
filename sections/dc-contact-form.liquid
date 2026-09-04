@@ -4,7 +4,7 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign subjects_raw = section.settings.subjects | default: 'An order, A return, Refills, Engraving, Press, Something else'
+  assign subjects_raw = section.settings.subjects | default: 'An order, A return, Press, Something else'
   assign subject_list = subjects_raw | split: ','
   assign consent_label = section.settings.consent_label | default: 'Send me the quarterly letter'
   assign send_label = section.settings.send_button_label | default: 'Send the message'
@@ -131,7 +131,7 @@
                 <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ block_label }}</p>
               {%- endif -%}
               {%- if block_value != blank -%}
-                <p class="font-display text-[20px] leading-[1.4] text-ink mt-[14px] mb-0">{{ block_value }}</p>
+                <p class="font-body text-[18px] md:text-[20px] leading-[1.45] text-ink mt-[14px] mb-0 tabular-nums">{{ block_value }}</p>
               {%- endif -%}
               {%- if block_note != blank -%}
                 <p class="font-body text-[12px] leading-[1.75] text-muted max-w-[32ch] mt-2 mb-0">{{ block_note }}</p>
@@ -153,7 +153,7 @@
       "type": "text",
       "id": "subjects",
       "label": "Subjects (comma separated)",
-      "default": "An order, A return, Refills, Engraving, Press, Something else"
+      "default": "An order, A return, Press, Something else"
     },
     {
       "type": "text",

@@ -4,7 +4,7 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Fragrance'
+  assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Skincare'
   assign eyebrow = section.settings.eyebrow | default: 'The collection'
 -%}
 
@@ -46,7 +46,7 @@
     { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
     { "type": "header", "content": "Breadcrumb" },
     { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
-    { "type": "text", "id": "breadcrumb_parent", "label": "Breadcrumb parent", "default": "Fragrance" },
+    { "type": "text", "id": "breadcrumb_parent", "label": "Breadcrumb parent", "default": "Skincare" },
     { "type": "url", "id": "breadcrumb_parent_url", "label": "Breadcrumb parent link" },
     { "type": "header", "content": "Hero" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The collection" }

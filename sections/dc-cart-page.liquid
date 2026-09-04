@@ -86,19 +86,33 @@
           <p class="font-mono text-caption text-muted -mt-2">{{ 'sections.cart.taxes_included' | t | default: 'Taxes included' }}</p>
         {%- endif -%}
 
-        <div class="flex gap-2">
-          <label for="dc-cart-discount-code" class="visually-hidden">{{ 'sections.cart.discount_code' | t | default: 'Gift or promotional code' }}</label>
+        <div class="flex gap-2 items-stretch">
+          {%- liquid
+            assign discount_placeholder = 'sections.cart.discount_code' | t
+            if discount_placeholder == blank or discount_placeholder contains 'sections.cart'
+              assign discount_placeholder = 'Promo code'
+            endif
+            assign apply_label = 'sections.cart.apply' | t
+            if apply_label == blank or apply_label contains 'sections.cart'
+              assign apply_label = 'Apply'
+            endif
+            assign checkout_label = 'sections.cart.proceed_checkout' | t
+            if checkout_label == blank or checkout_label contains 'sections.cart'
+              assign checkout_label = 'Proceed to checkout'
+            endif
+          -%}
+          <label for="dc-cart-discount-code" class="visually-hidden">{{ discount_placeholder }}</label>
           <input
             type="text"
             id="dc-cart-discount-code"
             data-dc-discount-code
             class="flex-1 min-w-0 border border-border bg-bg px-4 py-3 font-body text-body text-ink focus:outline-none focus:border-ink transition-colors duration-fast ease-fast"
-            placeholder="{{ 'sections.cart.discount_code' | t | default: 'Gift or promotional code' }}"
+            placeholder="{{ discount_placeholder }}"
           >
-          {% render 'dc-button', text: 'sections.cart.apply' | t | default: 'Apply', variant: 'outline', attributes: 'data-dc-discount-apply' %}
+          {% render 'dc-button', text: apply_label, variant: 'outline', attributes: 'data-dc-discount-apply' %}
         </div>
 
-        {% render 'dc-button', text: 'sections.cart.proceed_checkout' | t | default: 'Continue to delivery', variant: 'filled', sweep: true, type: 'submit', class: 'w-full', attributes: 'name="checkout"' %}
+        {% render 'dc-button', text: checkout_label, variant: 'filled', sweep: true, type: 'submit', class: 'w-full', attributes: 'name="checkout"' %}
 
         <a href="{{ routes.cart_url }}" class="text-center font-mono text-caption uppercase text-muted hover:text-ink transition-colors duration-fast ease-fast">
           {{ 'sections.cart.view_full_cart' | t | default: 'View full basket' }}
