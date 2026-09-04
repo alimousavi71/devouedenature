@@ -284,6 +284,11 @@
     color: inherit;
   }
 
+  .dc-ritual-card__img {
+    object-fit: cover;
+    object-position: center;
+  }
+
   .dc-brand-values__intro {
     text-wrap: pretty;
   }

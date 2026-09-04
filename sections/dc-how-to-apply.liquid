@@ -58,14 +58,22 @@
               {%- assign shown_steps = shown_steps | plus: 1 -%}
               <li class="min-w-0 text-center relative" {{ block.shopify_attributes }}>
                 <p class="font-body text-[13px] tracking-[0.1em] text-secondary m-0">{{ shown_steps }}.</p>
-                <div class="mt-[22px] relative aspect-square bg-ink overflow-hidden flex items-center justify-center">
+                <div class="dc-ritual-card__media mt-[22px] relative aspect-[800/1023] bg-ink overflow-hidden">
                   {%- if step_image != blank -%}
-                    {{ step_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: step_title, widths: '400, 600, 800' }}
+                    {{
+                      step_image
+                      | image_url: width: 800
+                      | image_tag:
+                        loading: 'lazy',
+                        class: 'dc-ritual-card__img absolute inset-0 w-full h-full object-cover',
+                        alt: step_title,
+                        widths: '400, 600, 800'
+                    }}
                   {%- elsif step_product != blank -%}
-                    <span class="font-mono text-[9px] tracking-[0.14em] uppercase text-gold">{{ step_product.title | truncate: 18 }}</span>
+                    <span class="absolute inset-0 flex items-center justify-center font-mono text-[9px] tracking-[0.14em] uppercase text-gold">{{ step_product.title | truncate: 18 }}</span>
                   {%- endif -%}
                   {%- if shown_steps < ritual_card_count -%}
-                    <span class="hidden lg:block absolute top-1/2 -right-5 translate-x-1/2 -translate-y-1/2 text-[16px] leading-none text-secondary pointer-events-none" aria-hidden="true">+</span>
+                    <span class="hidden lg:block absolute top-1/2 -right-5 translate-x-1/2 -translate-y-1/2 text-[16px] leading-none text-secondary pointer-events-none z-[2]" aria-hidden="true">+</span>
                   {%- endif -%}
                 </div>
                 {%- if step_title != blank -%}
