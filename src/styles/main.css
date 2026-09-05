@@ -293,6 +293,17 @@
     text-wrap: pretty;
   }
 
+  .dc-brand-values__heading {
+    max-width: min(100%, 44rem);
+    text-wrap: unset;
+  }
+
+  @media (min-width: 768px) {
+    .dc-brand-values__heading {
+      white-space: nowrap;
+    }
+  }
+
   .dc-faq-tab {
     border: 0;
     background: transparent;
