@@ -53,6 +53,7 @@
       ],
       "settings": {
         "location": "Toronto",
+        "instagram_url": "https://www.instagram.com/devoueskin/",
         "contact_email": "info@devouedenature.com",
         "contact_phone": "+1 (647) 556-6199",
         "payment_enable": true,

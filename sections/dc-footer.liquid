@@ -12,6 +12,7 @@
   assign contact_phone = section.settings.contact_phone | default: '+1 (647) 556-6199'
   assign contact_page = section.settings.contact_page | default: '/pages/contact'
   assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
+  assign instagram_url = section.settings.instagram_url | default: settings.social_instagram_link | default: 'https://www.instagram.com/devoueskin/'
 -%}
 
 <footer class="bg-ink text-[#EFE7DA] overflow-visible">
@@ -252,8 +253,8 @@
                     {%- endif -%}
                   {%- endfor -%}
                 {%- elsif block.settings.use_social_fallback -%}
-                  {%- if settings.social_instagram_link != blank -%}
-                    <li><a href="{{ settings.social_instagram_link }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                  {%- if instagram_url != blank -%}
+                    <li><a href="{{ instagram_url }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Instagram</a></li>
                   {%- endif -%}
                   {%- if settings.social_facebook_link != blank -%}
                     <li><a href="{{ settings.social_facebook_link }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Facebook</a></li>
@@ -302,20 +303,21 @@
         {%- endif -%}
 
         <div class="flex flex-wrap items-center gap-x-4 gap-y-2 shrink-0 ml-auto md:ml-0 md:justify-end">
-          {%- if settings.social_instagram_link != blank -%}
+          {%- if instagram_url != blank -%}
             <a
-              href="{{ settings.social_instagram_link }}"
-              class="inline-flex items-center justify-center w-5 h-5 text-current hover:opacity-100 opacity-90 transition-opacity duration-normal ease-normal"
+              href="{{ instagram_url }}"
+              class="dc-footer-instagram inline-flex items-center justify-center w-8 h-8 rounded-full border border-[rgba(255,250,240,0.35)] text-[#EFE7DA] hover:bg-[#EFE7DA] hover:text-ink transition-colors duration-normal ease-normal"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
+              title="Instagram"
             >
-              <span class="block w-[18px] h-[18px] [&_svg]:w-full [&_svg]:h-full">{% render 'icon-instagram' %}</span>
+              <span class="block w-[16px] h-[16px] [&_svg]:block [&_svg]:w-full [&_svg]:h-full">{% render 'icon-instagram' %}</span>
             </a>
           {%- endif -%}
 
           {%- if section.settings.show_policy -%}
-            <span class="flex flex-wrap items-center">
+            <span class="flex flex-wrap items-center opacity-60">
               {%- assign policy_index = 0 -%}
               {%- for policy in shop.policies -%}
                 {%- if policy != blank and policy.body != blank -%}
@@ -337,7 +339,7 @@
               {%- endif -%}
             </span>
           {%- else -%}
-            <span>{{ section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' }}</span>
+            <span class="opacity-60">{{ section.settings.legal_fallback | default: 'Legal · Privacy · Cookies' }}</span>
           {%- endif -%}
         </div>
     </div>
@@ -355,6 +357,12 @@
       "id": "location",
       "label": "Location",
       "default": "Toronto"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL",
+      "info": "Shown as an icon at the bottom of the footer. Falls back to Theme settings → Social media."
     },
     {
       "type": "header",
