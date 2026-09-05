@@ -20,7 +20,7 @@
           "settings": {
             "heading": "Client care",
             "menu": "",
-            "fallback_links": "Search|/search\nAbout Us|/pages/about-us\nTeam|/pages/about-us#our-team\nFAQs|/pages/faq",
+            "fallback_links": "Search|/search\nAbout Us|/pages/about-us\nTeam|/pages/about-us#team\nFAQs|/pages/faq",
             "use_social_fallback": false,
             "append_contact": false
           }
@@ -30,7 +30,7 @@
           "settings": {
             "heading": "The house",
             "menu": "",
-            "fallback_links": "Our story|/pages/about-us\nOur team|/pages/about-us#our-team\nScience|/pages/about-us\nContact|/pages/contact\nCareers|/pages/contact",
+            "fallback_links": "Our story|/pages/about-us\nOur team|/pages/about-us#team\nScience|/pages/about-us\nContact|/pages/contact\nCareers|/pages/contact",
             "use_social_fallback": false,
             "append_contact": false
           }

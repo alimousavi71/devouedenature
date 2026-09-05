@@ -9,6 +9,7 @@ import { initSearch } from './shopify/search.js'
 import { initFaqTabs } from './shopify/faq-tabs.js'
 import { initLocalizationForms } from './components/localization-form.js'
 import { initRecognitionSwipers } from './shopify/recognition-swiper.js'
+import { initHashScroll } from './components/hash-scroll.js'
 import './components/quantity-input.js'
 import './shopify/product-recommendations.js'
 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initFaqTabs()
   initLocalizationForms()
   initRecognitionSwipers()
+  initHashScroll()
 })
 
 // Sections re-rendered by the Shopify Theme Editor need reveal re-initialized.

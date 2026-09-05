@@ -3,7 +3,9 @@
 {%- endcomment -%}
 
 {%- unless section.settings.hide_section -%}
-  <section id="our-team" class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[120px]">
+  <section id="team" class="dc-about-team max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[140px] md:scroll-mt-[160px]">
+    {%- comment -%} Alias anchor for older footer links {%- endcomment -%}
+    <span id="our-team" class="block relative -top-[140px] md:-top-[160px] h-0 w-0 overflow-hidden" aria-hidden="true"></span>
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_1.15fr] gap-10 md:gap-[70px] xl:gap-[100px] items-start min-w-0">
       <div class="min-w-0" data-reveal>
         {%- if section.settings.heading != blank -%}
