@@ -18,6 +18,17 @@ config/settings_data.json
 sections/footer-group.json
 sections/header-group.json
 sections/overlay-group.json
-templates/*.json
-!templates/index.json
-!templates/product.json
+templates/404.json
+templates/article.json
+templates/blog.json
+templates/cart.json
+templates/collection.json
+templates/list-collections.json
+templates/page.json
+templates/page.about.json
+templates/page.about-us.json
+templates/page.faq.json
+templates/page.faqs.json
+templates/password.json
+templates/customers/*.json
+# Allowed for push: index.json, product.json, page.contact.json, search.json
