@@ -1040,6 +1040,44 @@
     @apply font-body text-body-sm tracking-[0.06em] text-[#EFE7DA] opacity-[0.82] hover:opacity-100 transition-opacity duration-normal ease-normal;
   }
 
+  .dc-footer-instagram {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #efe7da;
+    text-decoration: none;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .dc-footer-instagram:hover {
+    opacity: 0.75;
+  }
+
+  .dc-footer-instagram__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(255, 250, 240, 0.45);
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .dc-footer-instagram__icon svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  .dc-footer-instagram__label {
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
   .dc-footer-payment__icon {
     display: block;
     height: 20px;

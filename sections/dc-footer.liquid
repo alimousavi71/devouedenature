@@ -306,13 +306,14 @@
           {%- if instagram_url != blank -%}
             <a
               href="{{ instagram_url }}"
-              class="dc-footer-instagram inline-flex items-center justify-center w-8 h-8 rounded-full border border-[rgba(255,250,240,0.35)] text-[#EFE7DA] hover:bg-[#EFE7DA] hover:text-ink transition-colors duration-normal ease-normal"
+              class="dc-footer-instagram"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
               title="Instagram"
             >
-              <span class="block w-[16px] h-[16px] [&_svg]:block [&_svg]:w-full [&_svg]:h-full">{% render 'icon-instagram' %}</span>
+              <span class="dc-footer-instagram__icon" aria-hidden="true">{% render 'icon-instagram' %}</span>
+              <span class="dc-footer-instagram__label">Instagram</span>
             </a>
           {%- endif -%}
 
