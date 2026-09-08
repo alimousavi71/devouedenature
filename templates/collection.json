@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
@@ -44,7 +53,12 @@
           }
         }
       },
-      "block_order": ["filter-floral", "filter-woody", "filter-amber", "filter-fresh"],
+      "block_order": [
+        "filter-floral",
+        "filter-woody",
+        "filter-amber",
+        "filter-fresh"
+      ],
       "settings": {
         "products_per_page": 9,
         "archive_label": "Show the archive"
@@ -54,12 +68,15 @@
       "type": "dc-collection-editorial",
       "settings": {
         "eyebrow": "Journal",
-        "heading": "Crafted with intention",
-        "body": "Every Dévoué de Nature formula is developed with physicians and scientists, then filled with precision in Canada. We choose ingredients for performance and tolerance — so each step of your ritual feels considered, never aggressive.",
-        "link_label": "Our story",
-        "image_placeholder": "editorial — formulation lab"
+        "heading": "Why we fill by hand",
+        "body": "Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp.",
+        "link_label": "Read the note"
       }
     }
   },
-  "order": ["banner", "product-grid", "editorial"]
+  "order": [
+    "banner",
+    "product-grid",
+    "editorial"
+  ]
 }

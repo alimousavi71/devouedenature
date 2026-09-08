@@ -289,6 +289,49 @@
     object-position: center;
   }
 
+  .dc-about-member__more {
+    appearance: none;
+  }
+
+  .dc-team-bio {
+    width: min(100vw - 40px, 560px);
+    max-height: min(80vh, 720px);
+    margin: auto;
+    padding: 0;
+    border: 1px solid #e0d9cc;
+    background: #fffaf0;
+    color: #30271d;
+    box-shadow: 0 12px 40px rgba(48, 39, 29, 0.16);
+  }
+
+  .dc-team-bio::backdrop {
+    background: rgba(48, 39, 29, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .dc-team-bio__panel {
+    display: flex;
+    flex-direction: column;
+    max-height: min(80vh, 720px);
+  }
+
+  .dc-team-bio__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 28px 18px;
+    border-bottom: 1px solid #efe9de;
+    flex-shrink: 0;
+  }
+
+  .dc-team-bio__body {
+    padding: 22px 28px 32px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .dc-brand-values__intro {
     text-wrap: pretty;
   }

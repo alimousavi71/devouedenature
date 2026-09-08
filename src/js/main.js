@@ -10,6 +10,7 @@ import { initFaqTabs } from './shopify/faq-tabs.js'
 import { initLocalizationForms } from './components/localization-form.js'
 import { initRecognitionSwipers } from './shopify/recognition-swiper.js'
 import { initHashScroll } from './components/hash-scroll.js'
+import { initTeamBios } from './components/team-bio.js'
 import './components/quantity-input.js'
 import './shopify/product-recommendations.js'
 
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLocalizationForms()
   initRecognitionSwipers()
   initHashScroll()
+  initTeamBios()
 })
 
 // Sections re-rendered by the Shopify Theme Editor need reveal re-initialized.
@@ -39,4 +41,5 @@ document.addEventListener('shopify:section:load', (event) => {
   initFaqTabs(event.target)
   initLocalizationForms(event.target)
   initRecognitionSwipers(event.target)
+  initTeamBios(event.target)
 })

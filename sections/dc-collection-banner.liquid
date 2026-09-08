@@ -5,6 +5,10 @@
 
 {%- liquid
   assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Skincare'
+  assign breadcrumb_parent_key = breadcrumb_parent | strip | downcase
+  if breadcrumb_parent == blank or breadcrumb_parent_key == 'fragrance'
+    assign breadcrumb_parent = 'Skincare'
+  endif
   assign eyebrow = section.settings.eyebrow | default: 'The collection'
 -%}
 

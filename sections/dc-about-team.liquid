@@ -1,10 +1,14 @@
 {%- comment -%}
-  About team — copy + member cards with card-hover motion
+  About team — member cards + View more bio dialog (same page, long bios stay off the grid).
 {%- endcomment -%}
 
+{%- liquid
+  assign view_more_label = section.settings.view_more_label | default: 'View more'
+  assign close_label = section.settings.close_label | default: 'Close'
+-%}
+
 {%- unless section.settings.hide_section -%}
-  <section id="team" class="dc-about-team max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[140px] md:scroll-mt-[160px]">
-    {%- comment -%} Alias anchor for older footer links {%- endcomment -%}
+  <section id="team" class="dc-about-team max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[140px] md:scroll-mt-[160px]" data-dc-about-team>
     <span id="our-team" class="block relative -top-[140px] md:-top-[160px] h-0 w-0 overflow-hidden" aria-hidden="true"></span>
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_1.15fr] gap-10 md:gap-[70px] xl:gap-[100px] items-start min-w-0">
       <div class="min-w-0" data-reveal>
@@ -21,12 +25,13 @@
       {%- if section.blocks.size > 0 -%}
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0" data-reveal-stagger>
           {%- for block in section.blocks -%}
+            {%- assign bio_id = 'DcTeamBio-' | append: section.id | append: '-' | append: block.id -%}
             <article
-              class="dc-about-member border border-border px-[26px] py-[30px] min-w-0 break-words"
+              class="dc-about-member border border-border px-[26px] py-[30px] min-w-0 break-words flex flex-col"
               data-dc-lift-hover
               {{ block.shopify_attributes }}
             >
-              <div class="dc-about-member__meta">
+              <div class="dc-about-member__meta flex-1">
                 {%- if block.settings.name != blank -%}
                   <p class="font-display text-[20px] leading-[1.3] text-ink m-0">{{ block.settings.name }}</p>
                 {%- endif -%}
@@ -37,6 +42,50 @@
                   <p class="mt-2 font-mono text-[10px] tracking-[0.12em] text-muted m-0">{{ block.settings.location }}</p>
                 {%- endif -%}
               </div>
+
+              {%- assign member_bio = block.settings.bio -%}
+              {%- if member_bio != blank -%}
+                <button
+                  type="button"
+                  class="dc-about-member__more mt-[22px] self-start font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal bg-transparent p-0 cursor-pointer"
+                  data-dc-team-bio-open="{{ bio_id }}"
+                  aria-haspopup="dialog"
+                >
+                  {{ view_more_label }}
+                </button>
+
+                <dialog
+                  id="{{ bio_id }}"
+                  class="dc-team-bio"
+                  data-dc-team-bio
+                  aria-labelledby="{{ bio_id }}-title"
+                >
+                  <div class="dc-team-bio__panel">
+                    <header class="dc-team-bio__header">
+                      <div class="min-w-0 pr-4">
+                        {%- if block.settings.name != blank -%}
+                          <h3 id="{{ bio_id }}-title" class="font-display font-normal text-[24px] md:text-[28px] leading-[1.2] text-ink m-0">
+                            {{ block.settings.name }}
+                          </h3>
+                        {%- endif -%}
+                        {%- if block.settings.role != blank -%}
+                          <p class="mt-2 font-body text-[11px] tracking-[0.16em] uppercase text-secondary m-0">{{ block.settings.role }}</p>
+                        {%- endif -%}
+                      </div>
+                      <button
+                        type="button"
+                        class="dc-team-bio__close font-body text-[10px] tracking-[0.2em] uppercase text-secondary hover:text-ink transition-colors duration-fast ease-fast bg-transparent border-0 p-0 cursor-pointer shrink-0"
+                        data-dc-team-bio-close
+                      >
+                        {{ close_label }}
+                      </button>
+                    </header>
+                    <div class="dc-team-bio__body dc-prose font-body text-[14px] leading-[1.95] text-secondary [&_p]:m-0 [&_p+_p]:mt-[18px]">
+                      {{ member_bio }}
+                    </div>
+                  </div>
+                </dialog>
+              {%- endif -%}
             </article>
           {%- endfor -%}
         </div>
@@ -56,7 +105,19 @@
       "type": "richtext",
       "id": "body",
       "label": "Body",
-      "default": "<p>Dévoué de Nature was founded by a collective of physicians, advertising, and science specialists who shared a vision to elevate skincare through knowledge, integrity, and care.</p><p>What began as a desire to treat sensitive and aging skin safely soon became an approach we live, prove, and refine. Every formula is a small beginning and an end, born of a question we could not ignore: why does skincare have to compromise?</p><p>Each formula is crafted with precision in Canada, carefully tested for safety and performance, and created to feel and perform.</p>"
+      "default": "<p>Dévoué de Nature was founded by a collective of physicians, scientists, and skincare specialists united by a shared vision: to elevate skincare through knowledge, integrity, and care.</p>"
+    },
+    {
+      "type": "text",
+      "id": "view_more_label",
+      "label": "View more label",
+      "default": "View more"
+    },
+    {
+      "type": "text",
+      "id": "close_label",
+      "label": "Close label",
+      "default": "Close"
     }
   ],
   "blocks": [
@@ -65,9 +126,15 @@
       "name": "Team member",
       "limit": 8,
       "settings": [
-        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Mehrdad Suleiman, MD" },
-        { "type": "text", "id": "role", "label": "Role", "default": "Founder and formulator" },
-        { "type": "text", "id": "location", "label": "Location", "default": "Toronto" }
+        { "type": "text", "id": "name", "label": "Name", "default": "Dr. Mahabat Sulaiman, MD" },
+        { "type": "text", "id": "role", "label": "Role", "default": "Founder & Ingredient Researcher" },
+        { "type": "text", "id": "location", "label": "Location" },
+        {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Background / bio",
+          "info": "Shown in a View more panel on this page — keeps the team grid short."
+        }
       ]
     }
   ],
@@ -78,33 +145,29 @@
         {
           "type": "member",
           "settings": {
-            "name": "Dr. Mehrdad Suleiman, MD",
-            "role": "Founder and formulator",
-            "location": "Toronto"
+            "name": "Dr. Mahabat Sulaiman, MD",
+            "role": "Founder & Ingredient Researcher"
           }
         },
         {
           "type": "member",
           "settings": {
-            "name": "Dr. Tahsin Hussain, MD",
-            "role": "Clinical research",
-            "location": "Toronto"
+            "name": "Dr. Taha Hussain, MD",
+            "role": "Chief Executive Officer"
           }
         },
         {
           "type": "member",
           "settings": {
-            "name": "Leanne Bahrami Miller",
-            "role": "Brand and experience",
-            "location": "Los Angeles"
+            "name": "Leena Tabaja, MSc",
+            "role": "VP of Product and Consultant"
           }
         },
         {
           "type": "member",
           "settings": {
-            "name": "Dr. Nour Bakoun, MD, MSc",
-            "role": "Dermatological advisory",
-            "location": "Montréal"
+            "name": "Dr. Noor Bakroun, MD, MSc",
+            "role": "CPO - Skincare Specialist"
           }
         }
       ]

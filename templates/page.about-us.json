@@ -49,7 +49,11 @@
           }
         }
       },
-      "block_order": ["card-1", "card-2", "card-3"],
+      "block_order": [
+        "card-1",
+        "card-2",
+        "card-3"
+      ],
       "settings": {
         "hide_section": false,
         "heading": "Science-Led, Nature-Inspired",
@@ -93,7 +97,12 @@
           }
         }
       },
-      "block_order": ["pillar-1", "pillar-2", "pillar-3", "pillar-4"],
+      "block_order": [
+        "pillar-1",
+        "pillar-2",
+        "pillar-3",
+        "pillar-4"
+      ],
       "settings": {
         "hide_section": false,
         "heading": "Our Commitment to Quality & Integrity",
@@ -149,7 +158,11 @@
           }
         }
       },
-      "block_order": ["promise-1", "promise-2", "promise-3"],
+      "block_order": [
+        "promise-1",
+        "promise-2",
+        "promise-3"
+      ],
       "settings": {
         "hide_section": false,
         "heading": "Our Promise to You",
@@ -163,41 +176,52 @@
         "member-1": {
           "type": "member",
           "settings": {
-            "name": "Dr. Mehrdad Suleiman, MD",
-            "role": "Founder and formulator",
-            "location": "Toronto"
+            "name": "Dr. Mahabat Sulaiman, MD",
+            "role": "Founder & Ingredient Researcher",
+            "location": "",
+            "bio": "<p>Dr. Mahabat, founder and driving force behind Dévoué de Nature, combines her expertise as a physician with her certifications in cosmetic science, chemistry, and natural skincare to create a brand that redefines luxury and natural beauty. Her passion for skincare and dedication to natural ingredients have been the cornerstone of the brand’s philosophy, emphasizing the transformative power of organic formulations.</p><p>Dr. Mahabat’s role at Dévoué de Nature includes leading ingredient research, overseeing product production, and ensuring that every product meets the highest standards of quality and efficacy. From the inception of the idea to the final approval of each formulation, her meticulous approach ensures that the brand stays true to its mission of delivering effective, science-backed, and luxurious skincare.</p><p>Her personal passion for natural skincare was born out of her own journey. Avoiding synthetic products and embracing a minimalist approach to skincare allowed her to maintain healthy skin over the years. As a physician, she recognized the rising number of adults with skin concerns, which inspired her to create a brand devoted to natural skincare solutions. The name “Dévoué,” meaning devoted, reflects her unwavering commitment to skincare as both a science and an art.</p><p>Dr. Mahabat’s personal philosophy is rooted in treating the skin as an integral part of overall well-being. She draws from her medical background to highlight the importance of protecting the skin, the body’s largest organ, and incorporates practices such as sunscreen application, hydration, and rest into her own life. This holistic approach translates into the thoughtful formulations of Devoué de Nature, designed to care for the skin while empowering the individual.</p><p>The upcoming launch of Dévoué de Nature marks the realization of a long-held dream for Dr. Mahabat. The introduction of organic gold-infused products, inspired by ancient Egyptian skincare rituals, reflects her vision of merging historical beauty secrets with modern science. For her, this is not just a professional milestone but a personal triumph, bringing timeless skincare wisdom into contemporary routines.</p><p>Looking ahead, Dr. Mahabat envisions Dévoué de Nature as a global brand that empowers women of all skin tones, celebrates the benefits of natural gold, and expands its line to showcase the enduring value of organic ingredients. Her mission is to help individuals embrace youthful vitality and radiant confidence, one luxurious product at a time.</p><p>For Dr. Mahabat, Dévoué de Nature is more than a skincare line—it is a legacy of devotion, innovation, and natural beauty.</p>"
           }
         },
         "member-2": {
           "type": "member",
           "settings": {
-            "name": "Dr. Tahsin Hussain, MD",
-            "role": "Clinical research",
-            "location": "Toronto"
+            "name": "Dr. Taha Hussain, MD",
+            "role": "Chief Executive Officer",
+            "location": "",
+            "bio": "<p>Dr. Taha Hussain is the visionary CEO of Dévoué de Nature, a luxury skincare brand committed to fusing clinical integrity with refined beauty. A board-certified medical doctor in family medicine with credentials in both the United States and Canada, and aesthetically trained in advanced skincare procedures, Dr. Hussain brings a rare blend of scientific expertise and entrepreneurial insight to the skincare space.</p><p>At Dévoué de Nature, he oversees production, financial planning, and brand strategy—ensuring that every product is a reflection of the company’s core values: luxury, efficacy, and innovation. Under his leadership, the brand is not only launching with impact but is being shaped for long-term, sustainable growth.</p><p>Dr. Hussain’s journey into skincare began with a simple question: how can natural ingredients deliver real, clinical results? This curiosity sparked the foundation of Dévoué de Nature—a brand built on the belief that skincare should be both effective and beautifully elevated.</p><p>What excites Dr. Hussain most about the upcoming launch is the opportunity to finally share what has been years in the making—formulas backed by science, elevated through design, and developed with a deep understanding of modern skincare needs. The launch represents a culmination of research, refinement, and passion—ready to redefine what luxury skincare can truly be.</p><p>Looking ahead, Dr. Hussain envisions Dévoué de Nature as a global leader in luxury skincare—celebrated not just for its elegance, but for the transformation it brings to skin, confidence, and daily ritual. Through innovative formulations, immersive user experiences, and a dedication to community, his goal is to redefine what luxury skincare means in the modern world.</p>"
           }
         },
         "member-3": {
           "type": "member",
           "settings": {
-            "name": "Leanne Bahrami Miller",
-            "role": "Brand and experience",
-            "location": "Los Angeles"
+            "name": "Leena Tabaja, MSc",
+            "role": "VP of Product and Consultant",
+            "location": "",
+            "bio": "<p>Leena Tabaja is a skincare consultant, bringing a unique fusion of scientific expertise and personal passion to the brand. With a Master’s degree in Science specializing in Microbiology and Mycology, Leena’s academic journey has been deeply rooted in understanding the intricate science of natural products. Her research on antibiotic resistance and natural preservatives ignited a profound interest in harnessing the potential of natural actives in skincare.</p><p>Leena’s professional background in quality control has further sharpened her ability to navigate ingredient safety, efficacy, and regulatory standards with precision. This meticulous approach ensures that every Dévoué de Nature product is thoughtfully formulated to deliver both luxury and results. She has guided the brand’s innovative approach to ingredient selection, prioritizing in-demand actives that reflect the brand’s commitment to indulgence and efficacy.</p><p>Her personal skincare journey, rooted in overcoming challenges with acne and oily skin, inspired her dedication to creating solutions that genuinely work. This blend of personal and professional experience fuels her passion for helping others achieve confidence and balance through effective skincare.</p><p>Leena’s approach to life mirrors her philosophy on beauty: a harmonious balance between science and mindfulness. She embraces skincare as an essential self-care ritual, combining powerful actives with indulgent formulations to nurture both the skin and spirit. Her vision for Dévoué de Nature is to redefine luxury skincare as a meaningful ritual that empowers individuals to feel confident, rejuvenated, and cared for.For Leena, the launch of the brand is more than just introducing products—it’s an invitation to embrace skincare as a ritual of luxury and connection.</p>"
           }
         },
         "member-4": {
           "type": "member",
           "settings": {
-            "name": "Dr. Nour Bakoun, MD, MSc",
-            "role": "Dermatological advisory",
-            "location": "Montréal"
+            "name": "Dr. Noor Bakroun, MD, MSc",
+            "role": "CPO - Skincare Specialist",
+            "location": "",
+            "bio": "<p>Dr. Bakroun brings her medical expertise and passion for natural skincare to the forefront of the brand. With a medical degree in Family Medicine, advanced certifications in dermatology, a diploma in natural skincare, and aesthetic training in modern skincare procedures, Dr. Bakroun combines her extensive knowledge of anatomy, dermatology, and chemistry with a deep appreciation for aesthetics.</p><p>At Dévoué de Nature, Dr. Bakroun’s contributions include product ingredient research and managing the product development process. Her unique perspective as a physician informs her approach, ensuring that every product is designed with both efficacy and safety in mind. Drawing from her clinical experience, Dr. Bakroun is inspired by the transformative potential of what we apply to our skin—especially in addressing common skin concerns and enhancing overall health.</p><p>Dr. Bakroun’s journey into skincare was sparked by a shared vision with her colleague and mother-in-law, who dreamed of creating a skincare line rooted in science and natural beauty. This shared passion for helping others and a commitment to quality ingredients led to the creation of Dévoué de Nature.</p><p>As a physician, Dr. Bakroun’s philosophy centers on treating skincare as a mindful ritual rather than a routine chore. She advocates for incorporating natural, eco-friendly products into daily life and believes in the transformative power of sensations and aromas to elevate self-care. Her unique focus on the benefits of natural ingredients, including organic gold, ensures that Dévoué de Nature blends ancient secrets with modern science.</p><p>The launch of Dévoué de Nature marks an exciting milestone for Dr. Bakroun. Introducing luxurious, allergy-tested, and scientifically backed organic skincare products to the world is not just a professional achievement but a personal mission. She envisions Dévoué de Nature as an international leader in luxury skincare, setting new standards with products that work for all skin tones and types. Dr. Bakroun also plans to expand the brand’s offerings with additional skincare solutions, continuing to redefine the possibilities of natural and organic beauty.</p><p>For Dr. Bakroun, Dévoué de Nature is more than a brand—it’s a commitment to bringing timeless beauty secrets into the modern era, empowering individuals to embrace skincare that nurtures both their skin and their spirit.</p>"
           }
         }
       },
-      "block_order": ["member-1", "member-2", "member-3", "member-4"],
+      "block_order": [
+        "member-1",
+        "member-2",
+        "member-3",
+        "member-4"
+      ],
       "settings": {
         "hide_section": false,
         "heading": "Our Team",
-        "body": "<p>Dévoué de Nature was founded by a collective of physicians, advertising, and science specialists who shared a vision to elevate skincare through knowledge, integrity, and care.</p><p>What began as a desire to treat sensitive and aging skin safely soon became an approach we live, prove, and refine. Every formula is a small beginning and an end, born of a question we could not ignore: why does skincare have to compromise?</p><p>Each formula is crafted with precision in Canada, carefully tested for safety and performance, and created to feel and perform.</p>"
+        "body": "<p>Dévoué de Nature was founded by a collective of physicians, scientists, and skincare specialists united by a shared vision: to elevate skincare through knowledge, integrity, and care.</p><p>What began as a desire to treat sensitive and aging skin using safe, natural approaches has grown into a luxury skincare house that bridges ancient beauty traditions with breakthrough dermatological science.</p><p>Each formula is crafted with precision in Canada, carefully tested for safety and performance, and created to deliver visible results — not simply to please, but to truly perform.</p>",
+        "view_more_label": "View more",
+        "close_label": "Close"
       }
     },
     "founders_note": {

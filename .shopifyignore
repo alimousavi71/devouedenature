@@ -22,7 +22,6 @@ templates/404.json
 templates/article.json
 templates/blog.json
 templates/cart.json
-templates/collection.json
 templates/list-collections.json
 templates/page.json
 templates/page.about.json
@@ -31,4 +30,5 @@ templates/page.faq.json
 templates/page.faqs.json
 templates/password.json
 templates/customers/*.json
-# Allowed for push: index.json, product.json, page.contact.json, search.json
+# Allowed for push: index, product, page.contact, search, collection
+# About templates are Theme Editor content — do not push unless recovering deliberately.
