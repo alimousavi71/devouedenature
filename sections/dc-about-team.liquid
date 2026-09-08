@@ -50,18 +50,26 @@
                   class="dc-about-member__more mt-[22px] self-start font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal bg-transparent p-0 cursor-pointer"
                   data-dc-team-bio-open="{{ bio_id }}"
                   aria-haspopup="dialog"
+                  aria-controls="{{ bio_id }}"
                 >
                   {{ view_more_label }}
                 </button>
 
-                <dialog
+                <div
                   id="{{ bio_id }}"
-                  class="dc-team-bio"
+                  class="dc-team-bio hidden"
                   data-dc-team-bio
-                  aria-labelledby="{{ bio_id }}-title"
+                  aria-hidden="true"
                 >
-                  <div class="dc-team-bio__panel">
-                    <header class="dc-team-bio__header">
+                  <div class="dc-team-bio__scrim" data-dc-team-bio-close tabindex="-1"></div>
+                  <div
+                    class="dc-team-bio__panel"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="{{ bio_id }}-title"
+                    data-dc-team-bio-panel
+                  >
+                    <header class="dc-team-bio__header" data-dc-team-bio-ui>
                       <div class="min-w-0 pr-4">
                         {%- if block.settings.name != blank -%}
                           <h3 id="{{ bio_id }}-title" class="font-display font-normal text-[24px] md:text-[28px] leading-[1.2] text-ink m-0">
@@ -80,11 +88,13 @@
                         {{ close_label }}
                       </button>
                     </header>
-                    <div class="dc-team-bio__body dc-prose font-body text-[14px] leading-[1.95] text-secondary [&_p]:m-0 [&_p+_p]:mt-[18px]">
-                      {{ member_bio }}
+                    <div class="dc-team-bio__scroll" data-dc-team-bio-scroll data-dc-team-bio-ui data-lenis-prevent>
+                      <div class="dc-team-bio__body dc-prose font-body text-[14px] md:text-[15px] leading-[1.95] text-secondary [&_p]:m-0 [&_p+_p]:mt-[18px]">
+                        {{ member_bio }}
+                      </div>
                     </div>
                   </div>
-                </dialog>
+                </div>
               {%- endif -%}
             </article>
           {%- endfor -%}
