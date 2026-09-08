@@ -276,15 +276,15 @@
       {%- endfor -%}
     </div>
 
-    <div class="pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase opacity-60 overflow-visible relative z-[2]">
+    <div class="dc-footer-bar pt-4 md:pt-5 flex flex-wrap items-center gap-x-4 gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase overflow-visible relative z-[2]">
         <div class="flex flex-wrap items-center gap-x-5 gap-y-2 shrink-0">
-          <span>{{ shop.name }} — {{ location }}</span>
+          <span class="dc-footer-bar__meta">{{ shop.name }} — {{ location }}</span>
 
           {%- if section.settings.enable_country_selector -%}
             {%- if localization.available_countries.size > 1 -%}
               {% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label | default: 'Currency' %}
             {%- else -%}
-              <span class="opacity-80">
+              <span class="dc-footer-bar__meta">
                 {{ localization.country.currency.iso_code }}
                 {{ localization.country.currency.symbol }}
               </span>

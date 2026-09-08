@@ -1109,11 +1109,15 @@
     background: rgba(255, 250, 240, 0.04);
   }
 
+  .dc-footer-bar__meta {
+    color: rgba(239, 231, 218, 0.6);
+  }
+
   .dc-disclosure__list {
     position: absolute;
     left: 0;
     bottom: calc(100% + 8px);
-    z-index: 40;
+    z-index: 80;
     min-width: 220px;
     max-width: min(320px, calc(100vw - 40px));
     max-height: min(280px, 45vh);
@@ -1125,9 +1129,11 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     touch-action: pan-y;
-    background: theme('colors.ink');
+    background-color: #30271d;
+    background-image: none;
+    isolation: isolate;
     border: 1px solid rgba(255, 250, 240, 0.16);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 250, 240, 0.35) transparent;
   }
@@ -1143,7 +1149,7 @@
 
   .dc-localization .dc-disclosure {
     position: relative;
-    z-index: 40;
+    z-index: 80;
   }
 
   .dc-disclosure__link--active {
