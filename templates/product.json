@@ -82,9 +82,7 @@
       "settings": {
         "hide_section": false,
         "lead": "Proudly developed and made in Canada — formulas that bring together thoughtful ingredient selection, scientific expertise, and rigorous attention to quality.",
-        "body": "<p>Every detail is considered with purpose: high-performance actives chosen for results, balanced compositions designed to feel refined on the skin, and a sensorial experience that supports your daily ritual.</p><p>From cleanser to cream, each product is crafted to deliver meaningful results — never aggressive, always intentional.</p>",
-        "show_image_placeholder": true,
-        "image_placeholder": "product story — editorial image"
+        "body": "<p>Every detail is considered with purpose: high-performance actives chosen for results, balanced compositions designed to feel refined on the skin, and a sensorial experience that supports your daily ritual.</p><p>From cleanser to cream, each product is crafted to deliver meaningful results — never aggressive, always intentional.</p>"
       }
     },
     "campaign": {

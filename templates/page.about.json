@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -7,6 +16,7 @@
         "eyebrow": "About",
         "heading": "Dévoué de Nature",
         "tagline": "Redefining skincare — with purpose, with you.",
+        "image": "shopify://shop_images/Group_1410109167.jpg",
         "show_placeholder": true,
         "placeholder_label": "hero — the collection on gold"
       }
@@ -17,8 +27,12 @@
         "hide_section": false,
         "story_heading": "Where Science, Nature, and Devotion Become One",
         "story_body": "<p>Dévoué de Nature is a Canadian luxury skincare brand founded by a collective of physicians who believe skincare should be a considered, thoughtful, and deliberate ritual.</p><p>We create formulations that combine advanced dermatological science with high performance botanical ingredients, crafted with precision in Canada and designed to support healthy, resilient skin at every stage of life.</p><p>Every product is created to feel luxurious, perform meaningfully, and bring confidence to your daily ritual.</p>",
+        "story_image": "shopify://shop_images/Frame_175_8391d947-6e20-43a5-babd-54e405ba4061.jpg",
+        "story_placeholder_label": "story — brand editorial",
         "philosophy_heading": "Our Philosophy",
-        "philosophy_body": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>"
+        "philosophy_body": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>",
+        "philosophy_image": "shopify://shop_images/Group_1410109140.jpg",
+        "philosophy_placeholder_label": "philosophy — formulation detail"
       }
     },
     "science": {
@@ -29,7 +43,9 @@
           "settings": {
             "number": "01",
             "title": "High Performance Actives",
-            "text": "Concentrations chosen for the result, not the label."
+            "text": "Concentrations chosen for the result, not the label.",
+            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_gold_nanoparticles_form_6b6d1c49-06ee-40f3-adaf-4365a3dd55e0_1.jpg",
+            "overlay_opacity": 70
           }
         },
         "card-2": {
@@ -37,7 +53,9 @@
           "settings": {
             "number": "02",
             "title": "Gentle on Skin",
-            "text": "Tested for tolerance before it is tested for effect."
+            "text": "Tested for tolerance before it is tested for effect.",
+            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_gold_nanoparticles_form_6b6d1c49-06ee-40f3-adaf-4365a3dd55e0_2.jpg",
+            "overlay_opacity": 70
           }
         },
         "card-3": {
@@ -45,7 +63,9 @@
           "settings": {
             "number": "03",
             "title": "Balanced Compositions",
-            "text": "Nothing carried in the formula that does not earn its place."
+            "text": "Nothing carried in the formula that does not earn its place.",
+            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_skin_microstructure_abs_7e325b4f-cd29-4b10-b8dd-66f66dc14138_1.jpg",
+            "overlay_opacity": 70
           }
         }
       },
@@ -67,6 +87,7 @@
         "pillar-1": {
           "type": "pillar",
           "settings": {
+            "icon_svg": "",
             "mark": "diamond",
             "title": "Clinically tested",
             "text": "Every formula assessed under dermatological supervision."
@@ -75,6 +96,7 @@
         "pillar-2": {
           "type": "pillar",
           "settings": {
+            "icon_svg": "",
             "mark": "circle",
             "title": "Cruelty-free",
             "text": "No animal testing at any stage, in any market."
@@ -83,6 +105,7 @@
         "pillar-3": {
           "type": "pillar",
           "settings": {
+            "icon_svg": "",
             "mark": "diamond",
             "title": "Thoughtfully sourced",
             "text": "Traceable botanicals, named suppliers, disclosed origins."
@@ -91,6 +114,7 @@
         "pillar-4": {
           "type": "pillar",
           "settings": {
+            "icon_svg": "",
             "mark": "circle",
             "title": "Sustainable packaging",
             "text": "Glass, aluminium and refills wherever the formula allows."
@@ -116,6 +140,13 @@
         "hide_section": false,
         "heading": "A Brand with Purpose",
         "body": "<p>Dévoué de Nature was created to bridge a gap — where luxury meets responsibility, and science meets sensitivity.</p><p>We understand that skin is personal, seasonal, and ever-changing. Our mission is to support skin at every stage with products that feel comforting, refined, and empowering — whether your goal is hydration, rejuvenation, or maintaining healthy, resilient skin. This is skincare designed to evolve with you.</p>",
+        "media_type": "video",
+        "video": "shopify://files/videos/0420.mp4",
+        "video_url": "",
+        "autoplay_video": true,
+        "muted_video": true,
+        "loop_video": true,
+        "show_video_controls": false,
         "placeholder_label": "editorial — botanical, in mist"
       }
     },
@@ -125,6 +156,15 @@
         "hide_section": false,
         "heading": "Recognition & Excellence",
         "body": "<p>Our dedication to thoughtful design and innovation has been recognized internationally, including the A' Design Award, reflecting our commitment to excellence not only in formulation, but in the entire sensory and aesthetic experience.</p><p>From Toronto to Los Angeles, our presence on city billboards marks our growing global footprint, bringing our vision of elevated skincare to a wider audience.</p>",
+        "image_1": "shopify://shop_images/WhatsApp_Image_2026-04-15_at_13.21.56.jpg",
+        "image_1_alt": "",
+        "image_2": "shopify://shop_images/WhatsApp_Image_2026-04-15_at_13.21.56_6.jpg",
+        "image_2_alt": "",
+        "image_3_alt": "",
+        "image_4": "shopify://shop_images/WhatsApp_Image_2026-04-15_at_13.21.56_3.jpg",
+        "image_4_alt": "",
+        "image_5_alt": "",
+        "image_6_alt": "",
         "placeholder_label": "recognition — award and press",
         "show_pagination": true,
         "autoplay": true,
