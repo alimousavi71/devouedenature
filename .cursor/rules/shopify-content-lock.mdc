@@ -1,0 +1,39 @@
+---
+description: Never overwrite Shopify Theme Editor content when pushing theme code
+alwaysApply: true
+---
+
+# Shopify theme push — code vs content
+
+Merchant / Theme Editor data lives in JSON and must not be overwritten by routine deploys.
+
+## Locked by `.shopifyignore`
+- `templates/**/*.json`
+- `config/settings_data.json`
+- `sections/*-group.json`
+
+## Default deploy (always)
+```bash
+npm run theme:push:code
+# or equivalently:
+npm run theme:push
+```
+Pushes only: `assets`, `sections/*.liquid`, `snippets`, `layout`, `locales`, `config/settings_schema.json`.
+Use `--nodelete` (already in the script). Never run bare `shopify theme push`.
+
+## Sync content down (safe)
+After edits in Theme Editor:
+```bash
+npm run theme:pull:content -- --theme "ON DEV 2"
+```
+
+## Push content up (rare, explicit only)
+Only when the user clearly asks to overwrite remote JSON / recover structure:
+```bash
+npm run theme:push:content -- --theme "ON DEV 2" --no-pull templates/page.about-us.json
+```
+
+## Never
+- Push `page.about.json` / `page.about-us.json` / other template JSON unless the user explicitly requests content recovery
+- Use `theme:push:all-unsafe` unless the user explicitly accepts wiping Theme Editor data
+- Assume local JSON is newer than Theme Editor

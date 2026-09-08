@@ -11,24 +11,16 @@ postcss.config.cjs
 src/
 scripts/
 *.md
+.cursor/
+.shopify/
 
-# Theme Editor content — edited in Shopify Admin, not overwritten on push.
-# Run `npm run theme:pull:content` before committing merchant changes locally.
+# =============================================================================
+# CONTENT LOCK — Theme Editor / merchant data
+# Never overwritten by `shopify theme push` or `shopify theme:dev`.
+# Code push = assets, sections/*.liquid, snippets, layout, locales, settings_schema.
+# To sync content DOWN:  npm run theme:pull:content
+# To push content UP (rare): npm run theme:push:content -- <file>
+# =============================================================================
 config/settings_data.json
-sections/footer-group.json
-sections/header-group.json
-sections/overlay-group.json
-templates/404.json
-templates/article.json
-templates/blog.json
-templates/cart.json
-templates/list-collections.json
-templates/page.json
-templates/page.about.json
-templates/page.about-us.json
-templates/page.faq.json
-templates/page.faqs.json
-templates/password.json
-templates/customers/*.json
-# Allowed for push: index, product, page.contact, search, collection
-# About templates are Theme Editor content — do not push unless recovering deliberately.
+sections/*-group.json
+templates/**/*.json

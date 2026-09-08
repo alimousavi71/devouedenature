@@ -52,12 +52,6 @@
                 widths: '800, 1200, 1600'
             }}
           </div>
-        {%- elsif section.settings.show_image_placeholder -%}
-          <div class="mt-[40px] md:mt-[46px] relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)] flex items-center justify-center">
-            <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-muted text-center px-4">
-              {{ section.settings.image_placeholder | default: 'product story — editorial image' }}
-            </span>
-          </div>
         {%- endif -%}
       </div>
     </section>
