@@ -559,6 +559,14 @@
     backface-visibility: hidden;
   }
 
+  .dc-gallery-video,
+  .dc-gallery-external iframe,
+  .dc-gallery-lightbox__video,
+  .dc-gallery-lightbox__external iframe {
+    display: block;
+    background: #1a1612;
+  }
+
   .dc-gallery-zoom {
     transition: transform theme('transitionDuration.normal') theme('transitionTimingFunction.normal');
   }

@@ -4,13 +4,11 @@
     card_product  - {Object} required
     show_family   - {Boolean} optional, family/type label (default true)
     show_note     - {Boolean} optional, scent note under meta (default true)
-    show_save     - {Boolean} optional, Save control on media (default true)
   Usage: {% render 'dc-product-card', card_product: product %}
 {%- endcomment -%}
 {%- liquid
   assign show_family = show_family | default: true
   assign show_note = show_note | default: true
-  assign show_save = show_save | default: true
 
   assign badge_text = ''
   if card_product.metafields.custom.badges != blank
@@ -71,18 +69,6 @@
         </span>
       {%- endif -%}
     </a>
-
-    {%- if show_save -%}
-      <button
-        type="button"
-        data-dc-save-toggle
-        data-product-id="{{ card_product.id }}"
-        class="dc-product-card__save absolute z-[2] bottom-[16px] right-[16px] h-[30px] px-[14px] font-body text-[9px] tracking-[0.2em] uppercase border border-ink/25 bg-bg/70 text-secondary transition-all duration-normal ease-normal hover:border-ink aria-pressed:bg-ink aria-pressed:border-ink aria-pressed:text-bg"
-        aria-pressed="false"
-      >
-        <span data-dc-save-label>{{ 'products.product.save' | t | default: 'Save' }}</span>
-      </button>
-    {%- endif -%}
   </div>
 
   <a href="{{ card_product.url }}" class="dc-product-card__link block hover:opacity-[0.97] transition-opacity duration-fast ease-fast">

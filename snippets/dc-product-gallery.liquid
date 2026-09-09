@@ -1,95 +1,113 @@
 {%- comment -%}
-  Product gallery — redesign/Product.dc.html
-  Sticky 64×80 thumbnail rail + 4/5 main image + full-screen zoom lightbox.
+  Product gallery — thumbnail rail + main stage (image / video / external video) + lightbox.
   Accepts: product
 {%- endcomment -%}
 
+{%- liquid
+  assign featured = product.featured_media
+  assign featured_type = featured.media_type | default: 'image'
+  assign featured_alt = featured.alt | default: product.title | escape
+-%}
+
 <div data-dc-gallery-wrap>
-<div class="grid grid-cols-1 md:grid-cols-[64px_minmax(0,1fr)] gap-[28px] items-start" data-dc-gallery>
-  <div class="hidden md:flex flex-col gap-3 sticky top-[120px] self-start max-h-[calc(100vh-140px)] overflow-y-auto">
-    {%- for media in product.media -%}
-      {%- assign media_alt = media.alt | default: product.title | escape -%}
-      <button
-        type="button"
-        data-dc-gallery-thumb
-        data-index="{{ forloop.index0 }}"
-        data-media-src="{{ media | image_url: width: 1400 }}"
-        data-media-srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 1400 }} 1400w"
-        data-media-src-hires="{{ media | image_url: width: 2400 }}"
-        data-media-srcset-hires="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1800 }} 1800w, {{ media | image_url: width: 2400 }} 2400w"
-        data-media-alt="{{ media_alt }}"
-        class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent cursor-pointer transition-[border-color] duration-normal ease-normal border {% if forloop.first %}border-ink{% else %}border-transparent{% endif %}"
-        {% if forloop.first %}aria-current="true"{% endif %}
-        aria-label="View image {{ forloop.index }}"
+  <div class="grid grid-cols-1 md:grid-cols-[64px_minmax(0,1fr)] gap-[28px] items-start" data-dc-gallery>
+    <div class="hidden md:flex flex-col gap-3 sticky top-[120px] self-start max-h-[calc(100vh-140px)] overflow-y-auto">
+      {%- for media in product.media -%}
+        {% render 'dc-product-gallery-thumb', media: media, product: product, index: forloop.index0, active: forloop.first %}
+      {%- endfor -%}
+    </div>
+
+    <div class="min-w-0">
+      <div
+        data-dc-gallery-main
+        class="dc-gallery-main relative w-full aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#F8F3E8] to-[#E7E3DB]"
+        data-media-type="{{ featured_type }}"
       >
-        {{ media.preview_image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
-      </button>
-    {%- endfor -%}
-  </div>
+        {%- if featured != blank -%}
+          {%- assign featured_preview = featured.preview_image | default: featured -%}
 
-  <div class="min-w-0">
-    <button
-      type="button"
-      data-dc-gallery-main
-      data-dc-gallery-zoom
-      class="dc-gallery-zoom relative w-full aspect-[4/5] overflow-hidden bg-gradient-to-br from-[#F8F3E8] to-[#E7E3DB] cursor-zoom-in border-0 p-0 text-left"
-      aria-label="{{ 'products.product.media.zoom' | t | default: 'Zoom product image' }}"
-    >
-      {%- if product.featured_media -%}
-        {%- assign featured_image = product.featured_media.preview_image -%}
-        {%- assign featured_alt = product.featured_media.alt | default: product.title | escape -%}
-        <img
-          src="{{ featured_image | image_url: width: 1400 }}"
-          srcset="{{ featured_image | image_url: width: 700 }} 700w, {{ featured_image | image_url: width: 1000 }} 1000w, {{ featured_image | image_url: width: 1400 }} 1400w"
-          sizes="(min-width: 1024px) 55vw, 100vw"
-          width="{{ featured_image.width }}"
-          height="{{ featured_image.height }}"
-          loading="eager"
-          decoding="async"
-          class="dc-gallery-layer absolute inset-0 w-full h-full object-cover pointer-events-none"
-          alt="{{ featured_alt }}"
-          data-dc-gallery-img
-          data-dc-gallery-active
-        >
-        <img
-          class="dc-gallery-layer absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
-          data-dc-gallery-img
-          alt=""
-          aria-hidden="true"
-          decoding="async"
-        >
-      {%- else -%}
-        <div class="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(48,39,29,0.035)_0_14px,rgba(48,39,29,0)_14px_28px)]" aria-hidden="true"></div>
-      {%- endif -%}
-      <span class="absolute bottom-[18px] right-5 z-[1] font-body text-[10px] tracking-[0.2em] uppercase text-muted pointer-events-none">
-        {{ 'products.product.media.zoom' | t | default: 'Zoom' }}
-      </span>
-    </button>
-
-    {%- if product.media.size > 0 -%}
-      <div class="flex md:hidden gap-3 mt-3 overflow-x-auto pb-1 -mx-[20px] px-[20px] md:mx-0 md:px-0">
-        {%- for media in product.media -%}
-          {%- assign media_alt = media.alt | default: product.title | escape -%}
-          <button
-            type="button"
-            data-dc-gallery-thumb
-            data-index="{{ forloop.index0 }}"
-            data-media-src="{{ media | image_url: width: 1400 }}"
-            data-media-srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1000 }} 1000w, {{ media | image_url: width: 1400 }} 1400w"
-            data-media-src-hires="{{ media | image_url: width: 2400 }}"
-            data-media-srcset-hires="{{ media | image_url: width: 1200 }} 1200w, {{ media | image_url: width: 1800 }} 1800w, {{ media | image_url: width: 2400 }} 2400w"
-            data-media-alt="{{ media_alt }}"
-            class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent border {% if forloop.first %}border-ink{% else %}border-transparent{% endif %}"
-            {% if forloop.first %}aria-current="true"{% endif %}
-            aria-label="View image {{ forloop.index }}"
+          <div
+            data-dc-gallery-image-stack
+            class="absolute inset-0 {% unless featured_type == 'image' %}invisible opacity-0 pointer-events-none{% endunless %}"
           >
-            {{ media.preview_image | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
-          </button>
-        {%- endfor -%}
+            <img
+              src="{{ featured_preview | image_url: width: 1400 }}"
+              srcset="{{ featured_preview | image_url: width: 700 }} 700w, {{ featured_preview | image_url: width: 1000 }} 1000w, {{ featured_preview | image_url: width: 1400 }} 1400w"
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              width="{{ featured_preview.width }}"
+              height="{{ featured_preview.height }}"
+              loading="eager"
+              decoding="async"
+              class="dc-gallery-layer absolute inset-0 w-full h-full object-cover"
+              alt="{{ featured_alt }}"
+              data-dc-gallery-img
+              data-dc-gallery-active
+            >
+            <img
+              class="dc-gallery-layer absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none"
+              data-dc-gallery-img
+              alt=""
+              aria-hidden="true"
+              decoding="async"
+            >
+          </div>
+
+          <video
+            data-dc-gallery-video
+            class="dc-gallery-video absolute inset-0 w-full h-full object-cover {% unless featured_type == 'video' %}hidden{% endunless %}"
+            playsinline
+            muted
+            loop
+            controls
+            preload="metadata"
+            {% if featured_preview != blank %}poster="{{ featured_preview | image_url: width: 1400 }}"{% endif %}
+            {% if featured_type == 'video' %}autoplay{% endif %}
+          >
+            {%- if featured_type == 'video' -%}
+              {%- for source in featured.sources -%}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            {%- endif -%}
+          </video>
+
+          <div
+            data-dc-gallery-external
+            class="dc-gallery-external absolute inset-0 {% unless featured_type == 'external_video' %}hidden{% endunless %}"
+          >
+            {%- if featured_type == 'external_video' -%}
+              {{
+                featured
+                | external_video_tag:
+                  class: 'absolute inset-0 w-full h-full',
+                  loading: 'lazy'
+              }}
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(48,39,29,0.035)_0_14px,rgba(48,39,29,0)_14px_28px)]" aria-hidden="true"></div>
+        {%- endif -%}
+
+        <button
+          type="button"
+          data-dc-gallery-zoom
+          class="dc-gallery-zoom absolute inset-0 z-[2] border-0 p-0 bg-transparent text-left cursor-zoom-in {% unless featured_type == 'image' %}hidden{% endunless %}"
+          aria-label="{{ 'products.product.media.zoom' | t | default: 'Zoom product image' }}"
+        >
+          <span class="absolute bottom-[18px] right-5 z-[1] font-body text-[10px] tracking-[0.2em] uppercase text-muted pointer-events-none">
+            {{ 'products.product.media.zoom' | t | default: 'Zoom' }}
+          </span>
+        </button>
       </div>
-    {%- endif -%}
+
+      {%- if product.media.size > 0 -%}
+        <div class="flex md:hidden gap-3 mt-3 overflow-x-auto pb-1 -mx-[20px] px-[20px] md:mx-0 md:px-0">
+          {%- for media in product.media -%}
+            {% render 'dc-product-gallery-thumb', media: media, product: product, index: forloop.index0, active: forloop.first %}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
   </div>
-</div>
 
   {%- if product.media.size > 0 -%}
     <div
@@ -125,7 +143,7 @@
             type="button"
             data-dc-gallery-lightbox-prev
             class="dc-gallery-lightbox__arrow dc-gallery-lightbox__arrow--prev {% if product.media.size < 2 %}hidden{% endif %}"
-            aria-label="{{ 'general.pagination.previous' | t | default: 'Previous image' }}"
+            aria-label="{{ 'general.pagination.previous' | t | default: 'Previous' }}"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
               <path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
@@ -150,13 +168,24 @@
               aria-hidden="true"
               decoding="async"
             >
+            <video
+              data-dc-gallery-lightbox-video
+              class="dc-gallery-lightbox__video absolute inset-0 w-full h-full object-contain hidden"
+              playsinline
+              controls
+              loop
+            ></video>
+            <div
+              data-dc-gallery-lightbox-external
+              class="dc-gallery-lightbox__external absolute inset-0 hidden"
+            ></div>
           </div>
 
           <button
             type="button"
             data-dc-gallery-lightbox-next
             class="dc-gallery-lightbox__arrow dc-gallery-lightbox__arrow--next {% if product.media.size < 2 %}hidden{% endif %}"
-            aria-label="{{ 'general.pagination.next' | t | default: 'Next image' }}"
+            aria-label="{{ 'general.pagination.next' | t | default: 'Next' }}"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
               <path d="M9 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />

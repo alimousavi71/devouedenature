@@ -1,0 +1,48 @@
+{%- comment -%}
+  Gallery thumbnail — image / video / external_video.
+  Accepts: media, product, index, active
+{%- endcomment -%}
+
+{%- liquid
+  assign media_alt = media.alt | default: product.title | escape
+  assign media_type = media.media_type | default: 'image'
+  assign preview = media.preview_image | default: media
+  assign is_active = active
+-%}
+
+{%- capture video_sources_json -%}
+[{%- if media_type == 'video' -%}{%- for source in media.sources -%}{"url":{{ source.url | json }},"type":{{ source.mime_type | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endif -%}]
+{%- endcapture -%}
+
+{%- liquid
+  assign external_url = ''
+  if media_type == 'external_video'
+    assign external_url = media | external_video_url: autoplay: true, loop: true, muted: true, playlist: media.external_id
+  endif
+-%}
+
+<button
+  type="button"
+  data-dc-gallery-thumb
+  data-index="{{ index }}"
+  data-media-type="{{ media_type }}"
+  data-media-src="{{ preview | image_url: width: 1400 }}"
+  data-media-srcset="{{ preview | image_url: width: 700 }} 700w, {{ preview | image_url: width: 1000 }} 1000w, {{ preview | image_url: width: 1400 }} 1400w"
+  data-media-src-hires="{{ preview | image_url: width: 2400 }}"
+  data-media-srcset-hires="{{ preview | image_url: width: 1200 }} 1200w, {{ preview | image_url: width: 1800 }} 1800w, {{ preview | image_url: width: 2400 }} 2400w"
+  data-media-alt="{{ media_alt }}"
+  data-media-sources="{{ video_sources_json | escape }}"
+  {% if external_url != blank %}data-media-external="{{ external_url | escape }}"{% endif %}
+  class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent cursor-pointer transition-[border-color] duration-normal ease-normal border {% if is_active %}border-ink{% else %}border-transparent{% endif %}"
+  {% if is_active %}aria-current="true"{% endif %}
+  aria-label="{% if media_type == 'video' or media_type == 'external_video' %}View video {{ index | plus: 1 }}{% else %}View image {{ index | plus: 1 }}{% endif %}"
+>
+  {{ preview | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
+  {%- if media_type == 'video' or media_type == 'external_video' -%}
+    <span class="absolute inset-0 flex items-center justify-center pointer-events-none" style="background-color: rgba(48, 39, 29, 0.28)" aria-hidden="true">
+      <span class="w-5 h-5 rounded-full flex items-center justify-center" style="background-color: rgba(255, 250, 240, 0.92); color: #30271d">
+        <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M1.5.8v6.4L7 4z"/></svg>
+      </span>
+    </span>
+  {%- endif -%}
+</button>

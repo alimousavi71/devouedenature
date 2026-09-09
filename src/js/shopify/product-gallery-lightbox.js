@@ -17,6 +17,16 @@ function getLightboxLayers(root) {
   return { track, layers, active, next };
 }
 
+function parseSources(raw) {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 function applyItemToLayer(layer, item) {
   if (!layer || !item) return;
   layer.src = item.src;
@@ -26,7 +36,7 @@ function applyItemToLayer(layer, item) {
 }
 
 /**
- * Full-screen product image viewer — portaled to body.
+ * Full-screen product media viewer — images + Shopify / external video.
  */
 export class ProductGalleryLightbox {
   constructor(galleryRoot, { onIndexChange } = {}) {
@@ -38,9 +48,15 @@ export class ProductGalleryLightbox {
 
     this.scrim = this.lightbox.querySelector("[data-dc-gallery-lightbox-scrim]");
     this.track = this.lightbox.querySelector("[data-dc-gallery-lightbox-track]");
-    this.counter = this.lightbox.querySelector("[data-dc-gallery-lightbox-counter]");
+    this.counter = this.lightbox.querySelector(
+      "[data-dc-gallery-lightbox-counter]",
+    );
     this.closeBtn = this.lightbox.querySelector(
       "[data-dc-gallery-lightbox-close-btn]",
+    );
+    this.video = this.lightbox.querySelector("[data-dc-gallery-lightbox-video]");
+    this.external = this.lightbox.querySelector(
+      "[data-dc-gallery-lightbox-external]",
     );
     this.trigger = galleryRoot.querySelector("[data-dc-gallery-zoom]");
     this.onIndexChange = onIndexChange;
@@ -60,7 +76,8 @@ export class ProductGalleryLightbox {
   }
 
   mountToBody() {
-    if (!this.lightbox || this.lightbox.dataset.dcLightboxMounted === "1") return;
+    if (!this.lightbox || this.lightbox.dataset.dcLightboxMounted === "1")
+      return;
     document.body.appendChild(this.lightbox);
     this.lightbox.dataset.dcLightboxMounted = "1";
   }
@@ -72,10 +89,13 @@ export class ProductGalleryLightbox {
       if (Number.isNaN(index) || byIndex.has(index)) return;
       byIndex.set(index, {
         index,
+        type: thumb.dataset.mediaType || "image",
         src: thumb.dataset.mediaSrcHires || thumb.dataset.mediaSrc || "",
         srcset:
           thumb.dataset.mediaSrcsetHires || thumb.dataset.mediaSrcset || "",
         alt: thumb.dataset.mediaAlt || "",
+        sources: parseSources(thumb.dataset.mediaSources),
+        external: thumb.dataset.mediaExternal || "",
       });
     });
     return Array.from(byIndex.values()).sort((a, b) => a.index - b.index);
@@ -86,25 +106,7 @@ export class ProductGalleryLightbox {
       '[data-dc-gallery-thumb][aria-current="true"]',
     );
     if (current) return parseInt(current.dataset.index, 10);
-
-    const activeImg = this.gallery.querySelector(
-      "[data-dc-gallery-img][data-dc-gallery-active]",
-    );
-    if (!activeImg?.src) return 0;
-
-    const activePath = activeImg.currentSrc || activeImg.src;
-    const match = this.items.find((item) => {
-      if (!item.src) return false;
-      try {
-        return (
-          new URL(item.src, window.location.origin).pathname ===
-          new URL(activePath, window.location.origin).pathname
-        );
-      } catch {
-        return item.src === activePath;
-      }
-    });
-    return match?.index ?? 0;
+    return 0;
   }
 
   bind() {
@@ -163,19 +165,74 @@ export class ProductGalleryLightbox {
     }
   }
 
-  setImage(index, { animate = false, direction = 1 } = {}) {
-    const item = this.items[index];
+  stopMedia() {
+    if (this.video) {
+      try {
+        this.video.pause();
+      } catch {
+        /* noop */
+      }
+      this.video.removeAttribute("src");
+      this.video.innerHTML = "";
+      this.video.classList.add("hidden");
+      this.video.load();
+    }
+    if (this.external) {
+      this.external.innerHTML = "";
+      this.external.classList.add("hidden");
+    }
+    this.track
+      ?.querySelectorAll("[data-dc-gallery-lightbox-img]")
+      .forEach((img) => {
+        img.classList.remove("hidden");
+      });
+  }
+
+  showItem(item, { animate = false, direction = 1 } = {}) {
     if (!item) return;
 
-    this.index = index;
-    this.setCounter(index);
+    this.stopMedia();
+
+    if (item.type === "video") {
+      this.track
+        ?.querySelectorAll("[data-dc-gallery-lightbox-img]")
+        .forEach((img) => img.classList.add("hidden"));
+      if (this.video) {
+        this.video.classList.remove("hidden");
+        if (item.src) this.video.setAttribute("poster", item.src);
+        this.video.innerHTML = item.sources
+          .map(
+            (source) =>
+              `<source src="${source.url}" type="${source.type || "video/mp4"}">`,
+          )
+          .join("");
+        this.video.load();
+        this.video.muted = true;
+        const play = this.video.play();
+        if (play?.catch) play.catch(() => {});
+      }
+      this.onIndexChange?.(item.index);
+      return;
+    }
+
+    if (item.type === "external_video") {
+      this.track
+        ?.querySelectorAll("[data-dc-gallery-lightbox-img]")
+        .forEach((img) => img.classList.add("hidden"));
+      if (this.external && item.external) {
+        this.external.classList.remove("hidden");
+        this.external.innerHTML = `<iframe src="${item.external}" class="absolute inset-0 w-full h-full border-0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${item.alt || "Product video"}"></iframe>`;
+      }
+      this.onIndexChange?.(item.index);
+      return;
+    }
 
     const layers = getLightboxLayers(this.lightbox);
     if (!layers) return;
 
     if (!animate) {
       applyItemToLayer(layers.active, item);
-      this.onIndexChange?.(index);
+      this.onIndexChange?.(item.index);
       return;
     }
 
@@ -198,15 +255,23 @@ export class ProductGalleryLightbox {
         layers.next.removeAttribute("aria-hidden");
 
         this._sliding = false;
-        this.onIndexChange?.(index);
+        this.onIndexChange?.(item.index);
       },
     });
   }
 
+  setImage(index, { animate = false, direction = 1 } = {}) {
+    const item = this.items[index];
+    if (!item) return;
+
+    this.index = index;
+    this.setCounter(index);
+    this.showItem(item, { animate, direction });
+  }
+
   step(delta) {
     if (this.items.length < 2 || this._sliding) return;
-    const next =
-      (this.index + delta + this.items.length) % this.items.length;
+    const next = (this.index + delta + this.items.length) % this.items.length;
     this.setImage(next, { animate: true, direction: delta });
   }
 
@@ -219,13 +284,13 @@ export class ProductGalleryLightbox {
     this.index = index;
     const item = this.items[index];
     const layers = getLightboxLayers(this.lightbox);
-    if (layers && item) applyItemToLayer(layers.active, item);
     this.setCounter(index);
+    this.showItem(item);
 
     animateLightboxOpen({
       root: this.lightbox,
       scrim: this.scrim,
-      image: layers?.active,
+      image: item?.type === "image" ? layers?.active : this.video || this.external,
       ui: this.getUiElements(),
       onComplete: () => {
         document.addEventListener("keydown", this.onKeydown);
@@ -241,13 +306,15 @@ export class ProductGalleryLightbox {
     document.removeEventListener("keydown", this.onKeydown);
 
     const layers = getLightboxLayers(this.lightbox);
+    const item = this.items[this.index];
 
     animateLightboxClose({
       root: this.lightbox,
       scrim: this.scrim,
-      image: layers?.active,
+      image: item?.type === "image" ? layers?.active : this.video || this.external,
       ui: this.getUiElements(),
       onComplete: () => {
+        this.stopMedia();
         this._closing = false;
         if (this.lastFocused?.focus) this.lastFocused.focus();
       },

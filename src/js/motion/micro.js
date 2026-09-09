@@ -132,7 +132,6 @@ function initProductCardHover(root) {
     const media = card.querySelector('.dc-product-card__media')
     const meta = card.querySelector('.dc-product-card__meta')
     const note = card.querySelector('.dc-product-card__note')
-    const save = card.querySelector('.dc-product-card__save')
     if (!media) return
 
     card.addEventListener('mouseenter', () => {
@@ -140,13 +139,11 @@ function initProductCardHover(root) {
       tl.to(media, { y: LIFT.cardMedia, duration: DURATION.slow }, 0)
       if (meta) tl.to(meta, { y: LIFT.cardMeta, duration: DURATION.slow }, STAGGER.micro)
       if (note) tl.to(note, { opacity: 1, y: LIFT.cardSub, duration: DURATION.normal, ease: EASE.reveal }, STAGGER.tight)
-      if (save) tl.to(save, { opacity: 1, y: LIFT.cardSub, duration: DURATION.normal }, STAGGER.tight + STAGGER.micro)
     })
     card.addEventListener('mouseleave', () => {
       gsap.to(media, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
       if (meta) gsap.to(meta, { y: 0, duration: DURATION.slow, ease: EASE.reveal, overwrite: 'auto' })
       if (note) gsap.to(note, { y: 0, duration: DURATION.normal, ease: EASE.reveal, overwrite: 'auto' })
-      if (save) gsap.to(save, { y: 0, duration: DURATION.normal, ease: EASE.reveal, overwrite: 'auto' })
     })
   })
 }

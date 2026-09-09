@@ -153,7 +153,7 @@
                 <ul class="mt-[50px] grid grid-cols-2 md:grid-cols-4 gap-10 list-none m-0 p-0" role="list" data-reveal-stagger>
                   {%- for item in search_products -%}
                     <li>
-                      {% render 'dc-product-card', card_product: item, show_save: false %}
+                      {% render 'dc-product-card', card_product: item %}
                     </li>
                   {%- endfor -%}
                 </ul>

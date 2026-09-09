@@ -46,6 +46,16 @@ function getGalleryLayers(root) {
   return { main, layers, active, next };
 }
 
+function parseMediaSources(raw) {
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 function imagePath(url) {
   if (!url) return "";
   try {
@@ -186,14 +196,7 @@ class DcProductForm {
       this.root.querySelector(`[data-dc-gallery-thumb][data-index="${index}"]`);
     if (!thumb) return;
 
-    const src =
-      thumb.dataset.mediaSrc ||
-      this.product.media?.[index]?.preview_image?.src ||
-      this.product.media?.[index]?.src;
-
-    if (src) {
-      this.crossfadeMainImage(src, thumb.dataset.mediaSrcset);
-    }
+    this.showGalleryMedia(thumb);
 
     this.root.querySelectorAll("[data-dc-gallery-thumb]").forEach((t) => {
       const active = parseInt(t.dataset.index, 10) === index;
@@ -204,6 +207,87 @@ class DcProductForm {
     });
   }
 
+  showGalleryMedia(thumb) {
+    const main = this.root.querySelector("[data-dc-gallery-main]");
+    if (!main || !thumb) return;
+
+    const type = thumb.dataset.mediaType || "image";
+    const imageStack = main.querySelector("[data-dc-gallery-image-stack]");
+    const video = main.querySelector("[data-dc-gallery-video]");
+    const external = main.querySelector("[data-dc-gallery-external]");
+    const zoom = main.querySelector("[data-dc-gallery-zoom]");
+
+    main.dataset.mediaType = type;
+    this.pauseGalleryVideo();
+
+    if (type === "video") {
+      imageStack?.classList.add("invisible", "opacity-0", "pointer-events-none");
+      external?.classList.add("hidden");
+      external && (external.innerHTML = "");
+      zoom?.classList.add("hidden");
+
+      if (video) {
+        const sources = parseMediaSources(thumb.dataset.mediaSources);
+        const poster = thumb.dataset.mediaSrc || "";
+        video.classList.remove("hidden");
+        if (poster) video.setAttribute("poster", poster);
+        video.innerHTML = sources
+          .map(
+            (source) =>
+              `<source src="${source.url}" type="${source.type || "video/mp4"}">`,
+          )
+          .join("");
+        video.load();
+        video.muted = true;
+        video.playsInline = true;
+        video.loop = true;
+        const play = video.play();
+        if (play?.catch) play.catch(() => {});
+      }
+      return;
+    }
+
+    if (type === "external_video") {
+      imageStack?.classList.add("invisible", "opacity-0", "pointer-events-none");
+      video?.classList.add("hidden");
+      zoom?.classList.add("hidden");
+
+      if (external) {
+        const url = thumb.dataset.mediaExternal || "";
+        external.classList.remove("hidden");
+        if (url) {
+          external.innerHTML = `<iframe src="${url}" class="absolute inset-0 w-full h-full border-0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="${thumb.dataset.mediaAlt || "Product video"}"></iframe>`;
+        }
+      }
+      return;
+    }
+
+    // image
+    video?.classList.add("hidden");
+    if (external) {
+      external.classList.add("hidden");
+      external.innerHTML = "";
+    }
+    imageStack?.classList.remove("invisible", "opacity-0", "pointer-events-none");
+    zoom?.classList.remove("hidden");
+
+    const src =
+      thumb.dataset.mediaSrc ||
+      this.product.media?.[parseInt(thumb.dataset.index, 10)]?.preview_image
+        ?.src;
+    if (src) this.crossfadeMainImage(src, thumb.dataset.mediaSrcset);
+  }
+
+  pauseGalleryVideo() {
+    const video = this.root.querySelector("[data-dc-gallery-video]");
+    if (!video) return;
+    try {
+      video.pause();
+    } catch {
+      /* noop */
+    }
+  }
+
   bindGalleryLightbox() {
     const gallery = this.root.querySelector("[data-dc-gallery-wrap]");
     if (!gallery || gallery.dataset.dcLightboxBound === "1") return;
@@ -212,6 +296,14 @@ class DcProductForm {
     this.galleryLightbox = initProductGalleryLightbox(gallery, {
       onIndexChange: (index) => this.goToGalleryIndex(index),
     });
+
+    // Autoplay featured Shopify video on first paint
+    const activeThumb = this.root.querySelector(
+      '[data-dc-gallery-thumb][aria-current="true"]',
+    );
+    if (activeThumb?.dataset.mediaType === "video") {
+      this.showGalleryMedia(activeThumb);
+    }
   }
 
   crossfadeMainImage(src, srcset) {
