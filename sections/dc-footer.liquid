@@ -220,6 +220,22 @@
               if col_heading == blank and footer_menu.links.size > 0
                 assign col_heading = footer_menu.title
               endif
+
+              assign link_1_label = block.settings.link_1_label
+              assign link_1_url = block.settings.link_1_url
+              assign link_2_label = block.settings.link_2_label
+              assign link_2_url = block.settings.link_2_url
+              assign link_3_label = block.settings.link_3_label
+              assign link_3_url = block.settings.link_3_url
+              assign link_4_label = block.settings.link_4_label
+              assign link_4_url = block.settings.link_4_url
+              assign link_5_label = block.settings.link_5_label
+              assign link_5_url = block.settings.link_5_url
+
+              assign has_custom_links = false
+              if link_1_label != blank or link_2_label != blank or link_3_label != blank or link_4_label != blank or link_5_label != blank
+                assign has_custom_links = true
+              endif
             -%}
             <div class="min-w-0" {{ block.shopify_attributes }}>
               {%- if col_heading != blank -%}
@@ -230,28 +246,57 @@
 
               <ul class="mt-4 flex flex-col gap-2.5 list-none p-0 m-0">
                 {%- if footer_menu.links.size > 0 -%}
-                  {%- for link in footer_menu.links -%}
+                  {%- for link in footer_menu.links limit: 5 -%}
                     <li>
                       <a href="{{ link.url }}" class="dc-footer-link">{{ link.title }}</a>
                     </li>
                   {%- endfor -%}
-                {%- elsif block.settings.fallback_links != blank -%}
-                  {%- assign fallback_lines = block.settings.fallback_links | newline_to_br | split: '<br />' -%}
-                  {%- for line in fallback_lines -%}
-                    {%- assign line = line | strip -%}
-                    {%- if line != blank -%}
-                      {%- assign parts = line | split: '|' -%}
-                      <li>
-                        <a
-                          href="{{ parts[1] | strip | default: '#' }}"
-                          class="dc-footer-link"
-                          {% if parts[1] contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
-                        >
-                          {{ parts[0] | strip }}
-                        </a>
-                      </li>
-                    {%- endif -%}
-                  {%- endfor -%}
+                {%- elsif has_custom_links -%}
+                  {%- if link_1_label != blank -%}
+                    <li>
+                      <a
+                        href="{{ link_1_url | default: '#' }}"
+                        class="dc-footer-link"
+                        {% if link_1_url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                      >{{ link_1_label }}</a>
+                    </li>
+                  {%- endif -%}
+                  {%- if link_2_label != blank -%}
+                    <li>
+                      <a
+                        href="{{ link_2_url | default: '#' }}"
+                        class="dc-footer-link"
+                        {% if link_2_url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                      >{{ link_2_label }}</a>
+                    </li>
+                  {%- endif -%}
+                  {%- if link_3_label != blank -%}
+                    <li>
+                      <a
+                        href="{{ link_3_url | default: '#' }}"
+                        class="dc-footer-link"
+                        {% if link_3_url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                      >{{ link_3_label }}</a>
+                    </li>
+                  {%- endif -%}
+                  {%- if link_4_label != blank -%}
+                    <li>
+                      <a
+                        href="{{ link_4_url | default: '#' }}"
+                        class="dc-footer-link"
+                        {% if link_4_url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                      >{{ link_4_label }}</a>
+                    </li>
+                  {%- endif -%}
+                  {%- if link_5_label != blank -%}
+                    <li>
+                      <a
+                        href="{{ link_5_url | default: '#' }}"
+                        class="dc-footer-link"
+                        {% if link_5_url contains 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                      >{{ link_5_label }}</a>
+                    </li>
+                  {%- endif -%}
                 {%- elsif block.settings.use_social_fallback -%}
                   {%- if instagram_url != blank -%}
                     <li><a href="{{ instagram_url }}" class="dc-footer-link" target="_blank" rel="noopener noreferrer">Instagram</a></li>
@@ -558,18 +603,40 @@
       "type": "link_list",
       "name": "Link column",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading" },
-        { "type": "link_list", "id": "menu", "label": "Menu" },
         {
-          "type": "textarea",
-          "id": "fallback_links",
-          "label": "Fallback links",
-          "info": "One per line: Label|/path"
+          "type": "text",
+          "id": "heading",
+          "label": "Title",
+          "default": "Client care"
+        },
+        {
+          "type": "header",
+          "content": "Links (max 5)"
+        },
+        { "type": "text", "id": "link_1_label", "label": "Link 1 label", "default": "Search" },
+        { "type": "text", "id": "link_1_url", "label": "Link 1 URL", "default": "/search" },
+        { "type": "text", "id": "link_2_label", "label": "Link 2 label", "default": "About Us" },
+        { "type": "text", "id": "link_2_url", "label": "Link 2 URL", "default": "/pages/about-us" },
+        { "type": "text", "id": "link_3_label", "label": "Link 3 label", "default": "Team" },
+        { "type": "text", "id": "link_3_url", "label": "Link 3 URL", "default": "/pages/about-us#team" },
+        { "type": "text", "id": "link_4_label", "label": "Link 4 label", "default": "FAQs" },
+        { "type": "text", "id": "link_4_url", "label": "Link 4 URL", "default": "/pages/faq" },
+        { "type": "text", "id": "link_5_label", "label": "Link 5 label" },
+        { "type": "text", "id": "link_5_url", "label": "Link 5 URL" },
+        {
+          "type": "header",
+          "content": "Optional"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Shopify menu (overrides links above)",
+          "info": "If a menu is selected, its first 5 links are used instead of the fields above."
         },
         {
           "type": "checkbox",
           "id": "use_social_fallback",
-          "label": "Use theme social links as fallback",
+          "label": "Use theme social links when empty",
           "default": false
         },
         {
