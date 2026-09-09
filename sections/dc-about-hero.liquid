@@ -10,18 +10,18 @@
 
 {%- unless section.settings.hide_section -%}
   <section
-    class="relative h-[480px] md:h-[560px] xl:h-[640px] flex items-end overflow-hidden bg-[linear-gradient(165deg,#30271D_0%,#5B4933_52%,#DBB281_100%)]"
+    class="relative h-[480px] md:h-[560px] xl:h-[640px] flex items-end overflow-hidden {% if section.settings.image == blank %}bg-[linear-gradient(165deg,#30271D_0%,#5B4933_52%,#DBB281_100%)]{% else %}bg-ink{% endif %}"
     data-dc-hero
     data-dc-about-hero
   >
     {%- if section.settings.image != blank -%}
-      <div class="absolute inset-0 h-full w-full overflow-hidden" data-dc-hero-media data-parallax="30">
+      <div class="dc-about-hero__media absolute inset-0 h-full w-full overflow-hidden" data-dc-hero-media>
         {{
           section.settings.image
           | image_url: width: 2400
           | image_tag:
             loading: 'eager',
-            class: 'absolute inset-0 w-full h-full object-cover',
+            class: 'absolute inset-0 w-full h-full object-cover object-center',
             alt: heading,
             widths: '900, 1400, 1800, 2400',
             sizes: '100vw'
@@ -30,7 +30,7 @@
       <div class="absolute inset-0 bg-[linear-gradient(180deg,rgba(48,39,29,0.25)_0%,rgba(48,39,29,0.55)_100%)] pointer-events-none" aria-hidden="true"></div>
     {%- elsif section.settings.show_placeholder -%}
       <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-        <div class="w-[40%] max-w-[520px]" data-dc-hero-media data-parallax="20">
+        <div class="w-[40%] max-w-[520px]" data-dc-hero-media>
           <div class="relative aspect-[16/10] bg-bg/5 flex items-center justify-center">
             <span class="font-mono text-[10px] tracking-[0.14em] uppercase text-gold text-center px-4">
               {{ section.settings.placeholder_label | default: 'hero — the collection on gold' }}

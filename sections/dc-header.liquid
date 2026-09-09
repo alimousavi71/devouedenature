@@ -73,7 +73,7 @@
         assign account_label = 'general.account' | t | default: 'Account'
         assign saved_label = 'general.saved' | t | default: 'Saved'
       -%}
-      {% render 'dc-nav-link', url: routes.search_url, label: search_label, class: 'hidden md:inline-flex' %}
+      {% render 'dc-nav-link', url: routes.search_url | append: '?type=product', label: search_label, class: 'hidden md:inline-flex' %}
       {%- if section.settings.show_account -%}
         {% render 'dc-nav-link', url: account_url, label: account_label, class: 'hidden md:inline-flex' %}
       {%- endif -%}

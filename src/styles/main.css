@@ -820,6 +820,16 @@
     height: 480px;
   }
 
+  [data-dc-about-hero] .dc-about-hero__media,
+  [data-dc-about-hero] .dc-about-hero__media img {
+    transform: none !important;
+  }
+
+  [data-dc-about-hero] .dc-about-hero__media img {
+    object-fit: cover;
+    object-position: center;
+  }
+
   @media (min-width: 768px) {
     [data-dc-about-hero] {
       height: 560px;
@@ -980,6 +990,35 @@
 
   .dc-accordion--product .dc-accordion__inner a:hover {
     color: theme('colors.ink');
+  }
+
+  .dc-accordion--product .dc-accordion__media {
+    margin: 0 0 4px;
+  }
+
+  .dc-accordion--product .dc-accordion__media-img,
+  .dc-accordion--product .dc-accordion__media img,
+  .dc-accordion--product .dc-accordion__inner img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .dc-accordion--product .dc-accordion__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dc-accordion--product .dc-accordion__step {
+    font-family: theme('fontFamily.body');
+    font-size: 14px;
+    line-height: 1.7;
+    color: theme('colors.secondary');
+  }
+
+  .dc-accordion--product .dc-accordion__step p {
+    margin: 0;
   }
 
   /* Contact FAQ accordion — redesign/Contact.dc.html */

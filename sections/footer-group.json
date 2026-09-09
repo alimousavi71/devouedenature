@@ -21,7 +21,7 @@
             "heading": "Client care",
             "menu": "",
             "link_1_label": "Search",
-            "link_1_url": "/search",
+            "link_1_url": "/search?type=product",
             "link_2_label": "About Us",
             "link_2_url": "/pages/about-us",
             "link_3_label": "Team",

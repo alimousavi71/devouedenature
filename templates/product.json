@@ -44,7 +44,7 @@
           "settings": {
             "heading": "Shipping & returns",
             "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>",
-            "use_metafield": "",
+            "use_metafield": "above_footer_slogan_1",
             "characteristics": false
           }
         },
@@ -53,7 +53,7 @@
           "settings": {
             "heading": "How to apply",
             "description": "",
-            "use_metafield": "",
+            "use_metafield": "how_to_apply_image",
             "characteristics": false
           }
         }
