@@ -16,8 +16,8 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "Key ingredients",
-            "description": "",
-            "use_metafield": "key_ingredients",
+            "use_metafield": "",
+            "description": "{{ product.metafields.custom.key_ingredients | metafield_tag }}",
             "characteristics": false
           }
         },
@@ -25,8 +25,8 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "Composition",
-            "description": "",
-            "use_metafield": "full_ingredients",
+            "use_metafield": "",
+            "description": "{{ product.metafields.custom.full_ingredients | metafield_tag }}",
             "characteristics": false
           }
         },
@@ -34,8 +34,8 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "Signature details",
-            "description": "",
-            "use_metafield": "signature_details",
+            "use_metafield": "",
+            "description": "{{ product.metafields.custom.signature_details | metafield_tag }}",
             "characteristics": false
           }
         },
@@ -43,8 +43,8 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "Shipping & returns",
-            "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>",
             "use_metafield": "above_footer_slogan_1",
+            "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>",
             "characteristics": false
           }
         },
@@ -52,8 +52,8 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "How to apply",
-            "description": "",
-            "use_metafield": "how_to_apply_image",
+            "use_metafield": "",
+            "description": "<p>{{ product.metafields.custom.how_to_apply_text | metafield_tag }}</p>",
             "characteristics": false
           }
         }
@@ -196,6 +196,24 @@
         "collection": "",
         "products_to_show": 3
       }
+    },
+    "178896997000966695": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_yxi7wM": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_yxi7wM"
+      ],
+      "settings": {}
     }
   },
   "order": [
@@ -206,6 +224,7 @@
     "perfumer",
     "formats",
     "ritual",
-    "recommendations"
+    "recommendations",
+    "178896997000966695"
   ]
 }

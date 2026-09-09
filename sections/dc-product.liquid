@@ -153,86 +153,46 @@
           {%- for block in accordion_blocks -%}
             {%- liquid
               assign body = ''
+              assign media_image = blank
               assign mf_key = block.settings.use_metafield | strip
               assign mf = blank
-              assign has_how_to_steps = false
 
               if mf_key != blank
                 assign mf = product.metafields.custom[mf_key]
               endif
 
-              if product.metafields.custom.step_1 != blank or product.metafields.custom.step_2 != blank or product.metafields.custom.step_3 != blank or product.metafields.custom.step_4 != blank or product.metafields.custom.step_5 != blank
-                assign has_how_to_steps = true
+              if mf == blank or mf.value == blank
+                if mf_key == 'how_to_apply' or block.settings.heading contains 'How to apply' or block.settings.heading contains 'how to apply'
+                  if product.metafields.custom.how_to_apply_image.value != blank
+                    assign mf = product.metafields.custom.how_to_apply_image
+                  elsif product.metafields.custom.how_to_apply.value != blank
+                    assign mf = product.metafields.custom.how_to_apply
+                  elsif product.metafields.custom.howto_apply.value != blank
+                    assign mf = product.metafields.custom.howto_apply
+                  endif
+                endif
+              endif
+
+              if mf != blank and mf.value != blank
+                assign mf_type = mf.type | default: ''
+                assign body = mf | metafield_tag
+                if mf_type contains 'file_reference' or mf_type contains 'image'
+                  assign media_image = true
+                endif
+              elsif block.settings.description != blank
+                assign body = block.settings.description
               endif
             -%}
-
-            {%- if mf_key == 'how_to_apply_image' -%}
-              {%- capture body -%}
-                {%- if mf != blank and mf.value != blank -%}
-                  <div class="dc-accordion__media">
-                    {{
-                      mf.value
-                      | image_url: width: 1200
-                      | image_tag:
-                        loading: 'lazy',
-                        class: 'dc-accordion__media-img w-full h-auto',
-                        alt: block.settings.heading
-                    }}
-                  </div>
-                {%- endif -%}
-                {%- if has_how_to_steps -%}
-                  <ol class="dc-accordion__steps list-none m-0{% if mf != blank and mf.value != blank %} mt-4{% endif %} p-0">
-                    {%- if product.metafields.custom.step_1 != blank -%}
-                      <li class="dc-accordion__step">{{ product.metafields.custom.step_1 | metafield_tag }}</li>
-                    {%- endif -%}
-                    {%- if product.metafields.custom.step_2 != blank -%}
-                      <li class="dc-accordion__step">{{ product.metafields.custom.step_2 | metafield_tag }}</li>
-                    {%- endif -%}
-                    {%- if product.metafields.custom.step_3 != blank -%}
-                      <li class="dc-accordion__step">{{ product.metafields.custom.step_3 | metafield_tag }}</li>
-                    {%- endif -%}
-                    {%- if product.metafields.custom.step_4 != blank -%}
-                      <li class="dc-accordion__step">{{ product.metafields.custom.step_4 | metafield_tag }}</li>
-                    {%- endif -%}
-                    {%- if product.metafields.custom.step_5 != blank -%}
-                      <li class="dc-accordion__step">{{ product.metafields.custom.step_5 | metafield_tag }}</li>
-                    {%- endif -%}
-                  </ol>
-                {%- endif -%}
-              {%- endcapture -%}
-              {%- assign body = body | strip -%}
-              {%- if body == blank and block.settings.description != blank -%}
-                {%- capture body -%}{{ block.settings.description }}{%- endcapture -%}
-              {%- endif -%}
-            {%- elsif mf != blank and mf.value != blank -%}
-              {%- assign mf_type = mf.type | default: '' -%}
-              {%- if mf_type == 'file_reference' or mf_type contains 'file_reference' -%}
-                {%- capture body -%}
-                  <div class="dc-accordion__media">
-                    {{
-                      mf.value
-                      | image_url: width: 1200
-                      | image_tag:
-                        loading: 'lazy',
-                        class: 'dc-accordion__media-img w-full h-auto',
-                        alt: block.settings.heading
-                    }}
-                  </div>
-                {%- endcapture -%}
-              {%- else -%}
-                {%- capture body -%}
-                  {{ mf | metafield_tag }}
-                {%- endcapture -%}
-              {%- endif -%}
-            {%- elsif block.settings.description != blank -%}
-              {%- capture body -%}
-                {{ block.settings.description }}
-              {%- endcapture -%}
-            {%- endif -%}
-
             {%- if body != blank -%}
               <div {{ block.shopify_attributes }}>
-                {% render 'dc-product-accordion', heading: block.settings.heading, body: body %}
+                {%- capture accordion_body -%}
+                  {%- if media_image -%}
+                    <div class="dc-accordion__media">{{ body }}</div>
+                  {%- else -%}
+                    {{ body }}
+                  {%- endif -%}
+                {%- endcapture -%}
+                {% render 'dc-product-accordion', heading: block.settings.heading, body: accordion_body %}
               </div>
             {%- endif -%}
           {%- endfor -%}
@@ -327,18 +287,19 @@
           "default": "",
           "options": [
             { "value": "", "label": "None — use description below" },
-            { "value": "key_ingredients", "label": "Key Ingredients" },
-            { "value": "full_ingredients", "label": "Full Ingredients (Composition)" },
-            { "value": "signature_details", "label": "Signature Details" },
-            { "value": "how_to_apply_image", "label": "How to apply (image + step 1–5)" },
-            { "value": "above_footer_slogan_1", "label": "Above footer slogan 1 (Shipping & returns)" }
+            { "value": "key_ingredients", "label": "custom.key_ingredients" },
+            { "value": "full_ingredients", "label": "custom.full_ingredients" },
+            { "value": "signature_details", "label": "custom.signature_details" },
+            { "value": "how_to_apply", "label": "custom.how_to_apply (text or image)" },
+            { "value": "how_to_apply_image", "label": "custom.how_to_apply_image (image)" },
+            { "value": "shipping_returns", "label": "custom.shipping_returns" }
           ]
         },
         {
           "type": "richtext",
           "id": "description",
           "label": "Fallback description",
-          "info": "Used only when the selected metafield is empty."
+          "info": "Shown only when the metafield is blank. Leave empty for product-only rows."
         },
         {
           "type": "checkbox",
@@ -368,15 +329,11 @@
         },
         {
           "type": "dropdown_information",
-          "settings": {
-            "heading": "Shipping & returns",
-            "use_metafield": "above_footer_slogan_1",
-            "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>"
-          }
+          "settings": { "heading": "Shipping & returns", "use_metafield": "shipping_returns" }
         },
         {
           "type": "dropdown_information",
-          "settings": { "heading": "How to apply", "use_metafield": "how_to_apply_image" }
+          "settings": { "heading": "How to apply", "use_metafield": "how_to_apply" }
         }
       ]
     }
