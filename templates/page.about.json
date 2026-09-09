@@ -16,7 +16,7 @@
         "eyebrow": "About",
         "heading": "Dévoué de Nature",
         "tagline": "Redefining skincare — with purpose, with you.",
-        "image": "shopify://shop_images/Group_1410109167.jpg",
+        "image": "shopify://shop_images/Screenshot_2026-09-02_at_7.37.00_PM.png",
         "show_placeholder": true,
         "placeholder_label": "hero — the collection on gold"
       }
@@ -27,11 +27,11 @@
         "hide_section": false,
         "story_heading": "Where Science, Nature, and Devotion Become One",
         "story_body": "<p>Dévoué de Nature is a Canadian luxury skincare brand founded by a collective of physicians who believe skincare should be a considered, thoughtful, and deliberate ritual.</p><p>We create formulations that combine advanced dermatological science with high performance botanical ingredients, crafted with precision in Canada and designed to support healthy, resilient skin at every stage of life.</p><p>Every product is created to feel luxurious, perform meaningfully, and bring confidence to your daily ritual.</p>",
-        "story_image": "shopify://shop_images/Frame_175_8391d947-6e20-43a5-babd-54e405ba4061.jpg",
+        "story_image": "shopify://shop_images/Instagram_post_-_103s.jpg",
         "story_placeholder_label": "story — brand editorial",
         "philosophy_heading": "Our Philosophy",
         "philosophy_body": "<p>We believe luxury skincare must be effective, transparent, and deeply thoughtful.</p><p>Our approach blends advanced dermatological science with intentional, considered formulation — nothing included for effect alone. Every ingredient is chosen for the purpose it serves: barrier support, tolerance, and long-term skin health.</p><p>Nothing we create is accidental. From formula to packaging, every detail is crafted with intention — because your skin deserves both excellence and care.</p>",
-        "philosophy_image": "shopify://shop_images/Group_1410109140.jpg",
+        "philosophy_image": "shopify://shop_images/Instagram_post_-_93_e692c7a5-b040-40b9-8fb4-258f435ededc.jpg",
         "philosophy_placeholder_label": "philosophy — formulation detail"
       }
     },
@@ -44,7 +44,7 @@
             "number": "01",
             "title": "High Performance Actives",
             "text": "Concentrations chosen for the result, not the label.",
-            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_gold_nanoparticles_form_6b6d1c49-06ee-40f3-adaf-4365a3dd55e0_1.jpg",
+            "image": "shopify://shop_images/8N4A9712_2.jpg",
             "overlay_opacity": 70
           }
         },
@@ -54,7 +54,7 @@
             "number": "02",
             "title": "Gentle on Skin",
             "text": "Tested for tolerance before it is tested for effect.",
-            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_gold_nanoparticles_form_6b6d1c49-06ee-40f3-adaf-4365a3dd55e0_2.jpg",
+            "image": "shopify://shop_images/Screenshot_2026-09-03_at_7.52.27_PM.png",
             "overlay_opacity": 70
           }
         },
@@ -64,7 +64,7 @@
             "number": "03",
             "title": "Balanced Compositions",
             "text": "Nothing carried in the formula that does not earn its place.",
-            "image": "shopify://shop_images/u2714536122_Cinematic_macro_close-up_of_skin_microstructure_abs_7e325b4f-cd29-4b10-b8dd-66f66dc14138_1.jpg",
+            "image": "shopify://shop_images/Ali_Hosseini_ultra_realistic_macro_lab_photography_of_camelli_e7bc45ca-1901-49d2-976d-b700546fc53a_3.png",
             "overlay_opacity": 70
           }
         }
@@ -87,6 +87,7 @@
         "pillar-1": {
           "type": "pillar",
           "settings": {
+            "icon": "shopify://shop_images/clinically-tested-tight.svg",
             "icon_svg": "",
             "mark": "diamond",
             "title": "Clinically tested",
@@ -96,6 +97,7 @@
         "pillar-2": {
           "type": "pillar",
           "settings": {
+            "icon": "shopify://shop_images/cruelty-free-tight.svg",
             "icon_svg": "",
             "mark": "circle",
             "title": "Cruelty-free",
@@ -105,6 +107,7 @@
         "pillar-3": {
           "type": "pillar",
           "settings": {
+            "icon": "shopify://shop_images/thoughtfully-sourced-tight.svg",
             "icon_svg": "",
             "mark": "diamond",
             "title": "Thoughtfully sourced",
@@ -114,6 +117,7 @@
         "pillar-4": {
           "type": "pillar",
           "settings": {
+            "icon": "shopify://shop_images/sustainable-packaging-tight.svg",
             "icon_svg": "",
             "mark": "circle",
             "title": "Sustainable packaging",

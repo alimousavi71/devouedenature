@@ -108,6 +108,7 @@
         "hide_section": false,
         "eyebrow": "In her words",
         "heading": "A word from the perfumer",
+        "image": "shopify://shop_images/Screenshot_2026-09-02_at_7.37.00_PM.png",
         "quote": "I wanted the rose to arrive late. For the first ten minutes you smell only citrus and skin, and then it opens.",
         "attribution": "Hélène Marchand — Master perfumer"
       }
@@ -116,6 +117,7 @@
       "type": "dc-product-formats",
       "settings": {
         "hide_section": false,
+        "image": "shopify://shop_images/8N4A9897_2.jpg",
         "heading": "Find your format",
         "link_label": "Compare the range",
         "link_url": ""

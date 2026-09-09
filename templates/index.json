@@ -103,6 +103,7 @@
         "value-2": {
           "type": "value",
           "settings": {
+            "icon": "shopify://shop_images/physician-formulated-tight.svg",
             "icon_svg": "",
             "mark": "diamond",
             "title": "Physician formulated",
@@ -121,6 +122,7 @@
         "value-4": {
           "type": "value",
           "settings": {
+            "icon": "shopify://shop_images/cruelty-free-tight.svg",
             "icon_svg": "",
             "mark": "circle",
             "title": "Cruelty-free",
@@ -217,7 +219,7 @@
         "ig-2": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/IMG_9047.png",
+            "image": "shopify://shop_images/Screenshot_2026-09-03_at_8.17.57_PM.png",
             "label": ""
           }
         },
@@ -238,7 +240,7 @@
         "ig-5": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/IMG_9052.png",
+            "image": "shopify://shop_images/Screenshot_2026-09-03_at_8.17.42_PM.png",
             "label": ""
           }
         }

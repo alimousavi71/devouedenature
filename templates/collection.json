@@ -12,8 +12,10 @@
     "banner": {
       "type": "dc-collection-banner",
       "settings": {
+        "hide_section": false,
         "show_breadcrumb": true,
         "breadcrumb_parent": "Skincare",
+        "breadcrumb_parent_url": "",
         "eyebrow": "The collection"
       }
     },
@@ -60,17 +62,27 @@
         "filter-fresh"
       ],
       "settings": {
+        "hide_section": false,
         "products_per_page": 9,
-        "archive_label": "Show the archive"
+        "all_label": "All",
+        "clear_label": "Clear all",
+        "empty_heading": "No compositions match your filters.",
+        "all_products_label": "All compositions",
+        "archive_label": "Show the archive",
+        "archive_url": ""
       }
     },
     "editorial": {
       "type": "dc-collection-editorial",
       "settings": {
+        "hide_section": false,
+        "image": "shopify://shop_images/Ali_Hosseini_soft_liquid_abstract_background_translucent_water__4ba30941-29a3-4142-ac76-95a930ab9d48_2.jpg",
+        "image_placeholder": "editorial — formulation lab",
         "eyebrow": "Journal",
-        "heading": "Why we fill by hand",
-        "body": "Filling stops for eleven seconds between bottles so the trail settles below the collar. It costs us a third of our output and it is the reason the first spray is never sharp.",
-        "link_label": "Read the note"
+        "heading": "Why we choose 24K gold",
+        "body": "We choose 24K gold for its purity and timeless beauty. Inspired by generations of beauty rituals, we pair it with carefully selected actives in our L’Or Celeste collection—bringing a touch of gold to daily skincare and turning a familiar routine into a moment of devotion.",
+        "link_label": "Read the note",
+        "link_url": ""
       }
     }
   },
