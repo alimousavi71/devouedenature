@@ -9,17 +9,17 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="bg-elevated py-[64px] md:py-[90px] xl:py-[110px] px-5 md:px-10" data-reveal>
+  <section class="bg-elevated py-[48px] md:py-[90px] xl:py-[110px] px-[16px] md:px-10" data-reveal>
     <div class="max-w-page mx-auto">
       {%- if eyebrow != blank -%}
-        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+        <p class="font-body text-[9px] md:text-[10px] tracking-[0.24em] md:tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
       {%- endif -%}
       {%- if heading != blank -%}
-        <h2 class="font-display font-normal text-[38px] leading-none text-ink mt-5 mb-0">{{ heading }}</h2>
+        <h2 class="font-display font-normal text-[24px] md:text-[38px] leading-none text-ink mt-[12px] md:mt-5 mb-0">{{ heading }}</h2>
       {%- endif -%}
 
       {%- if section.blocks.size > 0 -%}
-        <div class="mt-[60px] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
+        <div class="mt-[28px] md:mt-[60px] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[28px] md:gap-10">
           {%- for block in section.blocks -%}
             {%- liquid
               assign city = block.settings.city
@@ -40,18 +40,18 @@
               {%- endif -%}
 
               {%- if city != blank -%}
-                <h3 class="font-display text-[22px] text-ink mt-[22px] mb-0">{{ city }}</h3>
+                <h3 class="font-display text-[20px] md:text-[22px] text-ink mt-[16px] md:mt-[22px] mb-0">{{ city }}</h3>
               {%- endif -%}
               {%- if address != blank -%}
-                <p class="font-body text-[12px] leading-[1.85] text-secondary mt-[10px] mb-0">{{ address }}</p>
+                <p class="font-body text-[12px] leading-[1.7] md:leading-[1.85] text-secondary mt-[8px] md:mt-[10px] mb-0">{{ address }}</p>
               {%- endif -%}
               {%- if hours != blank -%}
-                <p class="font-body text-[12px] leading-[1.85] text-muted mt-2 mb-0">{{ hours }}</p>
+                <p class="font-body text-[12px] leading-[1.7] md:leading-[1.85] text-muted mt-[6px] md:mt-2 mb-0">{{ hours }}</p>
               {%- endif -%}
               {%- if block.settings.link_url != blank and link_label != blank -%}
                 <a
                   href="{{ block.settings.link_url }}"
-                  class="inline-block mt-5 font-body text-[10px] tracking-[0.22em] uppercase text-ink border-b border-ink pb-1 hover:text-secondary transition-colors duration-fast ease-fast"
+                  class="inline-block mt-[14px] md:mt-5 font-body text-[10px] tracking-[0.22em] uppercase text-ink border-b border-ink pb-1 hover:text-secondary transition-colors duration-fast ease-fast"
                 >
                   {{ link_label }}
                 </a>

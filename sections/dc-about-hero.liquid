@@ -10,7 +10,7 @@
 
 {%- unless section.settings.hide_section -%}
   <section
-    class="relative h-[480px] md:h-[560px] xl:h-[640px] flex items-end overflow-hidden {% if section.settings.image == blank %}bg-[linear-gradient(165deg,#30271D_0%,#5B4933_52%,#DBB281_100%)]{% else %}bg-ink{% endif %}"
+    class="relative h-[420px] md:h-[560px] xl:h-[640px] flex items-end overflow-hidden {% if section.settings.image == blank %}bg-[linear-gradient(165deg,#30271D_0%,#5B4933_52%,#DBB281_100%)]{% else %}bg-ink{% endif %}"
     data-dc-hero
     data-dc-about-hero
   >
@@ -48,14 +48,14 @@
       {%- endif -%}
       {%- if heading != blank -%}
         <h1
-          class="font-display font-normal text-[42px] md:text-[62px] leading-[1.06] text-bg mt-[22px] mb-0 max-w-[20ch]"
+          class="font-display font-normal text-[28px] md:text-[42px] xl:text-[62px] leading-[1.06] text-bg mt-[14px] md:mt-[22px] mb-0 max-w-[20ch]"
           data-dc-hero-title
         >
           {{ heading }}
         </h1>
       {%- endif -%}
       {%- if tagline != blank -%}
-        <p class="mt-[22px] font-body text-[15px] leading-[1.8] text-bg/85 max-w-[46ch] m-0" data-dc-hero-copy>
+        <p class="mt-[14px] md:mt-[22px] font-body text-[14px] md:text-[15px] leading-[1.7] md:leading-[1.8] text-bg/85 max-w-[46ch] m-0" data-dc-hero-copy>
           {{ tagline }}
         </p>
       {%- endif -%}

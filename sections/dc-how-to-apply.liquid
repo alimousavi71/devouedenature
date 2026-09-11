@@ -16,19 +16,19 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="bg-elevated py-[64px] md:py-[90px] xl:py-7 px-[20px] md:px-[24px] xl:px-5">
+  <section class="bg-elevated py-[48px] md:py-[90px] xl:py-7 px-[16px] md:px-[24px] xl:px-5">
     <div class="max-w-page mx-auto">
       <header class="text-center max-w-[62ch] mx-auto" data-reveal-stagger>
         {%- if section.settings.heading != blank -%}
-          <h2 class="font-display font-normal text-[28px] md:text-[38px] leading-none tracking-[0.02em] uppercase text-ink m-0">{{ section.settings.heading }}</h2>
+          <h2 class="font-display font-normal text-[24px] md:text-[38px] leading-none tracking-[0.02em] uppercase text-ink m-0">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.description != blank -%}
-          <div class="mt-[18px] md:mt-[22px] font-body text-[14px] md:text-body leading-[1.7] text-secondary [&_p]:m-0">{{ section.settings.description }}</div>
+          <div class="mt-[14px] md:mt-[22px] font-body text-[14px] md:text-body leading-[1.65] md:leading-[1.7] text-secondary [&_p]:m-0">{{ section.settings.description }}</div>
         {%- endif -%}
       </header>
 
       {%- if ritual_card_count > 0 -%}
-        <ol class="mt-[48px] md:mt-[70px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-[40px] items-start list-none p-0 m-0" data-reveal-stagger>
+        <ol class="mt-[32px] md:mt-[70px] grid grid-cols-2 lg:grid-cols-5 gap-[20px] md:gap-[40px] items-start list-none p-0 m-0" data-reveal-stagger>
           {%- assign shown_steps = 0 -%}
           {%- for block in step_blocks -%}
             {%- liquid
@@ -57,8 +57,8 @@
             {%- if show_card -%}
               {%- assign shown_steps = shown_steps | plus: 1 -%}
               <li class="min-w-0 text-center relative" {{ block.shopify_attributes }}>
-                <p class="font-body text-[13px] tracking-[0.1em] text-secondary m-0">{{ shown_steps }}.</p>
-                <div class="dc-ritual-card__media mt-[22px] relative aspect-[800/1023] bg-ink overflow-hidden">
+                <p class="font-body text-[12px] md:text-[13px] tracking-[0.1em] text-secondary m-0">{{ shown_steps }}.</p>
+                <div class="dc-ritual-card__media mt-[14px] md:mt-[22px] relative aspect-[800/1023] bg-ink overflow-hidden">
                   {%- if step_image != blank -%}
                     {{
                       step_image
@@ -77,10 +77,10 @@
                   {%- endif -%}
                 </div>
                 {%- if step_title != blank -%}
-                  <p class="mt-[26px] font-body text-[12px] tracking-[0.14em] uppercase leading-[1.6] min-h-[3.2em] text-ink m-0">{{ step_title }}</p>
+                  <p class="mt-[14px] md:mt-[26px] font-body text-[10px] md:text-[12px] tracking-[0.12em] md:tracking-[0.14em] uppercase leading-[1.5] md:leading-[1.6] min-h-[3.2em] text-ink m-0">{{ step_title }}</p>
                 {%- endif -%}
                 {%- if step_url != blank and link_label != blank -%}
-                  <a href="{{ step_url }}" class="inline-block mt-[10px] font-body text-[10px] tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal">
+                  <a href="{{ step_url }}" class="inline-block mt-[8px] md:mt-[10px] font-body text-[9px] md:text-[10px] tracking-[0.18em] md:tracking-[0.2em] uppercase text-secondary border-b border-[#C4B69F] pb-[3px] hover:text-ink hover:border-ink transition-colors duration-normal ease-normal">
                     {{ link_label }}
                   </a>
                 {%- endif -%}

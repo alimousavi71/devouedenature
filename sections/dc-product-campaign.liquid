@@ -24,7 +24,7 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="relative h-[78vh] min-h-[560px] flex items-center justify-center overflow-hidden bg-[linear-gradient(155deg,#DBB281,#755F45)]" data-dc-campaign>
+  <section class="relative h-[48vh] min-h-[300px] md:h-[78vh] md:min-h-[560px] flex items-center justify-center overflow-hidden bg-[linear-gradient(155deg,#DBB281,#755F45)]" data-dc-campaign>
     {%- if image != blank -%}
       {{
         image
@@ -39,12 +39,12 @@
     {%- endif -%}
     <div class="absolute inset-0 pointer-events-none" style="background-color: rgba(48, 39, 29, 0.3)" aria-hidden="true"></div>
 
-    <div class="relative z-[1] text-center text-bg px-[20px] md:px-[24px]" data-dc-campaign-inner data-reveal-stagger>
+    <div class="relative z-[1] text-center text-bg px-[16px] md:px-[24px]" data-dc-campaign-inner data-reveal-stagger>
       {%- if eyebrow != blank -%}
         <p class="font-body text-[10px] tracking-[0.3em] uppercase opacity-80 m-0">{{ eyebrow }}</p>
       {%- endif -%}
       {%- if heading != blank -%}
-        <p class="font-display font-normal text-display mt-[22px] mb-0 tracking-[0.01em]">{{ heading }}</p>
+        <p class="font-display font-normal text-[26px] md:text-[54px] xl:text-display mt-[12px] md:mt-[22px] mb-0 tracking-[0.01em] leading-[1.1] max-w-[18ch] mx-auto">{{ heading }}</p>
       {%- endif -%}
     </div>
   </section>

@@ -16,17 +16,17 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px]">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start">
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[48px] md:pt-[90px] xl:pt-[130px]">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-[28px] md:gap-[70px] xl:gap-[100px] items-start">
       <div>
         <div data-reveal>
           {%- if section.settings.heading != blank -%}
-            <h2 class="font-display font-normal text-[32px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
+            <h2 class="font-display font-normal text-[26px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
               {{ section.settings.heading }}
             </h2>
           {%- endif -%}
           {%- if section.settings.body != blank -%}
-            <div class="mt-[30px] font-body text-[14px] leading-[1.95] text-secondary max-w-[48ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+            <div class="mt-[22px] md:mt-[30px] font-body text-[14px] leading-[1.85] md:leading-[1.95] text-secondary max-w-[48ch] [&_p]:m-0 [&_p+_p]:mt-[18px] md:[&_p+_p]:mt-[22px]">
               {{ section.settings.body }}
             </div>
           {%- endif -%}

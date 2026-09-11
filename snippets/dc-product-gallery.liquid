@@ -100,7 +100,7 @@
       </div>
 
       {%- if product.media.size > 0 -%}
-        <div class="flex md:hidden gap-3 mt-3 overflow-x-auto pb-1 -mx-[20px] px-[20px] md:mx-0 md:px-0">
+        <div class="flex md:hidden gap-2 mt-3 overflow-x-auto overscroll-x-contain pb-1 -mx-[16px] px-[16px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {%- for media in product.media -%}
             {% render 'dc-product-gallery-thumb', media: media, product: product, index: forloop.index0, active: forloop.first %}
           {%- endfor -%}

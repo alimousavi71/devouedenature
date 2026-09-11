@@ -342,10 +342,16 @@
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
-    padding: 28px 28px 18px;
+    padding: 20px 20px 14px;
     border-bottom: 1px solid #efe9de;
     flex-shrink: 0;
     background: #fffaf0;
+  }
+
+  @media (min-width: 768px) {
+    .dc-team-bio__header {
+      padding: 28px 28px 18px;
+    }
   }
 
   .dc-team-bio__scroll {
@@ -390,7 +396,13 @@
   }
 
   .dc-team-bio__body {
-    padding: 22px 28px 36px;
+    padding: 18px 20px 28px;
+  }
+
+  @media (min-width: 768px) {
+    .dc-team-bio__body {
+      padding: 22px 28px 36px;
+    }
   }
 
   .dc-brand-values__intro {
@@ -792,13 +804,33 @@
     z-index: 80;
   }
 
+  /* Reserves space under fixed header (JS syncs exact height) */
   .dc-header-spacer {
+    display: block;
     width: 100%;
+    flex-shrink: 0;
     pointer-events: none;
+    /* announcement + bar — before JS measures */
+    height: var(--dc-header-offset, 96px);
+    min-height: var(--dc-header-offset, 96px);
   }
 
-  .dc-header-spacer--overlay {
-    height: 0;
+  @media (min-width: 768px) {
+    .dc-header-spacer {
+      height: var(--dc-header-offset, 110px);
+      min-height: var(--dc-header-offset, 110px);
+    }
+  }
+
+  .dc-header-spacer--overlay,
+  .dc-header-spacer[data-dc-header-spacer-mode='overlay'] {
+    height: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* Belt-and-suspenders: clear fixed header on non-index templates */
+  body:not(.template-index) #MainContent {
+    scroll-padding-top: var(--dc-header-offset, 96px);
   }
 
   /* Homepage hero only — About and other heroes set their own height */
@@ -817,7 +849,7 @@
 
   [data-dc-about-hero] {
     min-height: 0;
-    height: 480px;
+    height: 420px;
   }
 
   [data-dc-about-hero] .dc-about-hero__media,
@@ -889,16 +921,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 0;
+    padding: 14px 0;
     border: 0;
     background: none;
     cursor: pointer;
     font-family: theme('fontFamily.body');
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: theme('colors.ink');
     text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .dc-accordion--product summary {
+      padding: 16px 0;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+    }
   }
 
   .dc-accordion--product summary::-webkit-details-marker {
@@ -948,12 +988,19 @@
   }
 
   .dc-accordion--product .dc-accordion__inner {
-    padding-bottom: 22px;
+    padding-bottom: 16px;
     max-width: 46ch;
     font-family: theme('fontFamily.body');
     font-size: 13px;
-    line-height: 1.9;
+    line-height: 1.75;
     color: theme('colors.secondary');
+  }
+
+  @media (min-width: 768px) {
+    .dc-accordion--product .dc-accordion__inner {
+      padding-bottom: 22px;
+      line-height: 1.9;
+    }
   }
 
   .dc-accordion--product .dc-accordion__inner > :first-child {
@@ -1023,18 +1070,34 @@
 
   /* Contact FAQ accordion — redesign/Contact.dc.html */
   .dc-accordion--contact .dc-accordion__summary {
-    padding-top: 24px;
-    padding-bottom: 24px;
-    font-size: 12px;
-    letter-spacing: 0.14em;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
     color: theme('colors.ink');
+  }
+
+  @media (min-width: 768px) {
+    .dc-accordion--contact .dc-accordion__summary {
+      padding-top: 24px;
+      padding-bottom: 24px;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+    }
   }
 
   .dc-accordion--contact .dc-accordion__body > div > div {
     max-width: 62ch;
-    padding-bottom: 24px;
+    padding-bottom: 16px;
     font-size: 13px;
-    line-height: 1.9;
+    line-height: 1.75;
+  }
+
+  @media (min-width: 768px) {
+    .dc-accordion--contact .dc-accordion__body > div > div {
+      padding-bottom: 24px;
+      line-height: 1.9;
+    }
   }
 
   .dc-contact-consent {

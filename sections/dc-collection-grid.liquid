@@ -23,21 +23,21 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-5 md:px-10 pb-[64px] md:pb-[90px] xl:pb-[130px]">
+  <section class="max-w-page mx-auto px-[16px] md:px-10 pb-[48px] md:pb-[90px] xl:pb-[130px]">
     {%- paginate collection.products by per_page -%}
 
-      <div class="sticky z-[60] -mx-5 md:-mx-10 px-5 md:px-10 bg-bg/95 backdrop-blur-[10px] border-b border-border mt-[70px]" style="top: var(--dc-header-offset, 78px);">
-        <div class="h-[62px] flex flex-wrap items-center justify-between gap-3 md:gap-6">
-          <div class="flex flex-wrap items-center gap-2" data-dc-filter-pills>
+      <div class="dc-collection-toolbar sticky z-[60] -mx-[16px] md:-mx-10 px-[16px] md:px-10 bg-bg/95 backdrop-blur-[10px] border-b border-border mt-[24px] md:mt-[70px]" style="top: var(--dc-header-offset, 78px);">
+        <div class="min-h-[48px] md:h-[62px] py-[8px] md:py-0 flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-[8px] md:gap-3">
+          <div class="dc-collection-toolbar__pills flex items-center gap-[6px] md:gap-2 overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-dc-filter-pills>
             {%- if has_list_filters -%}
               {%- unless has_active_filters -%}
-                <span class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg">
+                <span class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg shrink-0">
                   {{ section.settings.all_label | default: 'All' }}
                 </span>
               {%- else -%}
                 <a
                   href="{{ collection.url }}"
-                  class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal"
+                  class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal shrink-0"
                 >
                   {{ section.settings.all_label | default: 'All' }}
                 </a>
@@ -51,7 +51,7 @@
                       data-dc-filter-pill
                       data-param="{{ value.param_name }}"
                       data-value="{{ value.value }}"
-                      class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal {% if value.active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %} {% if value.count == 0 and value.active == false %}opacity-40 pointer-events-none{% endif %}"
+                      class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal shrink-0 {% if value.active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %} {% if value.count == 0 and value.active == false %}opacity-40 pointer-events-none{% endif %}"
                     >
                       {{ value.label }}
                     </a>
@@ -60,13 +60,13 @@
               {%- endfor -%}
             {%- elsif manual_pills.size > 0 -%}
               {%- unless has_active_filters -%}
-                <span class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg">
+                <span class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-ink bg-ink text-bg shrink-0">
                   {{ section.settings.all_label | default: 'All' }}
                 </span>
               {%- else -%}
                 <a
                   href="{{ collection.url }}"
-                  class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal"
+                  class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border border-border text-secondary hover:border-ink hover:text-ink transition-all duration-normal ease-normal shrink-0"
                 >
                   {{ section.settings.all_label | default: 'All' }}
                 </a>
@@ -88,7 +88,7 @@
                 {%- if pill_label != blank and pill_param != blank and pill_value != blank -%}
                   <a
                     href="{{ collection.url }}?{{ pill_param | url_encode }}={{ pill_value | url_encode }}"
-                    class="inline-flex items-center justify-center h-[34px] px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal {% if pill_active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %}"
+                    class="inline-flex items-center justify-center h-[32px] md:h-[34px] px-[14px] md:px-[18px] font-body text-[10px] tracking-[0.18em] uppercase rounded-pill border transition-all duration-normal ease-normal shrink-0 {% if pill_active %}border-ink bg-ink text-bg{% else %}border-border text-secondary hover:border-ink hover:text-ink{% endif %}"
                     {{ block.shopify_attributes }}
                   >
                     {{ pill_label }}
@@ -98,8 +98,8 @@
             {%- endif -%}
           </div>
 
-          <div class="flex items-center gap-[26px]">
-            <p class="font-body text-[10px] tracking-[0.18em] uppercase text-muted whitespace-nowrap" data-dc-result-count>
+          <div class="flex items-center justify-between md:justify-end gap-3 md:gap-[26px] shrink-0">
+            <p class="font-body text-[9px] md:text-[10px] tracking-[0.16em] md:tracking-[0.18em] uppercase text-muted whitespace-nowrap" data-dc-result-count>
               {%- if collection.products_count == 1 -%}
                 {{ collection.products_count }} composition
               {%- else -%}
@@ -109,7 +109,7 @@
             <select
               name="sort_by"
               data-dc-sort-select
-              class="h-[34px] border-0 bg-transparent font-body text-[10px] tracking-[0.18em] uppercase text-ink outline-none cursor-pointer"
+              class="h-[32px] md:h-[34px] max-w-[46vw] md:max-w-none border-0 bg-transparent font-body text-[10px] tracking-[0.18em] uppercase text-ink outline-none cursor-pointer"
               aria-label="{{ 'products.facets.sort_by_label' | t | default: 'Sort by' }}"
             >
               {%- for option in collection.sort_options -%}
@@ -130,10 +130,10 @@
         </div>
       {%- endif -%}
 
-      <div data-dc-collection-grid class="pt-[70px]">
+      <div data-dc-collection-grid class="pt-[22px] md:pt-[70px]">
         {%- if collection.products.size == 0 -%}
-          <div class="flex flex-col items-center justify-center gap-4 py-20 text-center bg-elevated" data-dc-empty-state>
-            <p class="font-display text-[26px] text-ink">{{ section.settings.empty_heading | default: 'No compositions match your filters.' }}</p>
+          <div class="flex flex-col items-center justify-center gap-4 py-12 md:py-20 text-center bg-elevated" data-dc-empty-state>
+            <p class="font-display text-[20px] md:text-[26px] text-ink px-2">{{ section.settings.empty_heading | default: 'No compositions match your filters.' }}</p>
             <div class="flex flex-wrap justify-center gap-3">
               {%- assign clear_filters_label = section.settings.clear_label | default: 'Clear filters' -%}
               {%- assign all_compositions_label = section.settings.all_products_label | default: 'All compositions' -%}
@@ -142,9 +142,9 @@
             </div>
           </div>
         {%- else -%}
-          <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-[70px]" data-reveal-stagger>
+          <ul class="grid grid-cols-2 lg:grid-cols-3 gap-x-[10px] gap-y-[22px] md:gap-x-[40px] md:gap-y-[50px] lg:gap-y-[70px]" data-reveal-stagger>
             {%- for product in collection.products -%}
-              <li>
+              <li class="min-w-0">
                 {% render 'dc-product-card', card_product: product %}
               </li>
             {%- endfor -%}
@@ -153,7 +153,7 @@
       </div>
 
       {%- if section.settings.archive_label != blank -%}
-        <div class="flex justify-center pt-[110px]">
+        <div class="flex justify-center pt-[36px] md:pt-[110px]">
           {%- liquid
             assign archive_href = section.settings.archive_url
             if archive_href == blank and paginate.next
@@ -165,13 +165,13 @@
           -%}
           <a
             href="{{ archive_href }}"
-            class="inline-flex items-center justify-center h-[54px] px-[46px] border border-ink bg-transparent text-ink font-body text-[11px] tracking-[0.24em] uppercase transition-all duration-normal ease-normal hover:bg-ink hover:text-bg"
+            class="inline-flex items-center justify-center h-[44px] md:h-[54px] w-full max-w-[320px] md:w-auto md:max-w-none px-[24px] md:px-[46px] border border-ink bg-transparent text-ink font-body text-[11px] tracking-[0.24em] uppercase transition-all duration-normal ease-normal hover:bg-ink hover:text-bg"
           >
             {{ section.settings.archive_label }}
           </a>
         </div>
       {%- elsif paginate.pages > 1 -%}
-        <nav class="pt-[110px] flex items-center justify-center gap-2" aria-label="{{ 'general.pagination.label' | t | default: 'Pagination' }}">
+        <nav class="pt-[36px] md:pt-[110px] flex items-center justify-center gap-2" aria-label="{{ 'general.pagination.label' | t | default: 'Pagination' }}">
           {%- if paginate.previous -%}
             <a href="{{ paginate.previous.url }}" class="font-body text-[11px] tracking-[0.24em] uppercase px-3 py-2 hover:opacity-55 transition-opacity duration-fast ease-fast">{{ 'general.pagination.previous' | t | default: 'Previous' }}</a>
           {%- endif -%}

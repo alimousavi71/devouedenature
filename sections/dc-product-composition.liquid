@@ -31,16 +31,16 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-[1200px] mx-auto px-[20px] md:px-[24px] xl:px-5 py-[64px] md:py-[90px] xl:py-[130px]">
+  <section class="max-w-[1200px] mx-auto px-[16px] md:px-[24px] xl:px-5 py-[48px] md:py-[90px] xl:py-[130px]">
     <header class="text-center" data-reveal-stagger>
       {%- if eyebrow != blank -%}
         <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
       {%- endif -%}
       {%- if heading != blank -%}
-        <h2 class="font-display font-normal text-h2 text-ink mt-5 mb-0 mx-auto max-w-[20ch]">{{ heading }}</h2>
+        <h2 class="font-display font-normal text-[26px] md:text-h2 text-ink mt-4 md:mt-5 mb-0 mx-auto max-w-[20ch]">{{ heading }}</h2>
       {%- endif -%}
       {%- if use_metafield_body or section.settings.body != blank -%}
-        <div class="mt-[22px] mx-auto max-w-[52ch] font-body text-body text-secondary [&_p]:m-0">
+        <div class="mt-[18px] md:mt-[22px] mx-auto max-w-[52ch] font-body text-[14px] md:text-body leading-[1.65] md:leading-normal text-secondary [&_p]:m-0">
           {%- if use_metafield_body -%}
             {{ product.metafields.custom.composition_body | metafield_tag }}
           {%- else -%}
@@ -50,13 +50,13 @@
       {%- endif -%}
     </header>
 
-    <div class="mt-[70px] grid grid-cols-1 md:grid-cols-[1.15fr_0.85fr] gap-[18px] items-end" data-reveal-stagger>
+    <div class="mt-[28px] md:mt-[70px] grid grid-cols-2 gap-[10px] md:grid-cols-[1.15fr_0.85fr] md:gap-[18px] items-end" data-reveal-stagger>
       <div class="relative aspect-[4/5] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
         {%- if image_1 != blank -%}
           {{ image_1 | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: heading, widths: '500, 800, 1000' }}
         {%- endif -%}
       </div>
-      <div class="relative aspect-[3/4] overflow-hidden bg-[repeating-linear-gradient(135deg,#E7E3DB_0_16px,#F4EFE4_16px_32px)]">
+      <div class="relative aspect-[3/4] md:aspect-[3/4] overflow-hidden bg-[repeating-linear-gradient(135deg,#E7E3DB_0_16px,#F4EFE4_16px_32px)]">
         {%- if image_2 != blank -%}
           {{ image_2 | image_url: width: 800 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: heading, widths: '400, 600, 800' }}
         {%- endif -%}

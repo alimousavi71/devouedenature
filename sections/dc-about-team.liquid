@@ -8,26 +8,26 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section id="team" class="dc-about-team max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[140px] md:scroll-mt-[160px]" data-dc-about-team>
+  <section id="team" class="dc-about-team max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[48px] md:pt-[90px] xl:pt-[130px] overflow-x-clip scroll-mt-[140px] md:scroll-mt-[160px]" data-dc-about-team>
     <span id="our-team" class="block relative -top-[140px] md:-top-[160px] h-0 w-0 overflow-hidden" aria-hidden="true"></span>
-    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_1.15fr] gap-10 md:gap-[70px] xl:gap-[100px] items-start min-w-0">
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_1.15fr] gap-[28px] md:gap-[70px] xl:gap-[100px] items-start min-w-0">
       <div class="min-w-0" data-reveal>
         {%- if section.settings.heading != blank -%}
-          <h2 class="font-display font-normal text-[32px] md:text-[42px] text-ink m-0">{{ section.settings.heading }}</h2>
+          <h2 class="font-display font-normal text-[26px] md:text-[42px] text-ink m-0">{{ section.settings.heading }}</h2>
         {%- endif -%}
         {%- if section.settings.body != blank -%}
-          <div class="dc-prose mt-[30px] font-body text-[14px] leading-[1.95] text-secondary max-w-[46ch] [&_p]:m-0 [&_p+_p]:mt-[22px]">
+          <div class="dc-prose mt-[22px] md:mt-[30px] font-body text-[14px] leading-[1.85] md:leading-[1.95] text-secondary max-w-[46ch] [&_p]:m-0 [&_p+_p]:mt-[18px] md:[&_p+_p]:mt-[22px]">
             {{ section.settings.body }}
           </div>
         {%- endif -%}
       </div>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0" data-reveal-stagger>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-[18px] md:gap-[22px] min-w-0" data-reveal-stagger>
           {%- for block in section.blocks -%}
             {%- assign bio_id = 'DcTeamBio-' | append: section.id | append: '-' | append: block.id -%}
             <article
-              class="dc-about-member border border-border px-[26px] py-[30px] min-w-0 break-words flex flex-col"
+              class="dc-about-member border border-border px-[18px] py-[22px] md:px-[26px] md:py-[30px] min-w-0 break-words flex flex-col"
               data-dc-lift-hover
               {{ block.shopify_attributes }}
             >

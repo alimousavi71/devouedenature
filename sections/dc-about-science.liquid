@@ -4,32 +4,32 @@
 
 {%- unless section.settings.hide_section -%}
   <section
-    class="bg-ink text-bg mt-[64px] md:mt-[90px] xl:mt-[130px] py-[64px] md:py-[90px] xl:py-[120px] px-[20px] md:px-[24px] xl:px-5"
+    class="bg-ink text-bg mt-[48px] md:mt-[90px] xl:mt-[130px] py-[48px] md:py-[90px] xl:py-[120px] px-[20px] md:px-[24px] xl:px-5"
     data-dc-campaign
   >
     <div class="max-w-page mx-auto">
       <header class="text-center">
         {%- if section.settings.heading != blank -%}
-          <h2 class="font-display font-normal text-[32px] md:text-[42px] text-bg m-0" data-dc-campaign-inner>
+          <h2 class="font-display font-normal text-[26px] md:text-[42px] text-bg m-0" data-dc-campaign-inner>
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
         {%- if section.settings.intro != blank -%}
-          <p class="mt-6 mx-auto max-w-[68ch] font-body text-[14px] leading-[1.9] text-gold m-0" data-dc-campaign-copy>
+          <p class="mt-[18px] md:mt-[22px] mx-auto max-w-[68ch] font-body text-[14px] leading-[1.8] md:leading-[1.9] text-gold m-0" data-dc-campaign-copy>
             {{ section.settings.intro }}
           </p>
         {%- endif -%}
       </header>
 
       {%- if section.blocks.size > 0 -%}
-        <div class="mt-[46px] md:mt-[70px] grid grid-cols-1 md:grid-cols-3 gap-6" data-reveal-stagger>
+        <div class="mt-[34px] md:mt-[70px] grid grid-cols-1 md:grid-cols-3 gap-[22px] md:gap-[40px]" data-reveal-stagger>
           {%- for block in section.blocks -%}
             {%- liquid
               assign card_overlay = block.settings.overlay_opacity | default: 70
               assign card_overlay_decimal = card_overlay | times: 0.01
             -%}
             <article
-              class="relative overflow-hidden min-h-[280px] md:min-h-[320px]"
+              class="relative overflow-hidden min-h-[220px] md:min-h-[320px]"
               data-dc-lift-hover
               {{ block.shopify_attributes }}
             >
@@ -53,7 +53,7 @@
                 {%- endif -%}
               </div>
 
-              <div class="relative z-[1] h-full min-h-[inherit] flex flex-col justify-between px-6 md:px-10 py-10 md:py-[56px]">
+              <div class="relative z-[1] h-full min-h-[inherit] flex flex-col justify-between px-[20px] py-[28px] md:px-10 md:py-[56px]">
                 {%- if block.settings.number != blank -%}
                   <p class="font-mono text-[10px] tracking-[0.18em] text-gold m-0">{{ block.settings.number }}</p>
                 {%- endif -%}

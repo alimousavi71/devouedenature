@@ -11,9 +11,9 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="mt-[64px] md:mt-[90px] xl:mt-[130px] bg-elevated py-[64px] md:py-[90px] xl:py-[120px] px-5 md:px-10" data-reveal>
-    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[90px] items-center">
-      <div class="relative aspect-[4/5] overflow-hidden">
+  <section class="mt-[40px] md:mt-[90px] xl:mt-[130px] bg-elevated py-[40px] md:py-[90px] xl:py-[120px] px-[16px] md:px-10" data-reveal>
+    <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-[22px] md:gap-[90px] items-center">
+      <div class="relative aspect-[5/4] md:aspect-[4/5] overflow-hidden">
         {%- if section.settings.image != blank -%}
           {{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', widths: '500, 750, 1000' }}
         {%- else -%}
@@ -25,18 +25,18 @@
 
       <div>
         {%- if eyebrow != blank -%}
-          <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+          <p class="font-body text-[9px] md:text-[10px] tracking-[0.24em] md:tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
         {%- endif -%}
         {%- if heading != blank -%}
-          <h2 class="font-display font-normal text-[38px] leading-[1.2] text-ink mt-5 mb-0 max-w-[22ch]">{{ heading }}</h2>
+          <h2 class="font-display font-normal text-[24px] md:text-[38px] leading-[1.2] text-ink mt-[12px] md:mt-5 mb-0 max-w-[22ch]">{{ heading }}</h2>
         {%- endif -%}
         {%- if body != blank -%}
-          <p class="font-body text-[13px] leading-[1.95] text-secondary max-w-[44ch] mt-6 mb-0 text-pretty">{{ body }}</p>
+          <p class="font-body text-[13px] leading-[1.7] md:leading-[1.95] text-secondary max-w-[44ch] mt-[14px] md:mt-[22px] mb-0 text-pretty">{{ body }}</p>
         {%- endif -%}
         {%- if link_label != blank and section.settings.link_url != blank -%}
           <a
             href="{{ section.settings.link_url }}"
-            class="inline-block mt-[30px] font-body text-[10px] tracking-[0.22em] uppercase text-ink border-b border-ink pb-1 hover:text-secondary transition-colors duration-fast ease-fast"
+            class="inline-block mt-[18px] md:mt-[30px] font-body text-[10px] tracking-[0.22em] uppercase text-ink border-b border-ink pb-1 hover:text-secondary transition-colors duration-fast ease-fast"
           >
             {{ link_label }}
           </a>

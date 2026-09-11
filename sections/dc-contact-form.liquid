@@ -19,7 +19,7 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-5 md:px-10 pt-[100px] pb-[130px] grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-10 lg:gap-[100px] items-start">
+  <section class="max-w-page mx-auto px-[16px] md:px-10 pt-[40px] md:pt-[100px] pb-[48px] md:pb-[130px] grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-[32px] lg:gap-[100px] items-start">
     <div data-reveal>
       {%- form 'contact', id: 'ContactForm', class: 'dc-contact-form' -%}
         {%- if form.posted_successfully? -%}
@@ -28,12 +28,12 @@
           </p>
         {%- else -%}
           {%- if form.errors -%}
-            <p class="font-body text-body-sm text-error m-0 mb-6">
+            <p class="font-body text-body-sm text-error m-0 mb-4 md:mb-6">
               {{ form.errors | default_errors }}
             </p>
           {%- endif -%}
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-[34px] gap-x-10">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-[22px] md:gap-y-[34px] gap-x-[24px] md:gap-x-10">
             <label class="dc-field block">
               <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ first_name_label }}</span>
               <input
@@ -41,7 +41,7 @@
                 name="contact[first_name]"
                 autocomplete="given-name"
                 value="{{ form.first_name }}"
-                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+                class="w-full h-[44px] md:h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
               >
             </label>
             <label class="dc-field block">
@@ -51,7 +51,7 @@
                 name="contact[last_name]"
                 autocomplete="family-name"
                 value="{{ form.last_name }}"
-                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+                class="w-full h-[44px] md:h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
               >
             </label>
             <label class="dc-field block">
@@ -62,7 +62,7 @@
                 autocomplete="email"
                 value="{{ form.email }}"
                 required
-                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+                class="w-full h-[44px] md:h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
               >
             </label>
             <label class="dc-field block">
@@ -71,19 +71,19 @@
                 type="text"
                 name="contact[order_number]"
                 value="{{ form.order_number }}"
-                class="w-full h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
+                class="w-full h-[44px] md:h-[46px] mt-2 bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] text-ink"
               >
             </label>
           </div>
 
           {%- if subject_list.size > 0 -%}
-            <div class="mt-[46px]">
-              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted block mb-4">{{ subject_label }}</span>
-              <div class="flex flex-wrap gap-[10px]">
+            <div class="mt-[28px] md:mt-[46px]">
+              <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted block mb-[12px] md:mb-4">{{ subject_label }}</span>
+              <div class="flex flex-wrap gap-[8px] md:gap-[10px]">
                 {%- for subject in subject_list -%}
                   {%- assign subject_value = subject | strip -%}
                   {%- if subject_value != blank -%}
-                    <label class="h-10 px-5 inline-flex items-center font-body text-[10px] tracking-[0.18em] uppercase border cursor-pointer transition-all duration-normal ease-normal border-border text-secondary has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-bg">
+                    <label class="h-[36px] md:h-10 px-[14px] md:px-[20px] inline-flex items-center font-body text-[10px] tracking-[0.16em] md:tracking-[0.18em] uppercase border cursor-pointer transition-all duration-normal ease-normal border-border text-secondary has-[:checked]:border-ink has-[:checked]:bg-ink has-[:checked]:text-bg">
                       <input type="radio" name="contact[subject]" value="{{ subject_value }}" class="sr-only" {% if forloop.first %}checked{% endif %}>
                       {{ subject_value }}
                     </label>
@@ -93,32 +93,32 @@
             </div>
           {%- endif -%}
 
-          <label class="dc-field block mt-[46px]">
+          <label class="dc-field block mt-[28px] md:mt-[46px]">
             <span class="font-body text-[10px] tracking-[0.22em] uppercase text-muted">{{ message_label }}*</span>
             <textarea
               name="contact[body]"
               rows="5"
               required
-              class="w-full mt-2 pb-[14px] bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] leading-[1.8] text-ink resize-y min-h-[120px]"
+              class="w-full mt-2 pb-[14px] bg-transparent border-0 border-b border-border font-body text-[14px] tracking-[0.04em] leading-[1.7] md:leading-[1.8] text-ink resize-y min-h-[110px] md:min-h-[120px]"
             >{{ form.body }}</textarea>
           </label>
 
-          <label class="flex gap-3 items-center mt-[34px] font-body text-[12px] tracking-[0.06em] text-secondary cursor-pointer">
+          <label class="flex gap-3 items-start md:items-center mt-[22px] md:mt-[34px] font-body text-[12px] tracking-[0.06em] text-secondary cursor-pointer">
             <input
               type="checkbox"
               name="contact[newsletter]"
-              class="dc-contact-consent shrink-0"
+              class="dc-contact-consent shrink-0 mt-[2px] md:mt-0"
             >
             {{ consent_label }}
           </label>
 
-          {% render 'dc-button', text: send_label, variant: 'filled', sweep: true, type: 'submit', class: 'w-full max-w-[320px] h-[58px] mt-[38px]' %}
+          {% render 'dc-button', text: send_label, variant: 'filled', sweep: true, type: 'submit', class: 'w-full md:max-w-[320px] h-[52px] md:h-[58px] mt-[28px] md:mt-[38px]' %}
         {%- endif -%}
       {%- endform -%}
     </div>
 
     {%- if info_blocks.size > 0 -%}
-      <aside class="border-t border-ink pt-[26px] lg:sticky lg:top-[120px] self-start" data-reveal>
+      <aside class="border-t border-ink pt-[22px] md:pt-[26px] lg:sticky lg:top-[120px] self-start" data-reveal>
         {%- for block in info_blocks -%}
           {%- liquid
             assign block_label = block.settings.label
@@ -126,15 +126,15 @@
             assign block_note = block.settings.note
           -%}
           {%- if block_label != blank or block_value != blank or block_note != blank -%}
-            <div class="py-[26px] border-b border-border" {{ block.shopify_attributes }}>
+            <div class="py-[18px] md:py-[26px] border-b border-border" {{ block.shopify_attributes }}>
               {%- if block_label != blank -%}
                 <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ block_label }}</p>
               {%- endif -%}
               {%- if block_value != blank -%}
-                <p class="font-body text-[18px] md:text-[20px] leading-[1.45] text-ink mt-[14px] mb-0 tabular-nums">{{ block_value }}</p>
+                <p class="font-body text-[16px] md:text-[20px] leading-[1.45] text-ink mt-[10px] md:mt-[14px] mb-0 tabular-nums break-words">{{ block_value }}</p>
               {%- endif -%}
               {%- if block_note != blank -%}
-                <p class="font-body text-[12px] leading-[1.75] text-muted max-w-[32ch] mt-2 mb-0">{{ block_note }}</p>
+                <p class="font-body text-[12px] leading-[1.65] md:leading-[1.75] text-muted max-w-[32ch] mt-[6px] md:mt-2 mb-0">{{ block_note }}</p>
               {%- endif -%}
             </div>
           {%- endif -%}

@@ -25,7 +25,7 @@
 
     <button
       type="button"
-      class="md:hidden inline-flex items-center justify-center w-10 h-10"
+      class="md:hidden inline-flex items-center justify-center w-[36px] h-[36px] -ml-1 text-ink"
       aria-label="{{ 'general.navigation' | t | default: 'Menu' }}"
       aria-haspopup="dialog"
       aria-controls="DcMobileNav"
@@ -93,6 +93,43 @@
   </header>
 </div>
 
+{%- liquid
+  assign header_overlay = false
+  if section.settings.transparent_on_index and template.name == 'index'
+    assign header_overlay = true
+  endif
+
+  # Fallback offsets before JS measures (announcement py-2 + caption ≈ 32px)
+  assign header_bar_mobile = 64
+  assign header_bar_desktop = 78
+  assign header_announce = 0
+  if section.settings.show_announcement and section.settings.announcement_text != blank
+    assign header_announce = 32
+  endif
+  assign header_offset_mobile = header_bar_mobile | plus: header_announce
+  assign header_offset_desktop = header_bar_desktop | plus: header_announce
+-%}
+<style>
+  :root {
+    --dc-header-offset: {{ header_offset_mobile }}px;
+  }
+  @media (min-width: 768px) {
+    :root {
+      --dc-header-offset: {{ header_offset_desktop }}px;
+    }
+  }
+</style>
+{%- comment -%}
+  Spacer lives in layout/theme.liquid (after header-group) so it always
+  participates in document flow outside the section wrapper.
+{%- endcomment -%}
+<script type="application/json" data-dc-header-meta>
+  {
+    "overlay": {% if header_overlay %}true{% else %}false{% endif %},
+    "offsetMobile": {{ header_offset_mobile }},
+    "offsetDesktop": {{ header_offset_desktop }}
+  }
+</script>
 
 {% render 'dc-mobile-nav',
   menu: section.settings.menu,

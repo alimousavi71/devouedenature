@@ -3,21 +3,21 @@
 {%- endcomment -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 py-[64px] md:py-[90px] xl:py-[130px] text-center" data-reveal-stagger>
+  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 py-[48px] md:py-[90px] xl:py-[130px] text-center" data-reveal-stagger>
     {%- if section.settings.heading != blank -%}
-      <h2 class="font-display font-normal text-[36px] md:text-[46px] text-ink m-0">{{ section.settings.heading }}</h2>
+      <h2 class="font-display font-normal text-[28px] md:text-[46px] text-ink m-0">{{ section.settings.heading }}</h2>
     {%- endif -%}
     {%- if section.settings.text != blank -%}
-      <p class="mt-5 mx-auto max-w-[52ch] font-body text-[14px] leading-[1.9] text-secondary m-0">{{ section.settings.text }}</p>
+      <p class="mt-4 mx-auto max-w-[52ch] font-body text-[14px] leading-[1.8] md:leading-[1.9] text-secondary m-0">{{ section.settings.text }}</p>
     {%- endif -%}
-    <div class="mt-10 flex flex-wrap gap-3 justify-center">
+    <div class="mt-[32px] md:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 justify-center items-stretch sm:items-center">
       {%- if section.settings.primary_label != blank -%}
         {% render 'dc-button',
           text: section.settings.primary_label,
           url: section.settings.primary_url,
           variant: 'filled',
           sweep: true,
-          class: 'h-[54px] px-10 text-[11px] tracking-[0.24em]'
+          class: 'w-full sm:w-auto h-[48px] md:h-[54px] px-[28px] md:px-10 text-[11px] tracking-[0.24em]'
         %}
       {%- endif -%}
       {%- if section.settings.secondary_label != blank -%}
@@ -25,7 +25,7 @@
           text: section.settings.secondary_label,
           url: section.settings.secondary_url,
           variant: 'outline',
-          class: 'h-[54px] px-10 text-[11px] tracking-[0.24em]'
+          class: 'w-full sm:w-auto h-[48px] md:h-[54px] px-[28px] md:px-10 text-[11px] tracking-[0.24em]'
         %}
       {%- endif -%}
     </div>

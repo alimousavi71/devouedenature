@@ -9,18 +9,18 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-[1000px] mx-auto px-5 md:px-10 py-[64px] md:py-[90px] xl:py-[130px]" data-reveal>
+  <section class="max-w-[1000px] mx-auto px-[16px] md:px-10 py-[48px] md:py-[90px] xl:py-[130px]" data-reveal>
     <header class="text-center">
       {%- if eyebrow != blank -%}
-        <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+        <p class="font-body text-[9px] md:text-[10px] tracking-[0.24em] md:tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
       {%- endif -%}
       {%- if heading != blank -%}
-        <h2 class="font-display font-normal text-[38px] leading-none text-ink mt-5 mb-0">{{ heading }}</h2>
+        <h2 class="font-display font-normal text-[24px] md:text-[38px] leading-none text-ink mt-[12px] md:mt-5 mb-0">{{ heading }}</h2>
       {%- endif -%}
     </header>
 
     {%- if section.blocks.size > 0 -%}
-      <div class="mt-[60px] border-t border-border">
+      <div class="mt-[32px] md:mt-[60px] border-t border-border">
         {%- for block in section.blocks -%}
           {%- assign question = block.settings.question -%}
           {%- assign answer = block.settings.answer -%}

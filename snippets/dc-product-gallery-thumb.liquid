@@ -33,14 +33,14 @@
   data-media-alt="{{ media_alt }}"
   data-media-sources="{{ video_sources_json | escape }}"
   {% if external_url != blank %}data-media-external="{{ external_url | escape }}"{% endif %}
-  class="relative w-16 h-20 p-0 shrink-0 overflow-hidden bg-transparent cursor-pointer transition-[border-color] duration-normal ease-normal border {% if is_active %}border-ink{% else %}border-transparent{% endif %}"
+  class="relative w-[56px] h-[70px] md:w-16 md:h-20 p-0 shrink-0 overflow-hidden bg-transparent cursor-pointer transition-[border-color] duration-normal ease-normal border {% if is_active %}border-ink{% else %}border-transparent{% endif %}"
   {% if is_active %}aria-current="true"{% endif %}
   aria-label="{% if media_type == 'video' or media_type == 'external_video' %}View video {{ index | plus: 1 }}{% else %}View image {{ index | plus: 1 }}{% endif %}"
 >
   {{ preview | image_url: width: 128 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: media_alt }}
   {%- if media_type == 'video' or media_type == 'external_video' -%}
     <span class="absolute inset-0 flex items-center justify-center pointer-events-none" style="background-color: rgba(48, 39, 29, 0.28)" aria-hidden="true">
-      <span class="w-5 h-5 rounded-full flex items-center justify-center" style="background-color: rgba(255, 250, 240, 0.92); color: #30271d">
+      <span class="w-[18px] h-[18px] rounded-full flex items-center justify-center" style="background-color: rgba(255, 250, 240, 0.92); color: #30271d">
         <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" aria-hidden="true"><path d="M1.5.8v6.4L7 4z"/></svg>
       </span>
     </span>

@@ -22,16 +22,16 @@
 
 {%- unless section.settings.hide_section -%}
   {%- if lead != blank or section.settings.body != blank or use_metafield_body or story_image != blank -%}
-    <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px] overflow-x-clip">
+    <section class="max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 pb-[48px] md:pb-[90px] xl:pb-[130px] overflow-x-clip">
       <div class="min-w-0" data-reveal-stagger>
         {%- if lead != blank -%}
-          <p class="m-0 mx-auto text-center font-display font-normal text-[24px] md:text-[27px] leading-[1.5] text-pretty text-ink max-w-[42ch]">
+          <p class="m-0 mx-auto text-center font-display font-normal text-[20px] md:text-[27px] leading-[1.45] md:leading-[1.5] text-pretty text-ink max-w-[42ch]">
             {{ lead }}
           </p>
         {%- endif -%}
 
         {%- if use_metafield_body or section.settings.body != blank -%}
-          <div class="dc-prose mt-[34px] md:mt-[40px] font-body text-body text-secondary columns-1 md:columns-2 md:gap-[44px] [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">
+          <div class="dc-prose mt-[22px] md:mt-[40px] font-body text-[13px] md:text-body leading-[1.8] md:leading-[1.9] text-secondary columns-1 md:columns-2 md:gap-[44px] [&_p]:mt-0 [&_p]:mb-3 md:[&_p]:mb-4 [&_p:last-child]:mb-0">
             {%- if use_metafield_body -%}
               {{ product.metafields.custom.editorial_body | metafield_tag }}
             {%- else -%}
@@ -41,7 +41,7 @@
         {%- endif -%}
 
         {%- if story_image != blank -%}
-          <div class="mt-[40px] md:mt-[46px] relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
+          <div class="mt-[28px] md:mt-[46px] relative aspect-[16/10] md:aspect-[21/9] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]">
             {{
               story_image
               | image_url: width: 1600

@@ -15,14 +15,14 @@
 
 {%- unless section.settings.hide_section -%}
   <section
-    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[64px] md:pt-[90px] xl:pt-[120px]"
+    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[48px] md:pt-[90px] xl:pt-[120px]"
     data-dc-recognition-carousel
     data-autoplay="{{ section.settings.autoplay }}"
     data-delay="{{ section.settings.autoplay_delay | default: 5000 }}"
     data-loop="{{ section.settings.loop }}"
     data-effect="{{ section.settings.transition_effect | default: 'fade' }}"
   >
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] xl:gap-[100px] items-start">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-[28px] md:gap-[70px] xl:gap-[100px] items-start">
       <div class="order-2 md:order-1 min-w-0 self-start">
         <div
           class="relative aspect-[4/3] overflow-hidden bg-[repeating-linear-gradient(135deg,#EFE7DA_0_16px,#F8F3E8_16px_32px)]"
@@ -66,7 +66,7 @@
       <div class="order-1 md:order-2 min-w-0 self-start">
         <div class="border-t border-ink pt-[26px]" data-reveal>
           {%- if section.settings.heading != blank -%}
-            <h2 class="font-display font-normal text-[32px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
+            <h2 class="font-display font-normal text-[26px] md:text-[40px] leading-[1.14] text-ink m-0 max-w-[16ch]">
               {{ section.settings.heading }}
             </h2>
           {%- endif -%}

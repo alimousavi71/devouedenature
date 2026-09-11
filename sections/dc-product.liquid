@@ -49,7 +49,7 @@
 
 {%- if section.settings.show_breadcrumbs -%}
   <nav
-    class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[22px] flex flex-wrap items-center gap-[10px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
+    class="max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 pt-[18px] md:pt-[22px] flex flex-wrap items-center gap-[10px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
     aria-label="{{ 'general.breadcrumb' | t | default: 'Breadcrumb' }}"
   >
     {%- if breadcrumb_collection != blank -%}
@@ -64,26 +64,26 @@
 {%- endif -%}
 
 <section
-  class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-5 pb-[64px] md:pb-[90px] xl:pb-7"
+  class="max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 pt-4 md:pt-5 pb-[48px] md:pb-[90px] xl:pb-7"
   data-dc-product-root
 >
   <script type="application/json" data-dc-product-json>
     {{ product | json }}
   </script>
 
-  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_340px] lg:grid-cols-[minmax(0,1fr)_420px] gap-[40px] md:gap-[80px] items-start">
+  <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_340px] lg:grid-cols-[minmax(0,1fr)_420px] gap-[28px] md:gap-[80px] items-start">
     <div data-dc-product-gallery>
       {% render 'dc-product-gallery', product: product %}
     </div>
 
-    <div class="md:sticky md:top-[120px] self-start pt-2" data-dc-product-buy>
+    <div class="md:sticky md:top-[120px] self-start md:pt-2" data-dc-product-buy>
       {%- if category_label != blank -%}
         <p class="font-body text-[10px] tracking-[0.26em] uppercase text-muted m-0" data-dc-product-item>{{ category_label }}</p>
       {%- endif -%}
 
-      <h1 class="font-display font-normal text-h1 text-ink mt-[14px] mb-0" data-dc-product-item>{{ product.title }}</h1>
+      <h1 class="font-display font-normal text-[28px] md:text-h1 leading-[1.1] md:leading-[1.06] text-ink mt-[10px] md:mt-[14px] mb-0" data-dc-product-item>{{ product.title }}</h1>
 
-      <div class="mt-[18px] font-body text-price text-ink leading-none" data-dc-price data-dc-product-item>
+      <div class="mt-[14px] md:mt-[18px] font-body text-price text-ink leading-none" data-dc-price data-dc-product-item>
         <span data-dc-price-value>{{ product.selected_or_first_available_variant.price | money }}</span>
         {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
           <span data-dc-compare-price class="text-muted line-through ml-3">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
@@ -94,7 +94,7 @@
       </div>
 
       {%- if product.description != blank -%}
-        <div class="dc-product-buy__desc mt-[22px] font-body text-[14px] leading-[1.75] text-secondary max-w-[42ch] text-pretty" data-dc-product-item>
+        <div class="dc-product-buy__desc mt-[18px] md:mt-[22px] font-body text-[14px] leading-[1.65] md:leading-[1.75] text-secondary max-w-[42ch] text-pretty" data-dc-product-item>
           {{ product.description }}
         </div>
       {%- endif -%}
@@ -105,12 +105,12 @@
         </div>
       {%- endunless -%}
 
-      <div class="mt-[28px] flex flex-wrap items-end gap-x-[28px] gap-y-[18px]" data-dc-product-item>
+      <div class="mt-[22px] md:mt-[28px] flex flex-wrap items-end gap-x-[20px] md:gap-x-[28px] gap-y-[14px] md:gap-y-[18px]" data-dc-product-item>
         <div>
-          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[12px] m-0">{{ 'products.product.quantity.label' | t | default: 'Quantity' }}</p>
+          <p class="font-body text-[10px] tracking-[0.22em] uppercase text-muted mb-[10px] md:mb-[12px] m-0">{{ 'products.product.quantity.label' | t | default: 'Quantity' }}</p>
           {% render 'dc-qty-stepper', name: 'quantity', value: 1, id: 'dc-product-qty' %}
         </div>
-        <div class="pb-[12px] font-body text-[11px] tracking-[0.1em] text-secondary flex items-center gap-2" data-dc-stock>
+        <div class="pb-[10px] md:pb-[12px] font-body text-[11px] tracking-[0.1em] text-secondary flex items-center gap-2" data-dc-stock>
           <span class="w-[5px] h-[5px] rounded-pill shrink-0" data-dc-stock-dot style="background:{% if product.selected_or_first_available_variant.available %}#6E7F5B{% else %}#C4B69F{% endif %}"></span>
           <span data-dc-stock-label>
             {%- if product.selected_or_first_available_variant.available -%}
@@ -124,7 +124,7 @@
 
       <form
         data-dc-product-form
-        class="mt-[30px]"
+        class="mt-[24px] md:mt-[30px]"
         data-dc-product-item
         data-dc-add-label="{{ add_to_bag_label | escape }}"
         data-dc-added-label="{{ section.settings.added_to_bag_label | escape }}"
@@ -139,18 +139,18 @@
           type: 'submit',
           id: 'dc-add-to-bag',
           disabled: add_to_bag_disabled,
-          class: 'w-full h-[58px] text-[11px] tracking-[0.24em]'
+          class: 'w-full h-[52px] md:h-[58px] text-[11px] tracking-[0.24em]'
         %}
       </form>
 
       {%- if show_refillable -%}
-        <div class="mt-[16px] flex justify-end" data-dc-product-item>
+        <div class="mt-[14px] md:mt-[16px] flex justify-end" data-dc-product-item>
           <span class="font-body text-[10px] tracking-[0.16em] uppercase text-muted">{{ refillable_label }}</span>
         </div>
       {%- endif -%}
 
       {%- if accordion_blocks.size > 0 -%}
-        <div class="dc-product-accordions mt-[40px] border-t border-border" data-dc-product-item>
+        <div class="dc-product-accordions mt-[32px] md:mt-[40px] border-t border-border" data-dc-product-item>
           {%- for block in accordion_blocks -%}
             {%- liquid
               assign body = ''
@@ -202,7 +202,7 @@
 
       {%- for block in section.blocks -%}
         {%- if block.type == '@app' -%}
-          <div class="mt-6" {{ block.shopify_attributes }}>{% render block %}</div>
+          <div class="mt-[22px] md:mt-[28px]" {{ block.shopify_attributes }}>{% render block %}</div>
         {%- endif -%}
       {%- endfor -%}
     </div>

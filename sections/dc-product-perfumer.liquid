@@ -31,17 +31,17 @@
 -%}
 
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pb-[64px] md:pb-[90px] xl:pb-[130px]">
-    <header class="text-center mb-[60px]" data-reveal-stagger>
+  <section class="max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 pb-[48px] md:pb-[90px] xl:pb-[130px]">
+    <header class="text-center mb-[32px] md:mb-[60px]" data-reveal-stagger>
       {%- if eyebrow != blank -%}
         <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
       {%- endif -%}
       {%- if heading != blank -%}
-        <h2 class="font-display font-normal text-h2 text-ink mt-5 mb-0">{{ heading }}</h2>
+        <h2 class="font-display font-normal text-[26px] md:text-h2 text-ink mt-4 md:mt-5 mb-0">{{ heading }}</h2>
       {%- endif -%}
     </header>
 
-    <div class="relative w-full aspect-[21/9] overflow-hidden bg-gradient-to-br from-[#EFE7DA] to-[#DCD4C4]" data-reveal>
+    <div class="relative w-full aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-gradient-to-br from-[#EFE7DA] to-[#DCD4C4]" data-reveal>
       {%- if image != blank -%}
         {{ image | image_url: width: 1800 | image_tag: loading: 'lazy', class: 'absolute inset-0 w-full h-full object-cover', alt: heading, widths: '900, 1400, 1800', sizes: '100vw' }}
       {%- endif -%}
@@ -52,7 +52,7 @@
       {%- liquid
         assign quote_text = quote | strip | remove: '"' | remove: '“' | remove: '”'
       -%}
-      <blockquote class="mt-[54px] mx-auto max-w-[62ch] text-center font-display font-normal text-[26px] leading-[1.6] text-pretty text-ink m-0">
+      <blockquote class="mt-[32px] md:mt-[54px] mx-auto max-w-[62ch] text-center font-display font-normal text-[20px] md:text-[26px] leading-[1.55] md:leading-[1.6] text-pretty text-ink m-0">
         “{{ quote_text }}”
       </blockquote>
     {%- endif -%}
@@ -61,7 +61,7 @@
       {%- liquid
         assign attribution_text = attribution | strip | remove: '"' | remove: '“' | remove: '”'
       -%}
-      <p class="text-center mt-[26px] font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ attribution_text }}</p>
+      <p class="text-center mt-[18px] md:mt-[26px] font-body text-[10px] tracking-[0.22em] uppercase text-muted m-0">{{ attribution_text }}</p>
     {%- endif -%}
     </div>
   </section>

@@ -10,22 +10,55 @@ function syncHeaderSpacer(root = document) {
   const spacer =
     root.querySelector("[data-dc-header-spacer]") ||
     document.querySelector("[data-dc-header-spacer]");
-  if (!shell || !spacer) return;
+  if (!shell) return;
+
+  const metaEl =
+    root.querySelector("[data-dc-header-meta]") ||
+    document.querySelector("[data-dc-header-meta]");
+  let overlay = spacer?.dataset.dcHeaderSpacerMode === "overlay";
+  if (metaEl) {
+    try {
+      const meta = JSON.parse(metaEl.textContent || "{}");
+      overlay = Boolean(meta.overlay);
+    } catch {
+      /* ignore malformed meta */
+    }
+  }
+
+  if (spacer) {
+    if (overlay) {
+      spacer.dataset.dcHeaderSpacerMode = "overlay";
+      spacer.classList.add("dc-header-spacer--overlay");
+    } else {
+      delete spacer.dataset.dcHeaderSpacerMode;
+      spacer.classList.remove("dc-header-spacer--overlay");
+    }
+  }
 
   const set = () => {
-    const height = shell.offsetHeight;
+    const height = Math.ceil(shell.getBoundingClientRect().height);
+    if (!height) return;
+
     document.documentElement.style.setProperty(
       "--dc-header-offset",
       `${height}px`,
     );
-    if (spacer.dataset.dcHeaderSpacerMode === "overlay") {
+
+    if (!spacer) return;
+
+    if (overlay) {
       spacer.style.height = "0px";
+      spacer.style.minHeight = "0px";
     } else {
       spacer.style.height = `${height}px`;
+      spacer.style.minHeight = `${height}px`;
     }
   };
 
   set();
+  // Re-measure after fonts / announcement layout settle
+  requestAnimationFrame(set);
+  window.setTimeout(set, 120);
 
   if (!shell.dataset.dcSpacerBound) {
     shell.dataset.dcSpacerBound = "1";

@@ -15,7 +15,7 @@
 {%- unless section.settings.hide_section -%}
   {%- if section.settings.show_breadcrumb -%}
     <nav
-      class="max-w-page mx-auto px-5 md:px-10 pt-[22px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
+      class="max-w-page mx-auto px-[16px] md:px-10 pt-[22px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
       aria-label="{{ 'general.breadcrumbs.home' | t | default: 'Breadcrumb' }}"
     >
       <ol class="flex flex-wrap items-center gap-[10px] list-none m-0 p-0">
@@ -39,11 +39,11 @@
     {%- endif -%}
   {%- endif -%}
 
-  <section class="max-w-page mx-auto px-5 md:px-10 pt-[70px]" data-reveal>
+  <section class="max-w-page mx-auto px-[16px] md:px-10 pt-[28px] md:pt-[70px]" data-reveal>
     {%- if eyebrow != blank -%}
-      <p class="font-body text-[10px] tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
+      <p class="font-body text-[9px] md:text-[10px] tracking-[0.24em] md:tracking-[0.28em] uppercase text-muted m-0">{{ eyebrow }}</p>
     {%- endif -%}
-    <h1 class="font-display font-normal text-[54px] leading-[1.08] text-ink mt-[18px] mb-0">{{ collection.title }}</h1>
+    <h1 class="font-display font-normal text-[28px] md:text-[54px] leading-[1.08] text-ink mt-[10px] md:mt-[18px] mb-0 text-balance">{{ collection.title }}</h1>
   </section>
 {%- endunless -%}
 
