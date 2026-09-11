@@ -1264,6 +1264,10 @@
     color: rgba(239, 231, 218, 0.6);
   }
 
+  .dc-footer-bar__policies {
+    max-width: 100%;
+  }
+
   .dc-disclosure__list {
     position: absolute;
     left: 0;

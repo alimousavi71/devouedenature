@@ -26,8 +26,8 @@
   assign bg_image = section.settings.background_image
 -%}
 
-<section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 pb-16 md:pb-[120px]">
-  <div class="relative overflow-hidden bg-ink px-6 md:px-[60px] py-12 md:py-[90px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-[60px] items-center">
+<section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 pb-12 md:pb-[120px]">
+  <div class="relative overflow-hidden bg-ink px-[20px] py-5 md:px-[60px] md:py-[90px] grid grid-cols-1 md:grid-cols-[1fr_auto] gap-5 md:gap-[60px] items-start md:items-center">
     {%- if bg_image != blank -%}
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
         {{
@@ -45,17 +45,17 @@
     {%- endif -%}
 
     <div class="relative z-[1]">
-      <h2 class="font-display font-normal text-[36px] leading-none text-bg m-0">
+      <h2 class="font-display font-normal text-[26px] md:text-[36px] leading-[1.1] text-bg m-0">
         {{ heading }}
       </h2>
-      <div class="mt-[16px] font-body text-body leading-[1.9] text-gold max-w-[46ch] [&_p]:m-0">
+      <div class="mt-3 md:mt-[16px] font-body text-[13px] leading-[1.7] md:text-body md:leading-[1.9] text-gold max-w-[46ch] [&_p]:m-0">
         {{ body_html }}
       </div>
     </div>
 
     <a
       href="{{ button_url }}"
-      class="relative z-[1] inline-flex items-center justify-center h-[54px] px-10 border border-gold bg-transparent text-bg font-body text-[11px] tracking-[0.24em] uppercase whitespace-nowrap transition-colors duration-normal ease-normal hover:bg-gold hover:text-ink shrink-0"
+      class="relative z-[1] inline-flex items-center justify-center w-full md:w-auto h-[48px] md:h-[54px] px-4 md:px-10 border border-gold bg-transparent text-bg font-body text-[11px] tracking-[0.24em] uppercase whitespace-nowrap transition-colors duration-normal ease-normal hover:bg-gold hover:text-ink shrink-0"
     >
       {{ button_label }}
     </a>

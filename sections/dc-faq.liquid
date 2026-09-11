@@ -3,9 +3,9 @@
   Reuses snippets/dc-accordion.liquid. Styled per redesign/Home.dc.html faq section.
 {%- endcomment -%}
 <section data-reveal="1" class="max-w-page mx-auto px-5 md:px-10 py-16 md:py-[120px]">
-  <div class="flex items-center justify-between gap-8">
+  <div class="flex flex-col items-start gap-5 md:flex-row md:items-center md:justify-between md:gap-8">
     {%- if section.settings.heading != blank -%}
-      <h2 class="font-display text-h2">{{ section.settings.heading }}</h2>
+      <h2 class="font-display text-[28px] leading-[1.2] md:text-h2">{{ section.settings.heading }}</h2>
     {%- endif -%}
     {%- if section.settings.button_label != blank -%}
       {% render 'dc-button', text: section.settings.button_label, url: section.settings.button_url, variant: 'outline' %}
