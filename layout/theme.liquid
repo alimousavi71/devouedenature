@@ -12,11 +12,15 @@
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
     {%- endif -%}
 
+    {%- liquid
+      assign normalized_page_title = page_title | handleize
+      assign normalized_shop_name = shop.name | handleize
+    -%}
     <title>
       {{ page_title }}
       {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
       {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+      {%- unless normalized_page_title contains normalized_shop_name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
     {% if page_description %}
@@ -24,6 +28,7 @@
     {% endif %}
 
     {% render 'meta-tags' %}
+    {% render 'dc-seo-schema' %}
     {% render 'dc-new-account-redirect' %}
 
     {{ content_for_header }}

@@ -1,0 +1,28 @@
+{%- comment -%}
+  Shared schema entry point. Commerce and editorial values come from Shopify
+  records; approved business identity is maintained in theme SEO settings.
+  Product/collection breadcrumb schema is rendered by its owning section so
+  labels, destinations and visibility stay aligned with that navigation.
+{%- endcomment -%}
+{%- liquid
+  assign business_name = settings.seo_business_name | default: shop.name
+  assign organization_id = shop.url | append: '/#organization'
+  assign website_id = shop.url | append: '/#website'
+  if request.page_type == 'index' or request.page_type == 'product' or request.page_type == 'article'
+    render 'dc-seo-business', business_name: business_name, organization_id: organization_id, website_id: website_id
+  endif
+  if request.page_type == 'product'
+    render 'dc-seo-product', business_name: business_name, organization_id: organization_id
+  elsif request.page_type == 'article'
+    render 'dc-seo-article', organization_id: organization_id
+  endif
+  if settings.show_breadcrumbs
+    if request.page_type == 'article'
+      render 'dc-seo-breadcrumbs', parent_label: blog.title, parent_url: blog.url, current_label: article.title, include_home: true
+    elsif request.page_type == 'blog'
+      render 'dc-seo-breadcrumbs', current_label: blog.title, include_home: true
+    elsif request.page_type == 'page'
+      render 'dc-seo-breadcrumbs', current_label: page.title, include_home: true
+    endif
+  endif
+-%}

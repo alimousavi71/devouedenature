@@ -24,7 +24,7 @@
 
 {%- if article.image -%}
   <div class="w-full aspect-[21/9] bg-elevated overflow-hidden">
-    {{ article.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'w-full h-full object-cover', alt: article.title }}
+    {{ article.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', class: 'w-full h-full object-cover', alt: article.title }}
   </div>
 {%- endif -%}
 

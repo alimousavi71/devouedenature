@@ -2,10 +2,12 @@
   New header section — Devoué de Nature theme migration.
   Built from scratch against redesign/Home.dc.html + redesign/Overlays.dc.html.
   Real Shopify data: section.settings.menu (linklist), cart.item_count, routes.*, customer, shop.name/logo.
+  The section wrapper reserves the header's natural height before JavaScript.
+  CSS keeps it sticky on content pages and preserves the homepage overlay.
 {%- endcomment -%}
 
 <div
-  class="dc-header-shell fixed top-0 inset-x-0 z-[80]"
+  class="dc-header-shell"
   data-dc-header-shell
 >
   {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
@@ -90,12 +92,7 @@
   </div>
   </header>
 </div>
-<div
-  class="dc-header-spacer{% if template.name == 'index' %} dc-header-spacer--overlay{% endif %}"
-  data-dc-header-spacer
-  data-dc-header-spacer-mode="{% if template.name == 'index' %}overlay{% else %}push{% endif %}"
-  aria-hidden="true"
-></div>
+
 
 {% render 'dc-mobile-nav',
   menu: section.settings.menu,
@@ -109,6 +106,7 @@
 {% schema %}
 {
   "name": "DC Header",
+  "class": "dc-header-section",
   "settings": [
     { "type": "checkbox", "id": "show_announcement", "label": "Show announcement bar", "default": true },
     { "type": "text", "id": "announcement_text", "label": "Announcement text", "default": "Complimentary shipping on orders over $250" },

@@ -1,0 +1,6 @@
+{%- comment -%}
+  Serialize JSON-LD as script data, not HTML. The caller builds valid JSON with
+  the json filter; escaping '<' prevents merchant text closing the script tag.
+{%- endcomment -%}
+{%- capture escaped_less_than -%}\u003c{%- endcapture -%}
+<script type="application/ld+json" data-dc-seo="{{ kind | escape }}">{{ data | strip | replace: '<', escaped_less_than }}</script>

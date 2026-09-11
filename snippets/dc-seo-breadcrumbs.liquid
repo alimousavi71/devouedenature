@@ -1,0 +1,52 @@
+{%- comment -%}
+  A single serializer for real navigation trails. Callers pass their resolved
+  section labels/URLs; unlinked labels never become invented parent URLs.
+  Supply include_home for Home > current or Home > parent > current.
+{%- endcomment -%}
+{%- liquid
+  assign has_parent = false
+  if parent_label != blank and parent_url != blank
+    assign has_parent = true
+  endif
+  assign position = 1
+-%}
+{%- if current_label != blank -%}
+  {%- if include_home or has_parent -%}
+    {%- capture home_url -%}{%- render 'dc-seo-absolute-url', url: routes.root_url -%}{%- endcapture -%}
+    {%- capture absolute_parent_url -%}{%- render 'dc-seo-absolute-url', url: parent_url -%}{%- endcapture -%}
+    {%- capture breadcrumb_data -%}
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "@id": {{ canonical_url | append: '#breadcrumb' | json }},
+      "itemListElement": [
+        {%- if include_home -%}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "name": {{ 'general.breadcrumbs.home' | t | json }},
+          "item": {{ home_url | json }}
+        },
+          {%- assign position = position | plus: 1 -%}
+        {%- endif -%}
+        {%- if has_parent -%}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "name": {{ parent_label | json }},
+          "item": {{ absolute_parent_url | json }}
+        },
+          {%- assign position = position | plus: 1 -%}
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "name": {{ current_label | json }},
+          "item": {{ canonical_url | json }}
+        }
+      ]
+    }
+    {%- endcapture -%}
+    {%- render 'dc-seo-jsonld', data: breadcrumb_data, kind: 'breadcrumb' -%}
+  {%- endif -%}
+{%- endif -%}

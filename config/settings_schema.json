@@ -24,6 +24,82 @@
     ]
   },
   {
+    "name": "Structured data identity",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Verified public business identity for search engines. Product prices, currency, availability and article content are read from Shopify records."
+      },
+      {
+        "type": "text",
+        "id": "seo_business_name",
+        "label": "Public business name",
+        "default": "Dévoué de Nature"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_alternate_name",
+        "label": "Alternate public name",
+        "default": "Devoue de Nature"
+      },
+      {
+        "type": "image_picker",
+        "id": "seo_business_logo",
+        "label": "Business logo"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_email",
+        "label": "Public contact email",
+        "default": "info@devouedenature.com"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_phone",
+        "label": "Public contact telephone",
+        "default": "+16475566199"
+      },
+      {
+        "type": "header",
+        "content": "Public head office"
+      },
+      {
+        "type": "paragraph",
+        "content": "Business contact address only. This does not define a retail store or return destination."
+      },
+      {
+        "type": "text",
+        "id": "seo_business_street",
+        "label": "Street and suite",
+        "default": "150 King Street West, Suite 215"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_city",
+        "label": "City",
+        "default": "Toronto"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_region",
+        "label": "Province or region",
+        "default": "ON"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_postal_code",
+        "label": "Postal code",
+        "default": "M5H 1J9"
+      },
+      {
+        "type": "text",
+        "id": "seo_business_country",
+        "label": "Country code",
+        "default": "CA"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {

@@ -1,0 +1,12 @@
+{%- comment -%}Normalize Shopify image and route URLs without adding preview parameters.{%- endcomment -%}
+{%- liquid
+  assign prefix = url | slice: 0, 2
+  assign first_character = url | slice: 0, 1
+  if prefix == '//'
+    echo url | prepend: 'https:'
+  elsif first_character == '/'
+    echo url | prepend: request.origin
+  else
+    echo url
+  endif
+-%}

@@ -1,0 +1,46 @@
+{%- comment -%}
+  Extend Judge.me's canonical #product identity; the app owns reviews/ratings.
+  Shopify prices are in hundredths of the presentment currency, including
+  currencies without subunits. Never use money filters for JSON numeric prices.
+  Optional descriptions and merchant policies remain omitted until their
+  source facts have been verified.
+{%- endcomment -%}
+{%- liquid
+  assign offer_variant = product.selected_or_first_available_variant
+  assign product_id = canonical_url | append: '#product'
+  assign offer_id = canonical_url | append: '#offer-' | append: offer_variant.id
+  assign offer_url = canonical_url | append: '?variant=' | append: offer_variant.id
+  assign currency_code = cart.currency.iso_code | default: shop.currency
+  assign product_image = offer_variant.featured_image | default: product.featured_image
+-%}
+{%- if offer_variant != blank -%}
+  {%- capture product_data -%}
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "@id": {{ product_id | json }},
+    "url": {{ canonical_url | json }},
+    "name": {{ product.title | json }},
+    "brand": {"@type": "Brand", "name": {{ business_name | json }}}
+    {%- if product_image != blank -%}
+      {%- assign image_url = product_image | image_url: width: 1600 -%}
+      {%- capture absolute_image_url -%}{%- render 'dc-seo-absolute-url', url: image_url -%}{%- endcapture -%},
+    "image": [{{ absolute_image_url | json }}]
+    {%- endif -%}
+    {%- if offer_variant.sku != blank -%},
+    "sku": {{ offer_variant.sku | json }}
+    {%- endif -%}
+    {%- render 'dc-seo-gtin', barcode: offer_variant.barcode -%},
+    "offers": {
+      "@type": "Offer",
+      "@id": {{ offer_id | json }},
+      "url": {{ offer_url | json }},
+      "price": {{ offer_variant.price | divided_by: 100.0 | json }},
+      "priceCurrency": {{ currency_code | json }},
+      "availability": "https://schema.org/{% if offer_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "seller": {"@id": {{ organization_id | json }}}
+    }
+  }
+  {%- endcapture -%}
+  {%- render 'dc-seo-jsonld', data: product_data, kind: 'product' -%}
+{%- endif -%}

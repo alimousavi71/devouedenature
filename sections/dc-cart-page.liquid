@@ -26,9 +26,10 @@
   </div>
 
   {%- if cart.item_count == 0 -%}
+    {%- assign continue_shopping_label = 'general.continue_shopping' | t -%}
     <div class="flex flex-col items-center justify-center gap-4 py-24 text-center border-t border-divider">
       <p class="font-body text-body text-secondary">{{ 'sections.cart.empty' | t | default: 'Your basket is empty.' }}</p>
-      {% render 'dc-button', text: 'general.continue_shopping' | t | default: 'Continue shopping', variant: 'filled', url: routes.all_products_collection_url %}
+      {% render 'dc-button', text: continue_shopping_label, variant: 'filled', url: routes.all_products_collection_url %}
     </div>
   {%- else -%}
     <form

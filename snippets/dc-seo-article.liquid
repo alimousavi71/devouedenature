@@ -1,0 +1,43 @@
+{%- comment -%}
+  Preserve actual editorial record values. Confirmed brand bylines resolve to
+  the publisher identity. No expert credentials or modification date invented.
+{%- endcomment -%}
+{%- liquid
+  assign author_name = article.author | strip
+  assign author_key = author_name | handleize
+  assign business_key = settings.seo_business_name | default: shop.name | handleize
+  assign shop_key = shop.name | handleize
+  assign alternate_key = settings.seo_business_alternate_name | handleize
+-%}
+{%- capture article_data -%}
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": {{ canonical_url | append: '#article' | json }},
+  "url": {{ canonical_url | json }},
+  "headline": {{ article.title | json }},
+  "mainEntityOfPage": {"@type": "WebPage", "@id": {{ canonical_url | json }}},
+  "publisher": {"@id": {{ organization_id | json }}}
+  {%- if author_name != blank -%},
+  "author": {
+    {%- if author_key == business_key or author_key == shop_key or author_key == alternate_key -%}
+    "@type": "Organization",
+    "@id": {{ organization_id | json }},
+    "name": {{ author_name | json }}
+    {%- else -%}
+    "@type": "Person",
+    "name": {{ author_name | json }}
+    {%- endif -%}
+  }
+  {%- endif -%}
+  {%- if article.published_at != blank -%},
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%:z' | json }}
+  {%- endif -%}
+  {%- if article.image != blank -%}
+    {%- assign image_url = article.image | image_url: width: 1600 -%}
+    {%- capture absolute_image_url -%}{%- render 'dc-seo-absolute-url', url: image_url -%}{%- endcapture -%},
+  "image": [{{ absolute_image_url | json }}]
+  {%- endif -%}
+}
+{%- endcapture -%}
+{%- render 'dc-seo-jsonld', data: article_data, kind: 'article' -%}

@@ -43,7 +43,7 @@
           "type": "dropdown_information",
           "settings": {
             "heading": "Shipping & returns",
-            "use_metafield": "above_footer_slogan_1",
+            "use_metafield": "shipping_returns",
             "description": "<p>Complimentary shipping on orders over $250. Eligible returns within 14 days — see our returns policy for details.</p>",
             "characteristics": false
           }

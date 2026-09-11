@@ -32,6 +32,11 @@
         <li class="text-ink" aria-current="page">{{ collection.title }}</li>
       </ol>
     </nav>
+    {%- if section.settings.breadcrumb_parent_url != blank -%}
+      {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_parent, parent_url: section.settings.breadcrumb_parent_url, current_label: collection.title %}
+    {%- else -%}
+      {% render 'dc-seo-breadcrumbs', current_label: collection.title, include_home: true %}
+    {%- endif -%}
   {%- endif -%}
 
   <section class="max-w-page mx-auto px-5 md:px-10 pt-[70px]" data-reveal>

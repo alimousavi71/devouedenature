@@ -11,6 +11,16 @@
   {%- assign suggested = collections[section.settings.collection].products | slice: 0, 2 -%}
 {%- endif -%}
 
+{%- liquid
+  assign collection_button_label = section.settings.collection_button_label | default: 'The collection'
+  assign search_button_label = section.settings.search_button_label | default: 'Search'
+  assign collection_button_url = section.settings.collection_url
+  if collection_button_url == blank
+    assign collection_button_url = collections['frontpage'].url | default: routes.all_products_collection_url
+  endif
+  assign product_search_url = routes.search_url | append: '?type=product'
+-%}
+
 <div class="bg-ink text-bg px-5 py-16 md:px-[60px] md:py-[130px]" data-reveal="1">
   <div class="max-w-page mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-[70px] items-center">
     <div>
@@ -20,8 +30,8 @@
         <p class="font-body text-body-lg text-bg/70 max-w-[46ch] mt-4">{{ section.settings.text }}</p>
       {%- endif -%}
       <div class="flex flex-wrap items-center gap-3 mt-8">
-        {% render 'dc-button', text: section.settings.collection_button_label | default: 'The collection', url: section.settings.collection_url, variant: 'outline' %}
-        {% render 'dc-button', text: section.settings.search_button_label | default: 'Search', url: routes.search_url | append: '?type=product', variant: 'outline' %}
+        {% render 'dc-button', text: collection_button_label, url: collection_button_url, variant: 'outline' %}
+        {% render 'dc-button', text: search_button_label, url: product_search_url, variant: 'outline' %}
       </div>
     </div>
 

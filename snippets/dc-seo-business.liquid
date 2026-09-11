@@ -1,0 +1,65 @@
+{%- liquid
+  assign site_url = shop.url | append: '/'
+  assign alternate_name = settings.seo_business_alternate_name | strip
+-%}
+{%- capture business_data -%}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "OnlineStore",
+      "@id": {{ organization_id | json }},
+      "name": {{ business_name | json }},
+      "url": {{ site_url | json }}
+      {%- if alternate_name != blank and alternate_name != business_name -%},
+      "alternateName": {{ alternate_name | json }}
+      {%- endif -%}
+      {%- if settings.seo_business_logo != blank -%}
+        {%- assign logo_url = settings.seo_business_logo | image_url: width: 600 -%}
+        {%- capture absolute_logo_url -%}{%- render 'dc-seo-absolute-url', url: logo_url -%}{%- endcapture -%},
+      "logo": {{ absolute_logo_url | json }}
+      {%- endif -%}
+      {%- if settings.seo_business_email != blank -%},
+      "email": {{ settings.seo_business_email | strip | json }}
+      {%- endif -%}
+      {%- if settings.seo_business_phone != blank -%},
+      "telephone": {{ settings.seo_business_phone | strip | json }}
+      {%- endif -%}
+      {%- if settings.seo_business_street != blank and settings.seo_business_city != blank and settings.seo_business_country != blank -%},
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": {{ settings.seo_business_street | strip | json }},
+        "addressLocality": {{ settings.seo_business_city | strip | json }},
+        "addressCountry": {{ settings.seo_business_country | strip | json }}
+        {%- if settings.seo_business_region != blank -%},
+        "addressRegion": {{ settings.seo_business_region | strip | json }}
+        {%- endif -%}
+        {%- if settings.seo_business_postal_code != blank -%},
+        "postalCode": {{ settings.seo_business_postal_code | strip | json }}
+        {%- endif -%}
+      }
+      {%- endif -%}
+      {%- if settings.social_instagram_link != blank or settings.social_facebook_link != blank -%},
+      "sameAs": [
+        {%- if settings.social_instagram_link != blank -%}{{ settings.social_instagram_link | json }}{%- endif -%}
+        {%- if settings.social_instagram_link != blank and settings.social_facebook_link != blank -%},{%- endif -%}
+        {%- if settings.social_facebook_link != blank -%}{{ settings.social_facebook_link | json }}{%- endif -%}
+      ]
+      {%- endif -%}
+    }
+    {%- if request.page_type == 'index' -%},
+    {
+      "@type": "WebSite",
+      "@id": {{ website_id | json }},
+      "url": {{ site_url | json }},
+      "name": {{ business_name | json }},
+      "publisher": {"@id": {{ organization_id | json }}}
+      {%- if alternate_name != blank and alternate_name != business_name -%},
+      "alternateName": {{ alternate_name | json }}
+      {%- endif -%}
+    }
+    {%- endif -%}
+  ]
+}
+{%- endcapture -%}
+{%- render 'dc-seo-jsonld', data: business_data, kind: 'business' -%}

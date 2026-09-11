@@ -1,0 +1,34 @@
+{%- comment -%}
+  Emit only a merchant-assigned barcode with GTIN length, digits and check digit.
+  Keep the original string (including leading zeros); never manufacture an ID.
+  Output is an optional JSON property prefixed by a comma for the Product node.
+{%- endcomment -%}
+{%- liquid
+  assign barcode_length = barcode | size
+  assign non_digits = barcode | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9'
+  assign valid_length = false
+  if barcode_length == 8 or barcode_length == 12 or barcode_length == 13 or barcode_length == 14
+    assign valid_length = true
+  endif
+  assign checksum = 0
+  assign barcode_number = barcode | plus: 0
+  if valid_length and non_digits == '' and barcode_number > 0
+    assign digits_from_right = barcode | split: '' | reverse
+    for digit in digits_from_right
+      assign parity = forloop.index | modulo: 2
+      assign digit_value = digit | plus: 0
+      if parity == 0
+        assign digit_value = digit_value | times: 3
+      endif
+      assign checksum = checksum | plus: digit_value
+    endfor
+    assign checksum_remainder = checksum | modulo: 10
+    if checksum_remainder == 0
+      assign gtin_property = 'gtin' | append: barcode_length
+      echo ','
+      echo gtin_property | json
+      echo ':'
+      echo barcode | json
+    endif
+  endif
+-%}

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "accessibility": {
     "close": "Close",
@@ -100,6 +109,7 @@
     "follow": "Follow"
   },
   "general": {
+    "breadcrumb": "Breadcrumb",
     "breadcrumbs": {
       "home": "Home"
     },
@@ -146,6 +156,7 @@
   },
   "products": {
     "facets": {
+      "sort_by_label": "Sort by",
       "product_count_simple": {
         "one": "{{ count }} Result",
         "other": "{{ count }} Results"
@@ -162,6 +173,7 @@
         "input_label": "Quantity for {{ product }}"
       },
       "media": {
+        "gallery": "Product gallery",
         "zoom": "Zoom"
       },
       "save": "Save",

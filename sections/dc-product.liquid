@@ -60,6 +60,7 @@
     <span aria-hidden="true">/</span>
     <span class="text-ink">{{ product.title }}</span>
   </nav>
+  {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_label, parent_url: breadcrumb_collection.url, current_label: product.title %}
 {%- endif -%}
 
 <section
