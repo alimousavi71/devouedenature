@@ -1,0 +1,60 @@
+{%- comment -%}
+  Product reviews — Judge.me (or other @app review widgets) inside theme chrome.
+  Styles: src/styles/main.css (.dc-reviews / #judgeme_product_reviews).
+{%- endcomment -%}
+
+{%- unless section.settings.hide_section -%}
+  <section
+    class="dc-reviews max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 py-[48px] md:py-[90px] xl:py-[130px]{% if section.settings.heading != blank %} dc-reviews--has-heading{% endif %}"
+    data-dc-reviews
+    {{ section.shopify_attributes }}
+  >
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank -%}
+      <header class="text-center mb-[28px] md:mb-[48px]" data-reveal-stagger>
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="font-body text-[9px] md:text-[10px] tracking-[0.24em] md:tracking-[0.28em] uppercase text-muted m-0">
+            {{ section.settings.eyebrow }}
+          </p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="font-display font-normal text-[26px] md:text-[38px] leading-none text-ink mt-[12px] md:mt-5 mb-0">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="dc-reviews__widget min-w-0" data-reveal>
+      {%- for block in section.blocks -%}
+        {% render block %}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "tag": "section",
+  "class": "dc-reviews-section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Voices" },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Customer reviews",
+      "info": "When set, the app widget’s own title is visually hidden."
+    }
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews"
+    }
+  ]
+}
+{% endschema %}

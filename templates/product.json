@@ -197,8 +197,8 @@
         "products_to_show": 3
       }
     },
-    "178896997000966695": {
-      "type": "apps",
+    "reviews": {
+      "type": "dc-product-reviews",
       "blocks": {
         "judge_me_reviews_review_widget_yxi7wM": {
           "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -213,7 +213,11 @@
       "block_order": [
         "judge_me_reviews_review_widget_yxi7wM"
       ],
-      "settings": {}
+      "settings": {
+        "hide_section": false,
+        "eyebrow": "Voices",
+        "heading": "Customer reviews"
+      }
     }
   },
   "order": [
@@ -225,6 +229,6 @@
     "formats",
     "ritual",
     "recommendations",
-    "178896997000966695"
+    "reviews"
   ]
 }
