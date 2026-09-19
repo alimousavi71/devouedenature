@@ -12,8 +12,9 @@
   assign category_label = product.type | default: product.vendor
   if section.settings.category_label != blank
     assign category_label = section.settings.category_label
-  elsif category_label == blank or category_label == 'Fragrance' or category_label == 'fragrance'
-    assign category_label = 'Skincare'
+  endif
+  if category_label == blank or category_label == 'Fragrance' or category_label == 'fragrance' or category_label == 'Skincare' or category_label == 'skincare'
+    assign category_label = 'Products'
   endif
 
   assign breadcrumb_label = ''
@@ -22,8 +23,16 @@
   endif
   if section.settings.breadcrumb_label != blank
     assign breadcrumb_label = section.settings.breadcrumb_label
-  elsif breadcrumb_label == blank or breadcrumb_label == 'Fragrance' or breadcrumb_label == 'fragrance'
-    assign breadcrumb_label = 'Skincare'
+  endif
+  if breadcrumb_label == blank or breadcrumb_label == 'Fragrance' or breadcrumb_label == 'fragrance' or breadcrumb_label == 'Skincare' or breadcrumb_label == 'skincare'
+    assign breadcrumb_label = 'Products'
+  endif
+
+  assign breadcrumb_url = routes.all_products_collection_url
+  if section.settings.breadcrumb_url != blank
+    assign breadcrumb_url = section.settings.breadcrumb_url
+  elsif breadcrumb_label != 'Products' and breadcrumb_collection != blank
+    assign breadcrumb_url = breadcrumb_collection.url
   endif
 
   assign show_refillable = false
@@ -52,15 +61,15 @@
     class="max-w-page mx-auto px-[16px] md:px-[24px] xl:px-5 pt-[18px] md:pt-[22px] flex flex-wrap items-center gap-[10px] font-body text-[10px] tracking-[0.18em] uppercase text-muted"
     aria-label="{{ 'general.breadcrumb' | t | default: 'Breadcrumb' }}"
   >
-    {%- if breadcrumb_collection != blank -%}
-      <a href="{{ breadcrumb_collection.url }}" class="text-muted hover:text-secondary transition-colors duration-fast ease-fast">{{ breadcrumb_label }}</a>
+    {%- if breadcrumb_url != blank -%}
+      <a href="{{ breadcrumb_url }}" class="text-muted hover:text-secondary transition-colors duration-fast ease-fast">{{ breadcrumb_label }}</a>
     {%- else -%}
       <span>{{ breadcrumb_label }}</span>
     {%- endif -%}
     <span aria-hidden="true">/</span>
     <span class="text-ink">{{ product.title }}</span>
   </nav>
-  {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_label, parent_url: breadcrumb_collection.url, current_label: product.title %}
+  {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_label, parent_url: breadcrumb_url, current_label: product.title %}
 {%- endif -%}
 
 <section
@@ -224,15 +233,22 @@
       "type": "text",
       "id": "breadcrumb_label",
       "label": "Breadcrumb parent label",
-      "default": "Skincare",
-      "info": "Shown instead of collection title when set. Use to replace Fragrance."
+      "default": "Products",
+      "info": "Defaults to Products. “Skincare” / “Fragrance” are remapped to Products."
+    },
+    {
+      "type": "url",
+      "id": "breadcrumb_url",
+      "label": "Breadcrumb parent link",
+      "info": "Defaults to All products when the label is Products."
     },
     {
       "type": "text",
       "id": "category_label",
       "label": "Category label override",
       "info": "Leave blank to use product type or vendor"
-    },    {
+    },
+    {
       "type": "text",
       "id": "in_stock_message",
       "label": "In stock message",

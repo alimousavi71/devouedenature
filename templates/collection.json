@@ -67,9 +67,7 @@
         "all_label": "All",
         "clear_label": "Clear all",
         "empty_heading": "No compositions match your filters.",
-        "all_products_label": "All compositions",
-        "archive_label": "Show the archive",
-        "archive_url": ""
+        "all_products_label": "All compositions"
       }
     },
     "editorial": {

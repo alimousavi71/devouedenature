@@ -1,0 +1,54 @@
+{%- comment -%}
+  Brand closing banner — ink band with centered wordmark + tagline.
+  Spelling: "Devoue" without accents (site-wide for this banner).
+{%- endcomment -%}
+
+{%- liquid
+  assign heading = section.settings.heading | default: 'Devoue de Nature'
+  assign heading = heading | replace: 'Dévoué', 'Devoue' | replace: 'dévoué', 'Devoue' | replace: 'DÉVOUÉ', 'DEVOUE'
+  assign tagline = section.settings.tagline | default: 'Redefining skincare — with purpose, with you.'
+-%}
+
+{%- unless section.settings.hide_section -%}
+  <section
+    class="dc-brand-banner bg-ink text-center px-[16px] md:px-[24px] py-[32px] md:py-[48px] xl:py-[56px]"
+    data-dc-brand-banner
+    data-reveal
+  >
+    {%- if heading != blank -%}
+      <p class="dc-brand-banner__title font-display font-normal text-[22px] md:text-[28px] xl:text-[32px] leading-[1.1] tracking-[0.01em] text-gold m-0">
+        {{ heading }}
+      </p>
+    {%- endif -%}
+    {%- if tagline != blank -%}
+      <p class="dc-brand-banner__tagline mt-[8px] md:mt-[10px] mx-auto max-w-[40ch] font-body text-[12px] md:text-[13px] leading-[1.6] md:leading-[1.7] text-bg/75 m-0">
+        {{ tagline }}
+      </p>
+    {%- endif -%}
+  </section>
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Brand banner",
+  "tag": "section",
+  "class": "dc-brand-banner-section",
+  "settings": [
+    { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Devoue de Nature",
+      "info": "Use “Devoue” without accents — this banner strips accents automatically."
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Redefining skincare — with purpose, with you."
+    }
+  ],
+  "presets": [{ "name": "Brand banner" }]
+}
+{% endschema %}

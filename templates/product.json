@@ -67,8 +67,8 @@
       ],
       "settings": {
         "show_breadcrumbs": true,
-        "breadcrumb_label": "Skincare",
-        "category_label": "Skincare",
+        "breadcrumb_label": "Products",
+        "category_label": "Products",
         "in_stock_message": "In stock — ships within 48 hours",
         "sold_out_message": "Sold out",
         "add_to_bag_label": "Add to the bag",

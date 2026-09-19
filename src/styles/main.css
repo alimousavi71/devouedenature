@@ -1012,7 +1012,7 @@
   }
 
   .dc-accordion--product .dc-accordion__inner p {
-    margin: 0 0 22px;
+    margin: 0 0 6px;
   }
 
   .dc-accordion--product .dc-accordion__inner p:last-child {
@@ -1021,12 +1021,17 @@
 
   .dc-accordion--product .dc-accordion__inner ul,
   .dc-accordion--product .dc-accordion__inner ol {
-    margin: 0 0 22px;
+    margin: 0 0 6px;
     padding-left: 1.2em;
   }
 
   .dc-accordion--product .dc-accordion__inner li {
     color: theme('colors.secondary');
+    margin: 0 0 6px;
+  }
+
+  .dc-accordion--product .dc-accordion__inner li:last-child {
+    margin-bottom: 0;
   }
 
   .dc-accordion--product .dc-accordion__inner a {

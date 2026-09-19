@@ -13,9 +13,28 @@
   assign contact_page = section.settings.contact_page | default: '/pages/contact'
   assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
   assign instagram_url = section.settings.instagram_url | default: settings.social_instagram_link | default: 'https://www.instagram.com/devoueskin/'
+
+  assign brand_banner_heading = section.settings.brand_banner_heading | default: 'Devoue de Nature'
+  assign brand_banner_heading = brand_banner_heading | replace: 'Dévoué', 'Devoue' | replace: 'dévoué', 'Devoue' | replace: 'DÉVOUÉ', 'DEVOUE'
+  assign brand_banner_tagline = section.settings.brand_banner_tagline | default: 'Redefining skincare — with purpose, with you.'
 -%}
 
 <footer class="bg-ink text-[#EFE7DA] overflow-visible">
+  {%- unless section.settings.hide_brand_banner -%}
+    <div class="dc-brand-banner text-center px-[16px] md:px-[24px] py-[32px] md:py-[48px] xl:py-[56px] border-b" style="border-color: {{ footer_border }};" data-dc-brand-banner data-reveal>
+      {%- if brand_banner_heading != blank -%}
+        <p class="dc-brand-banner__title font-display font-normal text-[22px] md:text-[28px] xl:text-[32px] leading-[1.1] tracking-[0.01em] text-gold m-0">
+          {{ brand_banner_heading }}
+        </p>
+      {%- endif -%}
+      {%- if brand_banner_tagline != blank -%}
+        <p class="dc-brand-banner__tagline mt-[8px] md:mt-[10px] mx-auto max-w-[40ch] font-body text-[12px] md:text-[13px] leading-[1.6] md:leading-[1.7] text-bg/75 m-0">
+          {{ brand_banner_tagline }}
+        </p>
+      {%- endif -%}
+    </div>
+  {%- endunless -%}
+
   <div class="max-w-page mx-auto px-5 md:px-10 pt-12 md:pt-16 lg:pt-[70px] pb-4 md:pb-5 overflow-visible">
     <div
       class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-[1.15fr_repeat(3,minmax(0,1fr))] gap-x-6 gap-y-10 md:gap-x-8 lg:gap-x-12 pb-10 md:pb-12 border-b"
@@ -398,6 +417,29 @@
   "tag": "section",
   "class": "footer",
   "settings": [
+    {
+      "type": "header",
+      "content": "Brand banner"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_brand_banner",
+      "label": "Hide brand banner",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "brand_banner_heading",
+      "label": "Banner heading",
+      "default": "Devoue de Nature",
+      "info": "Use “Devoue” without accents — accents are stripped automatically."
+    },
+    {
+      "type": "text",
+      "id": "brand_banner_tagline",
+      "label": "Banner tagline",
+      "default": "Redefining skincare — with purpose, with you."
+    },
     {
       "type": "text",
       "id": "location",

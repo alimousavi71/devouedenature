@@ -26,56 +26,8 @@
     },
     "dc-lineup": {
       "type": "dc-lineup",
-      "blocks": {
-        "claim-1": {
-          "type": "claim",
-          "settings": {
-            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M19.5 13.5C19.5 6.75 12 1.5 12 1.5C12 1.5 4.5 6.75 4.5 13.5C4.5 15.4891 5.29018 17.3968 6.6967 18.8033C8.10322 20.2098 10.0109 21 12 21C13.9891 21 15.8968 20.2098 17.3033 18.8033C18.7098 17.3968 19.5 15.4891 19.5 13.5Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M12.7594 17.9249C13.6761 17.7695 14.5219 17.3334 15.1802 16.6768C15.8384 16.0203 16.2767 15.1755 16.4344 14.2593\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
-            "mark": "circle",
-            "label": "Exosome Technology"
-          }
-        },
-        "claim-2": {
-          "type": "claim",
-          "settings": {
-            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M16 7L6.99372 16.7233C6.65201 17.0922 6.09799 17.0922 5.75628 16.7233L2 12.668M11.9941 16.7233L21.0004 7\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>",
-            "mark": "diamond",
-            "label": "Certified Pure Gold"
-          }
-        },
-        "claim-3": {
-          "type": "claim",
-          "settings": {
-            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M15 9L3.75 20.25\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M6.00003 17.9999C1.50003 10.4999 7.50003 2.99994 20.25 3.74994C21 16.4999 13.5 22.4999 6.00003 17.9999Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
-            "mark": "square",
-            "label": "Natural Ingredient"
-          }
-        },
-        "claim-4": {
-          "type": "claim",
-          "settings": {
-            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M5.10938 18.8906C4.24688 18.0281 4.81875 16.2187 4.37813 15.1594C3.9375 14.1 2.25 13.1719 2.25 12C2.25 10.8281 3.91875 9.9375 4.37813 8.84063C4.8375 7.74375 4.24688 5.97187 5.10938 5.10938C5.97187 4.24688 7.78125 4.81875 8.84063 4.37813C9.9 3.9375 10.8281 2.25 12 2.25C13.1719 2.25 14.0625 3.91875 15.1594 4.37813C16.2562 4.8375 18.0281 4.24688 18.8906 5.10938C19.7531 5.97187 19.1813 7.78125 19.6219 8.84063C20.0625 9.9 21.75 10.8281 21.75 12C21.75 13.1719 20.0813 14.0625 19.6219 15.1594C19.1625 16.2562 19.7531 18.0281 18.8906 18.8906C18.0281 19.7531 16.2187 19.1813 15.1594 19.6219C14.1 20.0625 13.1719 21.75 12 21.75C10.8281 21.75 9.9375 20.0813 8.84063 19.6219C7.74375 19.1625 5.97187 19.7531 5.10938 18.8906Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M16.125 9.75L10.6219 15L7.875 12.375\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
-            "mark": "circle",
-            "label": "Dermatologist Tested"
-          }
-        },
-        "claim-5": {
-          "type": "claim",
-          "settings": {
-            "icon": "shopify://shop_images/a-droplet-icon.svg",
-            "icon_svg": "",
-            "mark": "diamond",
-            "label": "Award Winning Design"
-          }
-        }
-      },
-      "block_order": [
-        "claim-1",
-        "claim-2",
-        "claim-3",
-        "claim-4",
-        "claim-5"
-      ],
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "heading": "L’Or Celeste Lineup",
         "product_list": [
@@ -95,13 +47,41 @@
         "value-1": {
           "type": "value",
           "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M19.5 13.5C19.5 6.75 12 1.5 12 1.5C12 1.5 4.5 6.75 4.5 13.5C4.5 15.4891 5.29018 17.3968 6.6967 18.8033C8.10322 20.2098 10.0109 21 12 21C13.9891 21 15.8968 20.2098 17.3033 18.8033C18.7098 17.3968 19.5 15.4891 19.5 13.5Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M12.7594 17.9249C13.6761 17.7695 14.5219 17.3334 15.1802 16.6768C15.8384 16.0203 16.2767 15.1755 16.4344 14.2593\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "mark": "circle",
+            "title": "Advanced biotechnology",
+            "text": "Cellular messengers that support visible renewal and repair."
+          }
+        },
+        "value-2": {
+          "type": "value",
+          "settings": {
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M16 7L6.99372 16.7233C6.65201 17.0922 6.09799 17.0922 5.75628 16.7233L2 12.668M11.9941 16.7233L21.0004 7\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"></path></svg>",
+            "mark": "diamond",
+            "title": "Certified pure gold",
+            "text": "24K gold, chosen for radiance and a sensorial finish."
+          }
+        },
+        "value-3": {
+          "type": "value",
+          "settings": {
+            "icon": "shopify://shop_images/a-droplet-icon.svg",
+            "icon_svg": "",
+            "mark": "square",
+            "title": "Award winning design",
+            "text": "Recognized for form, finish, and considered packaging."
+          }
+        },
+        "value-4": {
+          "type": "value",
+          "settings": {
             "icon_svg": "",
             "mark": "maple_leaf",
             "title": "Made in Canada",
             "text": "Formulated and filled with precision in Canada."
           }
         },
-        "value-2": {
+        "value-5": {
           "type": "value",
           "settings": {
             "icon": "shopify://shop_images/physician-formulated-tight.svg",
@@ -111,23 +91,13 @@
             "text": "Developed by a collective of physicians and scientists."
           }
         },
-        "value-3": {
+        "value-6": {
           "type": "value",
           "settings": {
-            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M15 9L3.75 20.25\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n    \t\t<path d=\"M6.00003 17.9999C1.50003 10.4999 7.50003 2.99994 20.25 3.74994C21 16.4999 13.5 22.4999 6.00003 17.9999Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
+            "icon_svg": "<svg class=\"icon icon-pack\" aria-hidden=\"true\" focusable=\"false\" width=\"24\" height=\"24\" viewbox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"transparent\"><path d=\"M15 9L3.75 20.25\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path><path d=\"M6.00003 17.9999C1.50003 10.4999 7.50003 2.99994 20.25 3.74994C21 16.4999 13.5 22.4999 6.00003 17.9999Z\" fill=\"transparent\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path></svg>",
             "mark": "square",
             "title": "Clinically tested",
             "text": "Assessed for safety, tolerance, and performance."
-          }
-        },
-        "value-4": {
-          "type": "value",
-          "settings": {
-            "icon": "shopify://shop_images/cruelty-free-tight.svg",
-            "icon_svg": "",
-            "mark": "circle",
-            "title": "Cruelty-free",
-            "text": "No animal testing at any stage, in any market."
           }
         }
       },
@@ -135,7 +105,9 @@
         "value-1",
         "value-2",
         "value-3",
-        "value-4"
+        "value-4",
+        "value-5",
+        "value-6"
       ],
       "settings": {
         "hide_section": false,
