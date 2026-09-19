@@ -346,7 +346,7 @@
 
           {%- if section.settings.enable_country_selector -%}
             {%- if localization.available_countries.size > 1 -%}
-              {% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label | default: 'Currency' %}
+              {% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label, default: 'Currency' %}
             {%- else -%}
               <span class="dc-footer-bar__meta">
                 {{ localization.country.currency.iso_code }}
@@ -700,3 +700,15 @@
   }
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label
+    | default: 'Currency' %}"
+  to: "{% render 'dc-localization-form', id: 'FooterCountry', label: section.settings.currency_label,
+    default: 'Currency' %}"
+  position: 18630..18747
+{% endcomment %}

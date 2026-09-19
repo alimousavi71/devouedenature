@@ -26,8 +26,6 @@
     },
     "dc-lineup": {
       "type": "dc-lineup",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading": "L’Or Celeste Lineup",
         "product_list": [
