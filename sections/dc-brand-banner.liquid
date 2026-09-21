@@ -1,11 +1,10 @@
 {%- comment -%}
   Brand closing banner — ink band with centered wordmark + tagline.
-  Spelling: "Devoue" without accents (site-wide for this banner).
 {%- endcomment -%}
 
 {%- liquid
-  assign heading = section.settings.heading | default: 'Devoue de Nature'
-  assign heading = heading | replace: 'Dévoué', 'Devoue' | replace: 'dévoué', 'Devoue' | replace: 'DÉVOUÉ', 'DEVOUE'
+  assign heading = section.settings.heading | default: 'Dévoué de Nature'
+  assign heading = heading | replace: 'Devoue', 'Dévoué' | replace: 'DEVOUE', 'DÉVOUÉ'
   assign tagline = section.settings.tagline | default: 'Redefining skincare — with purpose, with you.'
 -%}
 
@@ -39,8 +38,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Devoue de Nature",
-      "info": "Use “Devoue” without accents — this banner strips accents automatically."
+      "default": "Dévoué de Nature"
     },
     {
       "type": "text",

@@ -4,11 +4,17 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Skincare'
+  assign breadcrumb_parent = section.settings.breadcrumb_parent | default: 'Home'
   assign breadcrumb_parent_key = breadcrumb_parent | strip | downcase
-  if breadcrumb_parent == blank or breadcrumb_parent_key == 'fragrance'
-    assign breadcrumb_parent = 'Skincare'
+  if breadcrumb_parent == blank or breadcrumb_parent_key == 'fragrance' or breadcrumb_parent_key == 'skincare'
+    assign breadcrumb_parent = 'Home'
   endif
+
+  assign breadcrumb_parent_url = section.settings.breadcrumb_parent_url
+  if breadcrumb_parent_url == blank
+    assign breadcrumb_parent_url = routes.root_url
+  endif
+
   assign eyebrow = section.settings.eyebrow | default: 'The collection'
 -%}
 
@@ -19,24 +25,16 @@
       aria-label="{{ 'general.breadcrumbs.home' | t | default: 'Breadcrumb' }}"
     >
       <ol class="flex flex-wrap items-center gap-[10px] list-none m-0 p-0">
-        {%- if section.settings.breadcrumb_parent_url != blank -%}
-          <li>
-            <a href="{{ section.settings.breadcrumb_parent_url }}" class="text-muted hover:text-ink transition-colors duration-fast ease-fast">
-              {{ breadcrumb_parent }}
-            </a>
-          </li>
-        {%- else -%}
-          <li class="text-muted">{{ breadcrumb_parent }}</li>
-        {%- endif -%}
+        <li>
+          <a href="{{ breadcrumb_parent_url }}" class="text-muted hover:text-ink transition-colors duration-fast ease-fast">
+            {{ breadcrumb_parent }}
+          </a>
+        </li>
         <li aria-hidden="true">/</li>
         <li class="text-ink" aria-current="page">{{ collection.title }}</li>
       </ol>
     </nav>
-    {%- if section.settings.breadcrumb_parent_url != blank -%}
-      {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_parent, parent_url: section.settings.breadcrumb_parent_url, current_label: collection.title %}
-    {%- else -%}
-      {% render 'dc-seo-breadcrumbs', current_label: collection.title, include_home: true %}
-    {%- endif -%}
+    {% render 'dc-seo-breadcrumbs', parent_label: breadcrumb_parent, parent_url: breadcrumb_parent_url, current_label: collection.title %}
   {%- endif -%}
 
   <section class="max-w-page mx-auto px-[16px] md:px-10 pt-[28px] md:pt-[70px]" data-reveal>
@@ -55,8 +53,8 @@
     { "type": "checkbox", "id": "hide_section", "label": "Hide section", "default": false },
     { "type": "header", "content": "Breadcrumb" },
     { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
-    { "type": "text", "id": "breadcrumb_parent", "label": "Breadcrumb parent", "default": "Skincare" },
-    { "type": "url", "id": "breadcrumb_parent_url", "label": "Breadcrumb parent link" },
+    { "type": "text", "id": "breadcrumb_parent", "label": "Breadcrumb parent", "default": "Home", "info": "Defaults to Home. “Skincare” / “Fragrance” are remapped to Home." },
+    { "type": "url", "id": "breadcrumb_parent_url", "label": "Breadcrumb parent link", "info": "Defaults to the homepage when empty." },
     { "type": "header", "content": "Hero" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The collection" }
   ],

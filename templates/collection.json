@@ -14,8 +14,8 @@
       "settings": {
         "hide_section": false,
         "show_breadcrumb": true,
-        "breadcrumb_parent": "Skincare",
-        "breadcrumb_parent_url": "",
+        "breadcrumb_parent": "Home",
+        "breadcrumb_parent_url": "/",
         "eyebrow": "The collection"
       }
     },

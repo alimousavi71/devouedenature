@@ -12,14 +12,22 @@
     will-change: transform;
   }
 
-  /* Readable body copy — avoid mid-word splits like "e / fective" */
+  /* Readable body copy — never split mid-word */
   .dc-prose,
   .dc-prose :where(p, li, blockquote) {
     overflow-wrap: break-word;
     word-break: normal;
-    hyphens: auto;
-    -webkit-hyphens: auto;
+    hyphens: none;
+    -webkit-hyphens: none;
     text-wrap: pretty;
+  }
+
+  .dc-founders-note__body,
+  .dc-founders-note__body :where(p) {
+    word-break: normal;
+    overflow-wrap: break-word;
+    hyphens: none;
+    -webkit-hyphens: none;
   }
   .dc-btn__label,
   .sweep-cta__label {

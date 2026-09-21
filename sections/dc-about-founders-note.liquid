@@ -2,22 +2,28 @@
   About founders note — bordered letter
 {%- endcomment -%}
 
+{%- liquid
+  assign founders_body = section.settings.body | replace: '&nbsp;', ' '
+  assign founders_body = founders_body | replace: ' ', ' '
+  assign founders_signature = section.settings.signature | replace: '&nbsp;', ' ' | replace: ' ', ' '
+-%}
+
 {%- unless section.settings.hide_section -%}
-  <section class="max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[48px] md:pt-[90px] xl:pt-[130px] overflow-x-clip">
-    <div class="w-full md:w-1/2 min-w-0 mx-auto border border-gold px-[20px] py-[32px] md:px-12 md:py-[64px] box-border overflow-hidden" data-reveal>
+  <section class="dc-founders-note max-w-page mx-auto px-[20px] md:px-[24px] xl:px-5 pt-[48px] md:pt-[90px] xl:pt-[130px] overflow-x-clip">
+    <div class="w-full md:w-1/2 min-w-0 mx-auto border border-gold px-[20px] py-[32px] md:px-12 md:py-[64px] box-border" data-reveal>
       {%- if section.settings.heading != blank -%}
-        <h2 class="font-display font-normal text-[24px] md:text-[34px] text-secondary m-0 break-words">
+        <h2 class="font-display font-normal text-[24px] md:text-[34px] text-secondary m-0">
           {{ section.settings.heading }}
         </h2>
       {%- endif -%}
-      {%- if section.settings.body != blank -%}
-        <div class="dc-prose mt-[22px] md:mt-[34px] font-body text-[14px] leading-[1.95] text-secondary w-full [&_p]:m-0 [&_p+_p]:mt-[18px] md:[&_p+_p]:mt-[22px]">
-          {{ section.settings.body }}
+      {%- if founders_body != blank -%}
+        <div class="dc-prose dc-founders-note__body mt-[22px] md:mt-[34px] font-body text-[14px] leading-[1.95] text-secondary w-full [&_p]:m-0 [&_p+_p]:mt-[18px] md:[&_p+_p]:mt-[22px]">
+          {{ founders_body }}
         </div>
       {%- endif -%}
-      {%- if section.settings.signature != blank -%}
+      {%- if founders_signature != blank -%}
         <p class="mt-[32px] md:mt-10 pt-[20px] md:pt-[26px] border-t border-border font-body text-[11px] tracking-[0.2em] uppercase text-muted m-0">
-          {{ section.settings.signature }}
+          {{ founders_signature }}
         </p>
       {%- endif -%}
     </div>

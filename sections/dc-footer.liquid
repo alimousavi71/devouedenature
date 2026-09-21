@@ -14,9 +14,12 @@
   assign phone_href = contact_phone | replace: ' ', '' | replace: '(', '' | replace: ')', '' | replace: '-', ''
   assign instagram_url = section.settings.instagram_url | default: settings.social_instagram_link | default: 'https://www.instagram.com/devoueskin/'
 
-  assign brand_banner_heading = section.settings.brand_banner_heading | default: 'Devoue de Nature'
-  assign brand_banner_heading = brand_banner_heading | replace: 'Dévoué', 'Devoue' | replace: 'dévoué', 'Devoue' | replace: 'DÉVOUÉ', 'DEVOUE'
+  assign brand_banner_heading = section.settings.brand_banner_heading | default: 'Dévoué de Nature'
+  assign brand_banner_heading = brand_banner_heading | replace: 'Devoue', 'Dévoué' | replace: 'DEVOUE', 'DÉVOUÉ'
   assign brand_banner_tagline = section.settings.brand_banner_tagline | default: 'Redefining skincare — with purpose, with you.'
+
+  assign footer_brand_name = settings.seo_business_name | default: shop.name | default: 'Dévoué de Nature'
+  assign footer_brand_name = footer_brand_name | replace: 'Devoue', 'Dévoué' | replace: 'DEVOUE', 'DÉVOUÉ'
 -%}
 
 <footer class="bg-ink text-[#EFE7DA] overflow-visible">
@@ -53,13 +56,13 @@
                     | image_tag:
                       loading: 'lazy',
                       class: 'h-auto w-[120px] max-w-full',
-                      alt: shop.name,
+                      alt: footer_brand_name,
                       widths: '120, 240'
                   }}
                 </a>
               {%- else -%}
                 <a href="{{ routes.root_url }}" class="font-display text-[22px] leading-[1.2] text-[#EFE7DA] no-underline hover:opacity-80 transition-opacity duration-normal ease-normal">
-                  {{ shop.name }}
+                  {{ footer_brand_name }}
                 </a>
               {%- endif -%}
 
@@ -175,7 +178,7 @@
                     | image_tag:
                       loading: 'lazy',
                       class: 'h-auto w-[120px] max-w-full',
-                      alt: shop.name,
+                      alt: footer_brand_name,
                       widths: '120, 240'
                   }}
                 </a>
@@ -342,7 +345,7 @@
 
     <div class="dc-footer-bar pt-4 md:pt-5 flex flex-col items-start gap-y-4 md:flex-row md:flex-wrap md:items-center md:gap-x-4 md:gap-y-3 md:justify-between font-body text-[10px] tracking-[0.18em] uppercase overflow-visible relative z-[2]">
         <div class="dc-footer-bar__meta-row flex flex-col items-start gap-y-2 w-full min-w-0 md:w-auto md:flex-row md:flex-wrap md:items-center md:gap-x-5 md:gap-y-2">
-          <span class="dc-footer-bar__meta">{{ shop.name }} — {{ location }}</span>
+          <span class="dc-footer-bar__meta">{{ footer_brand_name }} — {{ location }}</span>
 
           {%- if section.settings.enable_country_selector -%}
             {%- if localization.available_countries.size > 1 -%}
@@ -431,8 +434,7 @@
       "type": "text",
       "id": "brand_banner_heading",
       "label": "Banner heading",
-      "default": "Devoue de Nature",
-      "info": "Use “Devoue” without accents — accents are stripped automatically."
+      "default": "Dévoué de Nature"
     },
     {
       "type": "text",

@@ -40,7 +40,7 @@
         "type": "text",
         "id": "seo_business_alternate_name",
         "label": "Alternate public name",
-        "default": "Devoue de Nature"
+        "default": "Dévoué de Nature"
       },
       {
         "type": "image_picker",
